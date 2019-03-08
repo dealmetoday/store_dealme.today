@@ -8,8 +8,8 @@
     "start": "next start"
   },
   "repository": {
-  "type": "git",
-  "url": "https://github.com/RyanLiu6/store_dealme.today"
+    "type": "git",
+    "url": "https://github.com/RyanLiu6/store_dealme.today"
   },
   "author": "Ryan Liu, Alfred Hong, Mihailo Stefanovic",
   "license": "MIT",
