@@ -9,45 +9,101 @@ const Home = () => (
   <div>
     <Head title="Home" />
 
-    <a name="home" />
     <Nav />
     <Banner />
 
-    <div className="hero">
-      <h1 className="title">Welcome to Next!</h1>
+    <div id="about" className="about">
+      <h1 className="title">About Us</h1>
       <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
+        DealMe strives to provide value for brick and mortar stores and their
+        customers.
+      </p>
+      <p className="description">
+        For shoppers, we aim to aleviate the pain experienced when they are
+        bombarded by mass marketing efforts. We understand that shoppers do, in
+        fact, want to make use of promotional offers - but only if the offers
+        align to their interests. At DealMe, we provide shoppers a platform to
+        view the deals relevant to them and their interests.
+      </p>
+      <p className="description">
+        For stores, we provide a platform to bring some of the benefits of
+        e-commerce to brick and mortar. Our platform empowers you to create and
+        distribute promotions to customers that have shown interest in your
+        business. The platform also gives you concrete data on the performance
+        of each and every promotion you have created through our services.
       </p>
 
       <div className="row">
-        <Link href="https://github.com/zeit/next.js#getting-started">
-          <a className="card">
-            <h3>Getting Started &rarr;</h3>
-            <p>Learn more about Next on Github and in their examples</p>
-          </a>
-        </Link>
-        <Link href="https://open.segment.com/create-next-app">
-          <a className="card">
-            <h3>Examples &rarr;</h3>
-            <p>
-              Find other example boilerplates on the{' '}
-              <code>create-next-app</code> site
-            </p>
-          </a>
-        </Link>
-        <Link href="https://github.com/segmentio/create-next-app">
-          <a className="card">
-            <h3>Create Next App &rarr;</h3>
-            <p>Was this tool helpful? Let us know how we can improve it</p>
-          </a>
-        </Link>
+
+        <div className="imgDetail">
+          <img src='/images/analysis.svg' alt="Intelligent" />
+          <h2>Intelligent</h2>
+          <p className="description">
+            Stores receive concrete data about the performance about their
+            promotions
+          </p>
+        </div>
+        <div className="imgDetail">
+          <img src='/images/snowflake.svg' alt="Unique" />
+          <h2>Unique</h2>
+          <p className="description">
+            Each shopper's experience will be unique, as the deals you see are
+            tailored to your preferences
+          </p>
+        </div>
+        <div className="imgDetail">
+          <img src='/images/padlock.svg' alt="Secure" />
+          <h2>Secure</h2>
+          <p className="description">
+            We hash your passwords, encrypt your data, and ensure all
+            interactions are done over a secure network so that your data stays
+            your data
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="team" className="team">
+      <h1 className="title">The DealMe Team</h1>
+      <div className="row">
+        <div className="imgDetail">
+          <img src="/images/team_drulofs.gif" alt="Darren Rulofs" />
+          <h2>Darren Rulofs</h2>
+          <p className="description">CEO</p>
+        </div>
+        <div className="imgDetail">
+          <img src="/images/team_lmarcil.gif" alt="Liam Marcil" />
+          <h2>Liam Marcil</h2>
+          <p className="description">CFO</p>
+        </div>
+        <div className="imgDetail">
+          <img src="/images/team_chackwell.gif" alt="Catherine Hackwell" />
+          <h2>Catherine Hackwell</h2>
+          <p className="description">COO</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="imgDetail">
+          <img src="/images/team_rliu.gif" alt="Ryan Liu" />
+          <h2>Ryan Liu</h2>
+          <p className="description">CTO</p>
+        </div>
+        <div className="imgDetail">
+          <img src="/images/team_ahong.gif" alt="Alfred Hong" />
+          <h2>Alfred Hong</h2>
+          <p className="description">CXO</p>
+        </div>
+        <div className="imgDetail">
+          <img src="/images/team_mstefanovic.gif" alt="Mihailo Stefanovic" />
+          <h2>Mihailo Stefanovic</h2>
+          <p className="description">CPO</p>
+        </div>
       </div>
     </div>
 
     <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
+      .imgDetail {
+        padding: 10px;
       }
       .title {
         margin: 0;
@@ -67,27 +123,15 @@ const Home = () => (
         flex-direction: row;
         justify-content: space-around;
       }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
+      .about {
+        width: 60%;
+        margin: 0 auto;
+        text-align: center;
       }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
+      .team {
+        width: 60%;
+        margin: 0 auto;
+        text-align: center;
       }
     `}</style>
   </div>

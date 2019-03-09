@@ -1,17 +1,15 @@
 import React from 'react'
-//background: url('../images/banner_busymall.jpeg');
 
 const Banner = () => (
-  <banner>
-    <a href="home" />
+  <banner id="banner">
     <div className="bannerImage">
       <br/>
       <div className="bannerStripe">
         <div className="bannerText">
-          <h1>Welcome to DealMe</h1>
+          <h1>Meet DealMe</h1>
           <p>
             DealMe was founded by a group of NVD students who found pains in
-            traditional promotional materials used by brick and mortar stores
+            traditional promotional materials used by brick and mortar
           </p>
           <p>
             For shoppers, we provide a personalized experience
@@ -33,7 +31,8 @@ const Banner = () => (
       .bannerImage {
         width: 100%;
         padding: 20vh 0px;
-        background: lightblue;
+        background-image: url("./images/banner_busymall.png");
+        background-color: lightblue;
       }
       .bannerStripe {
         width: 100%;
@@ -42,15 +41,18 @@ const Banner = () => (
         background: rgba(32, 32, 32, 0.5);
       }
       .bannerText {
-        width: 50%;
+        width: 60%;
         margin: 0 auto;
         text-align: center;
-        color: #333;
+        color: #F0F0F0;
       }
       h1 {
-          font-size: 36px;
+          font-size: 5rem;
           margin-top: 20px;
           margin-bottom: 10px;
+      }
+      p {
+        font-size: 1.2em;
       }
       a {
         color: #067df7;
