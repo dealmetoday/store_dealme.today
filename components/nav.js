@@ -12,8 +12,23 @@ const Nav = () => (
   <nav>
     <ul>
       <li>
-        <Link prefetch href="/">
+        <Link prefetch href="#home">
           <a>Home</a>
+        </Link>
+      </li>
+      <li>
+        <Link prefetch href="#about">
+          <a>About</a>
+        </Link>
+      </li>
+      <li>
+        <Link prefetch href="#team">
+          <a>Our Team</a>
+        </Link>
+      </li>
+      <li>
+        <Link prefetch href="#contact">
+          <a>Contact Us</a>
         </Link>
       </li>
       <ul>
@@ -38,7 +53,6 @@ const Nav = () => (
       }
       ul {
         display: flex;
-        justify-content: space-between;
       }
       nav > ul {
         padding: 4px 16px;
