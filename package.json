@@ -1,9 +1,15 @@
 {
-  "name": "material-kit-react",
-  "version": "1.4.0",
-  "description": "Material Kit React. Coded by Creative Tim",
+  "name": "DealMe.today",
+  "version": "1.0.0",
+  "description": "dealme.today - online discount platform",
   "private": true,
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RyanLiu6/store_dealme.today"
+  },
+  "author": "Ryan Liu, Alfred Hong, Mihailo Stefanovic",
+  "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -31,6 +37,7 @@
     "react": "16.8.1",
     "react-datetime": "2.16.3",
     "react-dom": "16.8.1",
+    "react-mobile-store-button": "0.0.4",
     "react-router-dom": "4.3.1",
     "react-scripts": "2.1.5",
     "react-slick": "0.23.2",
