@@ -38,7 +38,7 @@ function Footer({ ...props }) {
         <div className={classes.left}>
           <List className={classes.list}>
             {links.map(({ key, href, fa }) => (
-              <ListItem key={key}>
+              <ListItem className={classes.inlineBlock} key={key}>
                 <a
                   href={href}
                   className={classes.block}
