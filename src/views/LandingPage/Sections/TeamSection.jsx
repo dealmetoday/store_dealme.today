@@ -13,12 +13,12 @@ import Card from "components/Card/Card.jsx";
 
 import teamStyle from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
 
-import team_ahong from "assets/img/team/team_ahong.gif"
-import team_chackwell from "assets/img/team/team_chackwell.gif"
-import team_drulofs from "assets/img/team/team_drulofs.gif"
-import team_lmarcil from "assets/img/team/team_lmarcil.gif"
-import team_mstefanovic from "assets/img/team/team_mstefanovic.gif"
-import team_rliu from "assets/img/team/team_rliu.gif"
+import team_ahong from "assets/img/team/team_ahong.png"
+import team_chackwell from "assets/img/team/team_chackwell.jpg"
+import team_drulofs from "assets/img/team/team_drulofs.jpg"
+import team_lmarcil from "assets/img/team/team_lmarcil.jpg"
+import team_mstefanovic from "assets/img/team/team_mstefanovic.png"
+import team_rliu from "assets/img/team/team_rliu.jpg"
 
 class TeamSection extends React.Component {
   render() {
