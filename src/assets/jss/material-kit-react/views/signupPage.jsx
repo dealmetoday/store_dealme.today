@@ -84,6 +84,10 @@ const signupPageStyle = {
   },
   inputIconsColor: {
     color: "#495057"
+  },
+  signup: {
+    display: "flex",
+    justifyContent: "center"
   }
 };
 
