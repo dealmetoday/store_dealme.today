@@ -5,8 +5,8 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "start": "NODE_PATH=./src react-scripts start",
-    "build": "npm run build-package && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "now-build": "NODE_PATH=./src npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
