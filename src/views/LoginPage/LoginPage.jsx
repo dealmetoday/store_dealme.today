@@ -66,55 +66,10 @@ class LoginPage extends React.Component {
                   <form className={classes.form}>
                     <CardHeader color="danger" className={classes.cardHeader}>
                       <h4>Login</h4>
-                      <div className={classes.socialLine}>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-twitter"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-facebook"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-google-plus-g"} />
-                        </Button>
-                      </div>
                     </CardHeader>
-                    <p className={classes.divider}>Or Be Classical</p>
                     <CardBody>
                       <CustomInput
-                        labelText="First Name..."
-                        id="first"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "text",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <People className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Email..."
+                        labelText="Email"
                         id="email"
                         formControlProps={{
                           fullWidth: true
@@ -145,10 +100,13 @@ class LoginPage extends React.Component {
                           )
                         }}
                       />
+                      <Button simple color="primary" size="lg">
+                        Sign in
+                      </Button>
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="primary" size="lg">
-                        Get started
+                        New to DealMe? Create an account.
                       </Button>
                     </CardFooter>
                   </form>
