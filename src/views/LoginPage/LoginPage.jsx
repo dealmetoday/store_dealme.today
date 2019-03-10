@@ -30,6 +30,7 @@ class LoginPage extends React.Component {
       cardAnimaton: "cardHidden"
     };
   }
+
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     setTimeout(
@@ -40,8 +41,8 @@ class LoginPage extends React.Component {
     );
   }
 
-  handleClick() {
-    console.log("Yes");
+  redirectSignup = () => {
+    this.props.history.push("/signup");
   }
 
   render() {
@@ -111,7 +112,11 @@ class LoginPage extends React.Component {
                       </Button>
                     </div>
                     <CardFooter className={classes.cardFooter}>
-                      <Button simple color="primary" size="lg">
+                      <Button
+                          simple color="primary"
+                          size="lg"
+                          onClick={this.redirectSignup}
+                      >
                         New to DealMe? Create an account.
                       </Button>
                     </CardFooter>
