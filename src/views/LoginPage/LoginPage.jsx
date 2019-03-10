@@ -21,7 +21,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
-import image from "assets/img/bg7.jpg";
+import image from "assets/img/banner_busymall.jpeg";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class LoginPage extends React.Component {
         <Header
           absolute
           color="transparent"
-          brand="Material Kit React"
+          brand="DealMe"
           rightLinks={<HeaderLinks />}
           {...rest}
         />
@@ -64,7 +64,7 @@ class LoginPage extends React.Component {
               <GridItem xs={12} sm={12} md={4}>
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form className={classes.form}>
-                    <CardHeader color="primary" className={classes.cardHeader}>
+                    <CardHeader color="danger" className={classes.cardHeader}>
                       <h4>Login</h4>
                       <div className={classes.socialLine}>
                         <Button
