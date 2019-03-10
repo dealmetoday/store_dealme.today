@@ -1,4 +1,7 @@
-import { title } from "assets/jss/material-kit-react.jsx";
+import {
+  grayColor,
+  title
+} from "assets/jss/material-kit-react.jsx";
 
 const productStyle = {
   section: {
@@ -13,7 +16,7 @@ const productStyle = {
     textDecoration: "none"
   },
   description: {
-    color: "#999"
+    color: grayColor
   }
 };
 

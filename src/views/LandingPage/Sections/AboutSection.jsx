@@ -45,7 +45,7 @@ class AboutSection extends React.Component {
             </h5>
           </GridItem>
         </GridContainer>
-        <div>
+        <div className={classes.description}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={4}>
               <InfoArea

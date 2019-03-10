@@ -21,39 +21,39 @@ function Footer({ ...props }) {
     [classes.a]: true,
     [classes.footerWhiteFont]: whiteFont
   });
+  const faSize = {
+    fontSize: "32px"
+  };
+  const links = [
+    { href: "mailto:nvdbluetwo@gmail.com", fa: "fas fa-envelope"},
+    { href: "https://github.com/nvdbluetwo", fa: "fab fa-github"}
+  ].map(link => {
+    link.key = `nav-link-${link.href}-${link.fa}`
+    return link
+  });
+
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
         <div className={classes.left}>
           <List className={classes.list}>
-            <ListItem className={classes.inlineBlock}>
-              <a
-                href="https://google.com"
-                className={classes.block}
-                target="_blank"
-              >
-                I don't know what to put here
-              </a>
-            </ListItem>
+            {links.map(({ key, href, fa }) => (
+              <ListItem key={key}>
+                <a
+                  href={href}
+                  className={classes.block}
+                  target="_blank"
+                >
+                  <div style={faSize}>
+                    <i className={fa}></i>
+                  </div>
+                </a>
+              </ListItem>
+            ))}
           </List>
         </div>
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} , made with{" "}
-          <Favorite className={classes.icon} /> by{" "}
-          <a
-            href="https://ryanliu6.xyz"
-            className={aClasses}
-            target="_blank"
-          >
-            Ryan Liu
-          </a> and{" "}
-          <a
-            href="https://www.creative-tim.com"
-            className={aClasses}
-            target="_blank"
-          >
-            Mihailo Stefanovic
-          </a>
+          &copy; {1900 + new Date().getYear()} DealMe
         </div>
       </div>
     </footer>
