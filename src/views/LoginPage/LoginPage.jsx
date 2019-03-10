@@ -5,7 +5,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
-import People from "@material-ui/icons/People";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
@@ -40,6 +39,11 @@ class LoginPage extends React.Component {
       700
     );
   }
+
+  handleClick() {
+    console.log("Yes");
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -100,10 +104,12 @@ class LoginPage extends React.Component {
                           )
                         }}
                       />
-                      <Button simple color="primary" size="lg">
+                    </CardBody>
+                    <div className={classes.login}>
+                      <Button simple color="primary" size="lg" onClick={this.handleClick}>
                         Sign in
                       </Button>
-                    </CardBody>
+                    </div>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="primary" size="lg">
                         New to DealMe? Create an account.
