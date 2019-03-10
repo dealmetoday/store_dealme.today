@@ -82,6 +82,14 @@ class SignupPage extends React.Component {
                         }}
                       />
                       <CustomInput
+                        labelText="Parent Company (optional)"
+                        id="parent"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                      />
+                      <br/><br/>
+                      <CustomInput
                         labelText="Email"
                         id="email"
                         formControlProps={{
@@ -130,9 +138,11 @@ class SignupPage extends React.Component {
                           )
                         }}
                       />
-                      <Button simple color="primary" size="lg">
-                        Sign up
-                      </Button>
+                      <div className={classes.signup}>
+                        <Button simple color="primary" size="lg">
+                          Sign up
+                        </Button>
+                      </div>
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button
