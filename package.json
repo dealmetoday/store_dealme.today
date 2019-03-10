@@ -5,8 +5,9 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "npm run build-package-css && react-scripts build",
+    "start": "NODE_PATH=./src react-scripts start",
+    "build": "npm run build-package && react-scripts build",
+    "now-build": "NODE_PATH=./src npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint:check": "eslint . --ext=js,jsx;  exit 0",
@@ -40,10 +41,6 @@
     "@babel/plugin-proposal-class-properties": "7.3.0",
     "@babel/preset-env": "7.3.1",
     "@babel/preset-react": "7.0.0"
-  },
-  "optionalDependencies": {
-    "eslint-config-prettier": "4.0.0",
-    "eslint-plugin-prettier": "3.0.1"
   },
   "browserslist": [
     ">0.2%",
