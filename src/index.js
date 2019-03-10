@@ -13,13 +13,20 @@ import SignupPage from "views/SignupPage/SignupPage.jsx";
 
 var hist = createBrowserHistory();
 
+const Page404 = ({ location }) => (
+   <div>
+      <h2>No match found for <code>{location.pathname}</code></h2>
+   </div>
+);
+
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Route path="/login" component={LoginPage} />
-      <Route path="/profile" component={ProfilePage} />
+      <Route exact={true} path="/login" component={LoginPage} />
+      <Route exact={true} path="/profile" component={ProfilePage} />
       <Route path="/signup" component={SignupPage} />
-      <Route path="/" component={LandingPage} />
+      <Route exact={true} path="/" component={LandingPage} />
+      <Route component={Page404} />
     </Switch>
   </Router>,
   document.getElementById("root")

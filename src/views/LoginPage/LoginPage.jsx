@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
           absolute
           color="transparent"
           brand="DealMe"
-          rightLinks={<HeaderLinks />}
+          rightLinks={<HeaderLinks history={this.props.history}/>}
           {...rest}
         />
         <div
@@ -107,7 +107,7 @@ class LoginPage extends React.Component {
                       />
                     </CardBody>
                     <div className={classes.login}>
-                      <Button simple color="primary" size="lg" onClick={this.handleClick}>
+                      <Button simple color="primary" size="lg">
                         Sign in
                       </Button>
                     </div>

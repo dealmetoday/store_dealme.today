@@ -54,7 +54,7 @@ class SignupPage extends React.Component {
           absolute
           color="transparent"
           brand="DealMe"
-          rightLinks={<HeaderLinks />}
+          rightLinks={<HeaderLinks history={this.props.history}/>}
           {...rest}
         />
         <div
