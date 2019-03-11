@@ -17,6 +17,10 @@ import Menu from "@material-ui/icons/Menu";
 import headerStyle from "assets/jss/material-kit-react/components/headerStyle.jsx";
 
 class Header extends React.Component {
+  redirectHome = () => {
+    this.props.history.push("/");
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +77,7 @@ class Header extends React.Component {
       [classes.absolute]: absolute,
       [classes.fixed]: fixed
     });
-    const brandComponent = <Button className={classes.title}>{brand}</Button>;
+    const brandComponent = <Button className={classes.title} onClick={this.redirectHome}>{brand}</Button>;
     return (
       <AppBar className={appBarClasses}>
         <Toolbar className={classes.container}>
