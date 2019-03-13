@@ -1,6 +1,6 @@
 const axios = require('axios');
 const crypto = require('crypto');
-const SERVER = 'http://localhost:3000';
+const SERVER = 'https://api.dealme.today';
 
 class Utils {
   constructor() {
