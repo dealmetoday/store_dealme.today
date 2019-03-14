@@ -5,7 +5,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
-import People from "@material-ui/icons/People";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
@@ -120,6 +119,10 @@ class SignupPage extends React.Component {
     return matcher.test(password);
   }
 
+  test = () => {
+    console.log("yes");
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -128,7 +131,7 @@ class SignupPage extends React.Component {
           absolute
           color="transparent"
           brand="DealMe"
-          rightLinks={<HeaderLinks />}
+          rightLinks={<HeaderLinks history={this.props.history}/>}
           {...rest}
         />
         <div
@@ -218,7 +221,7 @@ class SignupPage extends React.Component {
                         }}
                       />
                       <div className={classes.signup}>
-                        <Button simple color="primary" size="lg">
+                        <Button simple color="primary" size="lg" onClick={this.test}>
                           Sign up
                         </Button>
                       </div>

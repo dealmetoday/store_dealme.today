@@ -17,29 +17,43 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.jsx";
 
-function HeaderLinks({ ...props }) {
-  const { classes } = props;
-  return (
-    <List className={classes.list}>
-      <ListItem className={classes.listItem}>
-        <Tooltip
-          id="signup-tooltip"
-          title="Sign Up"
-          placement={window.innerWidth > 959 ? "top" : "left"}
-          classes={{ tooltip: classes.tooltip }}
-        >
+class HeaderLinks extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  redirectSignin = () => {
+    this.props.history.push("/login");
+  }
+
+  redirectSignup = () => {
+    this.props.history.push("/signup");
+  }
+
+  render() {
+    const { classes, ...rest } = this.props;
+
+    return (
+      <List className={classes.list}>
+        <ListItem className={classes.listItem}>
           <Button
             color="transparent"
-            href="localhost:3000/login"
-            target="_blank"
             className={classes.navLink}
+            onClick={this.redirectSignin}
           >
-          <i className={classes.socialIcons + " fas fa-sign-in-alt"} />
+            Sign in
           </Button>
-        </Tooltip>
-      </ListItem>
-    </List>
-  );
+          <Button
+            color="transparent"
+            className={classes.navLink}
+            onClick={this.redirectSignup}
+          >
+            Sign up
+          </Button>
+        </ListItem>
+      </List>
+    );
+  }
 }
 
 export default withStyles(headerLinksStyle)(HeaderLinks);

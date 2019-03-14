@@ -22,6 +22,11 @@ import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import image from "assets/img/banner_busymall.jpeg";
 
+// Testing Utils
+import Utils from "components/Utils/Utils.jsx";
+
+let utils = new Utils();
+
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -45,6 +50,11 @@ class LoginPage extends React.Component {
     this.props.history.push("/signup");
   }
 
+  test = async () => {
+    let encrypted = await utils.encrypt('password');
+    console.log(encrypted);
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -53,7 +63,7 @@ class LoginPage extends React.Component {
           absolute
           color="transparent"
           brand="DealMe"
-          rightLinks={<HeaderLinks />}
+          rightLinks={<HeaderLinks history={this.props.history}/>}
           {...rest}
         />
         <div
@@ -107,7 +117,10 @@ class LoginPage extends React.Component {
                       />
                     </CardBody>
                     <div className={classes.login}>
-                      <Button simple color="primary" size="lg" onClick={this.handleClick}>
+                      <Button simple color="primary"
+                              size="lg"
+                              onClick={this.test}
+                      >
                         Sign in
                       </Button>
                     </div>

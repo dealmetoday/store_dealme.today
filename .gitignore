@@ -56,3 +56,6 @@ typings/
 
 # Build
 build/
+
+# WebStorm
+.idea
