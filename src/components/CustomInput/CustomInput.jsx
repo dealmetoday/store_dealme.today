@@ -55,7 +55,7 @@ function CustomInput({ ...props }) {
   }
   console.log(props.error);
   return (
-    <FormControl {...formControlProps} error={error} className={formControlClasses}>
+    <FormControl {...formControlProps} className={formControlClasses}>
       {labelText !== undefined ? (
         <InputLabel
           className={classes.labelRoot + " " + labelClasses}
@@ -71,6 +71,9 @@ function CustomInput({ ...props }) {
           root: marginTop,
           disabled: classes.disabled,
           underline: underlineClasses
+        }}
+        style={{
+          error: true
         }}
         id={id}
         onBlur={onBlur}

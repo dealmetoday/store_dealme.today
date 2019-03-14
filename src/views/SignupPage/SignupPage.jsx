@@ -1,43 +1,35 @@
 import React from "react";
-// @material-ui/core components
+
+// Material-UI Components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import Email from "@material-ui/icons/Email";
-// core components
-import Header from "components/Header/Header.jsx";
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import Footer from "components/Footer/Footer.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
+
+// Material Kit Components
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Footer from "components/Footer/Footer.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import Header from "components/Header/Header.jsx";
+import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
 
+// Material-UI Icons
+import Email from "@material-ui/icons/Email";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+
+// Styles and Images
 import signupPageStyle from "assets/jss/material-kit-react/views/signupPage.jsx";
-
 import image from "assets/img/banner_busymall.jpeg";
-import { TextField } from "@material-ui/core";
-import { relativeTimeThreshold } from "moment";
 
-const renderTextField = ({
-  input,
-  label,
-  meta: {touched, error},
-  ...custom
-}) => (
-  <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-  />
-)
 
 class SignupPage extends React.Component {
   constructor(props) {
@@ -45,18 +37,25 @@ class SignupPage extends React.Component {
     // we use this to make the card to appear after the page has been rendered
     this.state = {
       cardAnimaton: "cardHidden",
-      form: {
-        name: "",
-        parent: "",
-        email: "",
-        password: "",
-        confirm: ""
-      },
-      errors: {
+      showPassword: false,
+
+      name: "",
+      parent: "",
+      email: "",
+      password: "",
+      confirm: "",
+
+      err_name: "",
+      err_email: "",
+      err_password: "",
+      err_confirm: "",
+
+      error: {
+        name: false,
         email: false,
         password: false,
-        confirm: false
-      }
+        confirm: false,
+      },
     };
   }
 
@@ -74,49 +73,101 @@ class SignupPage extends React.Component {
     this.props.history.push("/login");
   }
 
-  onBlur(event) {
-    const target = event.target;
-    const form = this.state.form;
-    const errors = this.state.errors;
-    form[target.id] = target.value;
-
-    // Perform error checking
-    if (target.id === "email") {
-      errors.email = !this.validEmail(form.email);
-    } else if (target.id === "password") {
-      errors.password = !this.validPassword(form.name, form.password);
-      if (form.confirm) {
-        errors.confirm = (form.password !== form.confirm);
-      }
-    } else if (target.id === "confirm") {
-      errors.confirm = (form.password !== form.confirm);
+  handleBlur = (event) => {
+    const id = event.target.id;
+    const value = event.target.value;
+    let new_error = {
+      name: false,
+      email: false,
+      password: false,
+      confirm: false,
     }
-    // console.log(form);
-    console.log(errors.password);
+
+    if (id === "name") {
+      new_error.name = !this.validName(value);
+    } else if (id === "email") {
+      new_error.email = !this.validEmail(value);
+    } else if (id === "password") {
+      new_error.password = !this.validPassword(this.state.name, value);
+    } else if (id === "confirm") {
+      new_error.confirm = !this.validConfirm(this.state.password, value);
+    }
+
+    this.setState({ error: new_error });
+    console.log(id, value);
+    console.log(this.state.error);
   }
 
-  handleInputChange = (event) => {
-    console.log(this.state.form.name);
+  handleChange = (event) => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
+
+  handleShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
+
+  validConfirm(password, confirm) {
+    let errstring = "";
+    if (!confirm) {
+      errstring = "This is a required field";
+    } else if (password && password !== confirm) {
+      errstring = "Passwords do not match"
+    }
+    this.setState({ err_confirm: errstring });
+    return (errstring.length === 0);
   }
 
   validEmail(email) {
-    const rfc5322 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const res = email.match(rfc5322);
-    return (res !== null);
-  }
-
-  validPassword(username, password) {
-    const passwordUpper = password.toUpperCase();
-    const usernameUpper = username.toUpperCase();
-
-    // Password cannot contain username
-    if (usernameUpper && passwordUpper.includes(usernameUpper)) {
+    let errstring = "";
+    if (!email) {
+      errstring = "This is a required field";
+      this.setState({ err_email: errstring });
       return false;
     }
 
-    // Require a number, symbol, and alphanumeric characters
-    const matcher = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])(?=.{8,512})");
-    return matcher.test(password);
+    const re = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
+    const valid = re.test(email);
+
+    if (!valid) {
+      errstring = "The email provided is invalid";
+    }
+    this.setState({ err_email: errstring });
+    return valid;
+  }
+
+  validName(name) {
+    let errstring = "";
+    if (!name) {
+      errstring = "This is a required field";
+    }
+    this.setState({ err_name: errstring });
+    return (errstring.length === 0);
+  }
+
+  validPassword(username, password) {
+    let errstring = "";
+    if (!password) {
+      errstring = "This is a required field";
+      this.setState({ err_password: errstring });
+      return false;
+    }
+
+    if (username && password.toUpperCase().includes(username.toUpperCase())) {
+      errstring = "Your password cannot contain your store's name";
+      this.setState({ err_password: errstring });
+      return false;
+    }
+
+    // Password must contain at least one character, one number, and one symbol
+    const re = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])(?=.{8,512})");
+    const valid = re.test(password);
+
+    if (!valid) {
+      errstring  = "Password must contain one character, one number, and one "
+      errstring += "of !@#$%^&";
+    }
+    this.setState({ err_password: errstring });
+    return valid;
   }
 
   test = () => {
@@ -146,86 +197,137 @@ class SignupPage extends React.Component {
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={4}>
                 <Card className={classes[this.state.cardAnimaton]}>
-                  <form className={classes.form}>
+                  <form ref="form" onSubmit={this.handleSubmit} className={classes.form}>
                     <CardHeader color="danger" className={classes.cardHeader}>
                       <h4>Create An Account</h4>
                     </CardHeader>
+
                     <CardBody>
-                      <CustomInput
-                        labelText="Store Name"
-                        id="name"
-                        onBlur={this.onBlur.bind(this)}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Parent Company (optional)"
-                        id="parent"
-                        onBlur={this.onBlur.bind(this)}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
+                      <FormControl className={classes.FormControl} error={this.state.error.name}>
+                        <InputLabel
+                          id="label_name"
+                          htmlFor={(this.state.error.name) ? "component-error" : "component-simple"}
+                        >
+                          Store Name
+                        </InputLabel>
+                        <Input
+                          id="name"
+                          value={this.state.name}
+                          onBlur={this.handleBlur}
+                          onChange={this.handleChange}
+                          aria-describedby="err_name"
+                        />
+                        <FormHelperText id="err_name">
+                          {this.state.err_name}
+                        </FormHelperText>
+                      </FormControl>
+                      <br/>
+
+                      <FormControl className={classes.FormControl}>
+                        <InputLabel id="label_parent">
+                          Parent Company
+                        </InputLabel>
+                        <Input
+                          id="parent"
+                          value={this.state.parent}
+                          onChange={this.handleChange}
+                        />
+                      </FormControl>
                       <br/><br/>
-                      <CustomInput
-                        labelText="Email"
-                        id="email"
-                        onBlur={this.onBlur.bind(this)}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "email",
-                          endAdornment: (
+
+                      <FormControl className={classes.FormControl} error={this.state.error.email}>
+                        <InputLabel
+                          id="label_email"
+                          htmlFor={(this.state.error.email) ? "component-error" : "component-simple"}
+                        >
+                          Email
+                        </InputLabel>
+                        <Input
+                          id="email"
+                          value={this.state.email}
+                          onBlur={this.handleBlur}
+                          onChange={this.handleChange}
+                          aria-describedby="err_email"
+                          endAdornment={
                             <InputAdornment position="end">
-                              <Email className={classes.inputIconsColor} />
+                              <Email />
                             </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Password"
-                        id="password"
-                        onBlur={this.onBlur.bind(this)}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "password",
-                          endAdornment: (
+                          }
+                        />
+                        <FormHelperText id="err_email">
+                          {this.state.err_email}
+                        </FormHelperText>
+                      </FormControl>
+                      <br/>
+
+                      <FormControl className={classes.FormControl} error={this.state.error.password}>
+                        <InputLabel
+                          id="label_password"
+                          htmlFor={this.state.error.password ? "component-error" : "component-simple"}
+                        >
+                          Password
+                        </InputLabel>
+                        <Input
+                          id="password"
+                          type={this.state.showPassword ? "text" : "password"}
+                          value={this.state.password}
+                          onBlur={this.handleBlur}
+                          onChange={this.handleChange}
+                          aria-describedby="err_password"
+                          endAdornment={
                             <InputAdornment position="end">
-                              <Icon className={classes.inputIconsColor}>
-                                lock_outline
-                              </Icon>
+                              <IconButton
+                                aria-label="Toggle password visibility"
+                                onClick={this.handleShowPassword}
+                              >
+                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
                             </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Confirm Password"
-                        id="confirm"
-                        onBlur={this.onBlur.bind(this)}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "password",
-                          endAdornment: (
+                          }
+                        />
+                        <FormHelperText id="err_password">
+                          {this.state.err_password}
+                        </FormHelperText>
+                      </FormControl>
+                      <br/>
+
+                      <FormControl className={classes.FormControl} error={this.state.error.confirm}>
+                        <InputLabel
+                          id="label_confirm"
+                          htmlFor={this.state.error.confirm ? "component-error" : "component-simple"}
+                        >
+                          Confirm Password
+                        </InputLabel>
+                        <Input
+                          id="confirm"
+                          type={this.state.showPassword ? "text" : "password"}
+                          value={this.state.confirm}
+                          onBlur={this.handleBlur}
+                          onChange={this.handleChange}
+                          aria-describedby="err_confirm"
+                          endAdornment={
                             <InputAdornment position="end">
-                              <Icon className={classes.inputIconsColor}>
-                                lock_outline
-                              </Icon>
+                              <IconButton
+                                aria-label="Toggle password visibility"
+                                onClick={this.handleShowPassword}
+                              >
+                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
                             </InputAdornment>
-                          )
-                        }}
-                      />
+                          }
+                        />
+                        <FormHelperText id="err_confirm">
+                          {this.state.err_confirm}
+                        </FormHelperText>
+                      </FormControl>
+                      <br/>
                       <div className={classes.signup}>
                         <Button simple color="primary" size="lg" onClick={this.test}>
                           Sign up
                         </Button>
                       </div>
                     </CardBody>
+
                     <CardFooter className={classes.cardFooter}>
                       <Button
                           simple
