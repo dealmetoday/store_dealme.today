@@ -76,12 +76,7 @@ class SignupPage extends React.Component {
   handleBlur = (event) => {
     const id = event.target.id;
     const value = event.target.value;
-    let new_error = {
-      name: false,
-      email: false,
-      password: false,
-      confirm: false,
-    }
+    let new_error = this.state.error;
 
     if (id === "name") {
       new_error.name = !this.validName(value);
