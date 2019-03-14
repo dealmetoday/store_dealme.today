@@ -324,19 +324,14 @@ class SignupPage extends React.Component {
                       </FormControl>
                       <br/>
                       <div className={classes.signup}>
-                        <Button simple color="primary" size="lg" onClick={this.test}>
+                        <Button round color="danger" size="lg" onClick={this.test}>
                           Sign up
                         </Button>
                       </div>
                     </CardBody>
 
                     <CardFooter className={classes.cardFooter}>
-                      <Button
-                          simple
-                          color="primary"
-                          size="lg"
-                          onClick={this.redirectLogin}
-                        >
+                      <Button simple color="primary" size="lg" onClick={this.redirectLogin}>
                         Already have an account? Click here to log in.
                       </Button>
                     </CardFooter>
