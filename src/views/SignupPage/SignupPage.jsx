@@ -203,7 +203,7 @@ class SignupPage extends React.Component {
                     </CardHeader>
 
                     <CardBody>
-                      <FormControl className={classes.FormControl} error={this.state.error.name}>
+                      <FormControl fullWidth className={classes.FormControl} error={this.state.error.name}>
                         <InputLabel
                           id="label_name"
                           htmlFor={(this.state.error.name) ? "component-error" : "component-simple"}
@@ -223,7 +223,7 @@ class SignupPage extends React.Component {
                       </FormControl>
                       <br/>
 
-                      <FormControl className={classes.FormControl}>
+                      <FormControl fullWidth className={classes.FormControl}>
                         <InputLabel id="label_parent">
                           Parent Company
                         </InputLabel>
@@ -235,7 +235,7 @@ class SignupPage extends React.Component {
                       </FormControl>
                       <br/><br/>
 
-                      <FormControl className={classes.FormControl} error={this.state.error.email}>
+                      <FormControl fullWidth className={classes.FormControl} error={this.state.error.email}>
                         <InputLabel
                           id="label_email"
                           htmlFor={(this.state.error.email) ? "component-error" : "component-simple"}
@@ -250,7 +250,9 @@ class SignupPage extends React.Component {
                           aria-describedby="err_email"
                           endAdornment={
                             <InputAdornment position="end">
-                              <Email />
+                              <IconButton>
+                                <Email />
+                              </IconButton>
                             </InputAdornment>
                           }
                         />
@@ -260,7 +262,7 @@ class SignupPage extends React.Component {
                       </FormControl>
                       <br/>
 
-                      <FormControl className={classes.FormControl} error={this.state.error.password}>
+                      <FormControl fullWidth className={classes.FormControl} error={this.state.error.password}>
                         <InputLabel
                           id="label_password"
                           htmlFor={this.state.error.password ? "component-error" : "component-simple"}
@@ -291,7 +293,7 @@ class SignupPage extends React.Component {
                       </FormControl>
                       <br/>
 
-                      <FormControl className={classes.FormControl} error={this.state.error.confirm}>
+                      <FormControl fullWidth className={classes.FormControl} error={this.state.error.confirm}>
                         <InputLabel
                           id="label_confirm"
                           htmlFor={this.state.error.confirm ? "component-error" : "component-simple"}
