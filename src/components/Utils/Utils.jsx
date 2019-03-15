@@ -1,6 +1,7 @@
 const axios = require('axios');
 const crypto = require('crypto');
-const SERVER = 'https://api.dealme.today';
+// const SERVER = 'https://api.dealme.today';
+const SERVER = 'http://localhost:3000';
 
 class Utils {
   constructor() {
@@ -50,22 +51,19 @@ class Utils {
   }
 
   async post(endpoint, body) {
-    let data = { data: body };
-    this.response = await axios.post(endpoint, data);
+    this.response = await axios.post(endpoint, body);
 
     return this.response.data;
   }
 
   async put(endpoint, body) {
-    let data = { data: body };
-    this.response = await axios.put(endpoint, data);
+    this.response = await axios.put(endpoint, body);
 
     return this.response.data;
   }
 
   async delete(endpoint, body) {
-    let data = { data: body };
-    this.response = await axios.delete(endpoint, data);
+    this.response = await axios.delete(endpoint, body);
 
     return this.response.data;
   }

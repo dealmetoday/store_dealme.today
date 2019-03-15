@@ -33,7 +33,6 @@ import image from "assets/img/banner_busymall.jpeg";
 // Utilities
 import Utils from "components/Utils/Utils.jsx";
 
-
 let utils = new Utils();
 
 class SignupPage extends React.Component {
@@ -85,6 +84,8 @@ class SignupPage extends React.Component {
 
     if (id === "name") {
       new_error.name = !this.validName(value);
+    } else if (id === "parent") {
+      this.setState({ parent: value });
     } else if (id === "email") {
       new_error.email = !this.validEmail(value);
     } else if (id === "password") {
@@ -115,14 +116,29 @@ class SignupPage extends React.Component {
       return;
     }
 
-    const params = {
-      name: this.state.name,
-      email: this.state.email,
-      password: await utils.encrypt(this.state.password),
-      role: "store"
+    let parentVal = "";
+    if (this.state.parent !== "") {
+      parentVal = this.state.parent;
+      this.setState({ parent: "" });
     }
 
-    const data = await utils.post('/stores', params);
+    let params = {
+      name: this.state.name,
+      email: this.state.email,
+      parentCompany: parentVal,
+      password: await utils.encrypt(this.state.password)
+    }
+
+    let data = await utils.post('/stores', params);
+    console.log(data);
+
+    params = {
+      email: this.state.email,
+      role: "store",
+      password: await utils.encrypt(this.state.password)
+    }
+
+    data = await utils.put('/auth/login/email', params);
     console.log(data);
   }
 
