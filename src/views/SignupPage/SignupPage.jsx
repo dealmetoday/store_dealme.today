@@ -90,6 +90,9 @@ class SignupPage extends React.Component {
       new_error.email = !this.validEmail(value);
     } else if (id === "password") {
       new_error.password = !this.validPassword(this.state.name, value);
+      if (this.state.confirm) {
+        new_error.confirm = !this.validConfirm(value, this.state.confirm);
+      }
     } else if (id === "confirm") {
       new_error.confirm = !this.validConfirm(this.state.password, value);
     }
