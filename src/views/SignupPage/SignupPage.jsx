@@ -30,6 +30,11 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import signupPageStyle from "assets/jss/material-kit-react/views/signupPage.jsx";
 import image from "assets/img/banner_busymall.jpeg";
 
+// Utilities
+import Utils from "components/Utils/Utils.jsx";
+
+
+let utils = new Utils();
 
 class SignupPage extends React.Component {
   constructor(props) {
@@ -89,8 +94,6 @@ class SignupPage extends React.Component {
     }
 
     this.setState({ error: new_error });
-    console.log(id, value);
-    console.log(this.state.error);
   }
 
   handleChange = (event) => {
@@ -99,6 +102,28 @@ class SignupPage extends React.Component {
 
   handleShowPassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
+  }
+
+  handleSignup = async () => {
+    if (this.state.error.name || !this.state.name) {
+      return;
+    } else if (this.state.error.email || !this.state.email) {
+      return;
+    } else if (this.state.error.password || !this.state.password) {
+      return;
+    } else if (this.state.error.confirm || !this.state.confirm) {
+      return;
+    }
+
+    const params = {
+      name: this.state.name,
+      email: this.state.email,
+      password: await utils.encrypt(this.state.password),
+      role: "store"
+    }
+
+    const data = await utils.post('/stores', params);
+    console.log(data);
   }
 
   validConfirm(password, confirm) {
@@ -163,10 +188,6 @@ class SignupPage extends React.Component {
     }
     this.setState({ err_password: errstring });
     return valid;
-  }
-
-  test = () => {
-    console.log("yes");
   }
 
   render() {
@@ -319,7 +340,7 @@ class SignupPage extends React.Component {
                       </FormControl>
                       <br/>
                       <div className={classes.signup}>
-                        <Button round color="danger" size="lg" onClick={this.test}>
+                        <Button round color="danger" size="lg" onClick={this.handleSignup}>
                           Sign up
                         </Button>
                       </div>
