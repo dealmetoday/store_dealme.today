@@ -32,7 +32,10 @@ class LoginPage extends React.Component {
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
-      cardAnimaton: "cardHidden"
+      cardAnimaton: "cardHidden",
+
+      email: "",
+      password: ""
     };
   }
 
@@ -50,9 +53,26 @@ class LoginPage extends React.Component {
     this.props.history.push("/signup");
   }
 
-  test = async () => {
-    let encrypted = await utils.encrypt('password');
-    console.log(encrypted);
+  handleBlur = (event) => {
+    const id = event.target.id;
+    const value = event.target.value;
+    let new_error = this.state.error;
+
+    if (id === "email") {
+      this.setState({ email: value });
+    } else if (id === "password") {
+      this.setState({ password: value });
+    }
+  }
+
+  handleSignin = async () => {
+    const params = {
+      email: this.state.email,
+      password: await utils.encrypt(this.state.password)
+    }
+
+    const data = await utils.post('/stores', params);
+    console.log(data);
   }
 
   render() {
@@ -100,7 +120,7 @@ class LoginPage extends React.Component {
                       />
                       <CustomInput
                         labelText="Password"
-                        id="pass"
+                        id="password"
                         formControlProps={{
                           fullWidth: true
                         }}
@@ -119,7 +139,7 @@ class LoginPage extends React.Component {
                     <div className={classes.login}>
                       <Button simple color="primary"
                               size="lg"
-                              onClick={this.test}
+                              onClick={this.handleSignin}
                       >
                         Sign in
                       </Button>
