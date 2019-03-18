@@ -66,13 +66,14 @@ class LoginPage extends React.Component {
   }
 
   handleSignin = async () => {
-    const params = {
-      email: this.state.email,
-      password: await utils.encrypt(this.state.password)
-    }
+    this.props.history.push("/admin/dashboard");
+    // const params = {
+    //   email: this.state.email,
+    //   password: await utils.encrypt(this.state.password)
+    // }
 
-    const data = await utils.post('/stores', params);
-    console.log(data);
+    // const data = await utils.post('/stores', params);
+    // console.log(data);
   }
 
   render() {
