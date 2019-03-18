@@ -17,7 +17,8 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 
-import avatar from "assets/img/faces/marc.jpg";
+import avatar from "assets/img/reactlogo.png";
+import { Input } from "@material-ui/core";
 
 const dashboardRoutes = [];
 
@@ -41,6 +42,54 @@ const styles = {
 };
 
 class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+      parent: "",
+      description: "",
+      address: "",
+      city: "",
+      postalcode: "",
+
+      display: {
+        name: "Your Store",
+        parent: "Your Parent Store",
+        description: "Describe your store here!",
+        address: "123 Fake Street",
+        city: "Vancouver",
+        postalcode: "A1B 2C3",
+      }
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
+
+  handleSubmit = () => {
+    console.log(this.refs);
+    if (this.state.name) {
+      this.state.display.name = this.state.name;
+    }
+    if (this.state.parent) {
+      this.state.display.parent = this.state.parent;
+    }
+    if (this.state.description) {
+      this.state.display.description = this.state.description;
+    }
+    if (this.state.address) {
+      this.state.display.address = this.state.address;
+    }
+    if (this.state.city) {
+      this.state.display.city = this.state.city;
+    }
+    if (this.state.postalcode) {
+      this.state.display.postalcode = this.state.postalcode;
+    }
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -55,7 +104,26 @@ class ProfilePage extends React.Component {
         />
         <br/><br/><br/><br/><br/>
         <GridContainer justify="center">
-          <GridItem xs={10} sm={10} md={6}>
+          <GridItem xs={10} sm={10} md={5}>
+            <Card profile>
+              <CardAvatar profile>
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img src={avatar} alt="..." />
+                </a>
+              </CardAvatar>
+              <CardBody profile>
+                <h6 className={classes.cardCategory}>{this.state.display.parent}</h6>
+                <h4 className={classes.cardTitle}>{this.state.display.name}</h4>
+                <p className={classes.description}>{this.state.display.description}</p>
+                <br/><br/>
+                <h6 className={classes.cardCategory}>Location</h6>
+                <p className={classes.description}>
+                  {this.state.display.address}, {this.state.display.city}, {this.state.display.postalcode}
+                </p>
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={10} sm={10} md={5}>
             <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
@@ -63,80 +131,27 @@ class ProfilePage extends React.Component {
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={5}>
+                  <h4 className={classes.cardTitle}>General Store Information</h4>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Company (disabled)"
-                      id="company-disabled"
+                      labelText="Store Name"
+                      id="name"
+                      value={this.state.name}
                       formControlProps={{
                         fullWidth: true
                       }}
-                      inputProps={{
-                        disabled: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3}>
-                    <CustomInput
-                      labelText="Username"
-                      id="username"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Email address"
-                      id="email-address"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
+                      onChange={this.handleChange}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="First Name"
-                      id="first-name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Last Name"
-                      id="last-name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="City"
-                      id="city"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Country"
-                      id="country"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Postal Code"
-                      id="postal-code"
+                      labelText="Parent Store"
+                      id="parent"
+                      value={this.state.parent}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -145,10 +160,10 @@ class ProfilePage extends React.Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
                     <CustomInput
-                      labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                      id="about-me"
+                      labelText="Describe your store here"
+                      id="desciption"
+                      value={this.state.description}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -156,34 +171,51 @@ class ProfilePage extends React.Component {
                         multiline: true,
                         rows: 5
                       }}
+                      onChange={this.handleChange}
+                    />
+                  </GridItem>
+                </GridContainer>
+
+                <GridContainer>
+                  <h4 className={classes.cardTitle}>Store Location</h4>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Address"
+                      id="address"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={8} sm={8} md={8}>
+                    <CustomInput
+                      labelText="City"
+                      id="city"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      onChange={this.handleChange}
+                    />
+                  </GridItem>
+                  <GridItem xs={4} sm={4} md={4}>
+                    <CustomInput
+                      labelText="Postal Code"
+                      id="postalcode"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      onChange={this.handleChange}
                     />
                   </GridItem>
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Update Profile</Button>
+                <Button color="primary" onClick={this.handleSubmit}>Update Profile</Button>
               </CardFooter>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card profile>
-              <CardAvatar profile>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  <img src={avatar} alt="..." />
-                </a>
-              </CardAvatar>
-              <CardBody profile>
-                <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-                <h4 className={classes.cardTitle}>Alec Thompson</h4>
-                <p className={classes.description}>
-                  Don't be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves Kanye
-                  I love Rick Owens’ bed design but the back is...
-                </p>
-                <Button color="primary" round>
-                  Follow
-                </Button>
-              </CardBody>
             </Card>
           </GridItem>
         </GridContainer>
