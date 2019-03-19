@@ -45,9 +45,9 @@ import logo from "assets/img/reactlogo.png";
 import { bugs, website, server } from "variables/general.jsx";
 
 import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
+  trafficChart,
+  viewChart,
+  claimChart
 } from "variables/charts.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
@@ -208,7 +208,7 @@ class DashboardPage extends React.Component {
               <GridItem xs={12} sm={12} md={6}>
                 <Card>
                   <CardHeader color="warning">
-                    <CardIcon>
+                    <CardIcon color="warning">
                       <Icon>content_copy</Icon>
                     </CardIcon>
                     <h3 className={classes.cardTitleWhite}>Top Performing Promotions</h3>
@@ -245,24 +245,24 @@ class DashboardPage extends React.Component {
                   <CardHeader color="success">
                     <ChartistGraph
                       className="ct-chart"
-                      data={dailySalesChart.data}
+                      data={trafficChart.data}
                       type="Line"
-                      options={dailySalesChart.options}
-                      listener={dailySalesChart.animation}
+                      options={trafficChart.options}
+                      listener={trafficChart.animation}
                     />
                   </CardHeader>
                   <CardBody>
                     <h4 className={classes.cardTitle}>Weekly Store Traffic</h4>
                     <p className={classes.cardCategory}>
                       <span className={classes.successText}>
-                        <ArrowUpward className={classes.upArrowCardCategory} /> 55%
+                        <ArrowUpward className={classes.upArrowCardCategory} /> 5%
                       </span>{" "}
-                      increase in today sales.
+                      increase in traffic this week.
                     </p>
                   </CardBody>
                   <CardFooter chart>
                     <div className={classes.stats}>
-                      <AccessTime /> updated 4 minutes ago
+                      <AccessTime /> updated 30 minutes ago
                     </div>
                   </CardFooter>
                 </Card>
@@ -274,24 +274,24 @@ class DashboardPage extends React.Component {
                   <CardHeader color="danger">
                     <ChartistGraph
                       className="ct-chart"
-                      data={dailySalesChart.data}
+                      data={viewChart.data}
                       type="Line"
-                      options={dailySalesChart.options}
-                      listener={dailySalesChart.animation}
+                      options={viewChart.options}
+                      listener={viewChart.animation}
                     />
                   </CardHeader>
                   <CardBody>
                     <h4 className={classes.cardTitle}>Weekly Promotion Views</h4>
                     <p className={classes.cardCategory}>
                       <span className={classes.successText}>
-                        <ArrowUpward className={classes.upArrowCardCategory} /> 55%
+                        <ArrowUpward className={classes.upArrowCardCategory} /> 10%
                       </span>{" "}
-                      increase in today sales.
+                      increase in promotion views this week.
                     </p>
                   </CardBody>
                   <CardFooter chart>
                     <div className={classes.stats}>
-                      <AccessTime /> updated 4 minutes ago
+                      <AccessTime /> updated 30 minutes ago
                     </div>
                   </CardFooter>
                 </Card>
@@ -301,24 +301,24 @@ class DashboardPage extends React.Component {
                   <CardHeader color="info">
                     <ChartistGraph
                       className="ct-chart"
-                      data={dailySalesChart.data}
+                      data={claimChart.data}
                       type="Line"
-                      options={dailySalesChart.options}
-                      listener={dailySalesChart.animation}
+                      options={claimChart.options}
+                      listener={claimChart.animation}
                     />
                   </CardHeader>
                   <CardBody>
                     <h4 className={classes.cardTitle}>Weekly Promotion Claims</h4>
                     <p className={classes.cardCategory}>
                       <span className={classes.successText}>
-                        <ArrowUpward className={classes.upArrowCardCategory} /> 55%
+                        <ArrowUpward className={classes.upArrowCardCategory} /> 5%
                       </span>{" "}
-                      increase in today sales.
+                      increase in promotion claims this week.
                     </p>
                   </CardBody>
                   <CardFooter chart>
                     <div className={classes.stats}>
-                      <AccessTime /> updated 4 minutes ago
+                      <AccessTime /> updated 30 minutes ago
                     </div>
                   </CardFooter>
                 </Card>
