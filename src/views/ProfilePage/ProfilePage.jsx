@@ -53,14 +53,12 @@ class ProfilePage extends React.Component {
       city: "",
       postalcode: "",
 
-      display: {
-        name: "Your Store",
-        parent: "Your Parent Store",
-        description: "Describe your store here!",
-        address: "123 Fake Street",
-        city: "Vancouver",
-        postalcode: "A1B 2C3",
-      }
+      disp_name: "Your Store",
+      disp_parent: "Your Parent Store",
+      disp_description: "Describe your store here!",
+      disp_address: "123 Fake Street",
+      disp_city: "Vancouver",
+      disp_postalcode: "A1B 2C3",
     }
   }
 
@@ -68,25 +66,26 @@ class ProfilePage extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
 
-  handleSubmit = () => {
-    console.log(this.refs);
+  handleSubmit = (e) => {
+    e.preventDefault();
+
     if (this.state.name) {
-      this.state.display.name = this.state.name;
+      this.setState({ disp_name: this.state.name });
     }
     if (this.state.parent) {
-      this.state.display.parent = this.state.parent;
+      this.setState({ disp_parent: this.state.parent });
     }
     if (this.state.description) {
-      this.state.display.description = this.state.description;
+      this.setState({ disp_description: this.state.description });
     }
     if (this.state.address) {
-      this.state.display.address = this.state.address;
+      this.setState({ disp_address: this.state.address });
     }
     if (this.state.city) {
-      this.state.display.city = this.state.city;
+      this.setState({ disp_city: this.state.city });
     }
     if (this.state.postalcode) {
-      this.state.display.postalcode = this.state.postalcode;
+      this.setState({ disp_postalcode: this.state.postalcode });
     }
   }
 
@@ -106,19 +105,19 @@ class ProfilePage extends React.Component {
         <GridContainer justify="center">
           <GridItem xs={10} sm={10} md={5}>
             <Card profile>
-              <CardAvatar profile>
+              <CardAvatar>
                 <a href="#pablo" onClick={e => e.preventDefault()}>
                   <img src={avatar} alt="..." />
                 </a>
               </CardAvatar>
               <CardBody profile>
-                <h6 className={classes.cardCategory}>{this.state.display.parent}</h6>
-                <h4 className={classes.cardTitle}>{this.state.display.name}</h4>
-                <p className={classes.description}>{this.state.display.description}</p>
+                <h6 className={classes.cardCategory}>{this.state.disp_parent}</h6>
+                <h4 className={classes.cardTitle}>{this.state.disp_name}</h4>
+                <p className={classes.description}>{this.state.disp_description}</p>
                 <br/><br/>
                 <h6 className={classes.cardCategory}>Location</h6>
                 <p className={classes.description}>
-                  {this.state.display.address}, {this.state.display.city}, {this.state.display.postalcode}
+                  {this.state.disp_address}, {this.state.disp_city}, {this.state.disp_postalcode}
                 </p>
               </CardBody>
             </Card>
@@ -155,6 +154,7 @@ class ProfilePage extends React.Component {
                       formControlProps={{
                         fullWidth: true
                       }}
+                      onChange={this.handleChange}
                     />
                   </GridItem>
                 </GridContainer>
@@ -162,7 +162,7 @@ class ProfilePage extends React.Component {
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText="Describe your store here"
-                      id="desciption"
+                      id="description"
                       value={this.state.description}
                       formControlProps={{
                         fullWidth: true
@@ -187,6 +187,7 @@ class ProfilePage extends React.Component {
                       formControlProps={{
                         fullWidth: true
                       }}
+                      onChange={this.handleChange}
                     />
                   </GridItem>
                 </GridContainer>
