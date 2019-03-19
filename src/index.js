@@ -9,6 +9,7 @@ import "assets/css/material-dashboard-react.css?v=1.6.0";
 // pages for this product
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
+import PromotionsPage from "views/PromotionsPage/PromotionsPage.jsx";
 
 import LandingPage from "views/LandingPage/LandingPage.jsx";
 import LoginPage from "views/LoginPage/LoginPage.jsx";
@@ -29,6 +30,7 @@ ReactDOM.render(
     <Switch>
       <Route exact={true} path="/admin/dashboard" component={DashboardPage} />
       <Route exact={true} path="/admin/profile" component={ProfilePage} />
+      <Route exact={true} path="/admin/promotions" component={PromotionsPage} />
 
       <Route exact={true} path="/login" component={LoginPage} />
       <Route exact={true} path="/signup" component={SignupPage} />
