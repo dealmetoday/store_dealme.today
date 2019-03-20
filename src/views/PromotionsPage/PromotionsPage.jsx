@@ -36,23 +36,17 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 const dashboardRoutes = [];
 
-const cols = [
-  { id: 'desc', numeric: false, disablePadding: false, label: 'Description' },
-  { id: 'views', numeric: true, disablePadding: false, label: 'Views' },
-  { id: 'claims', numeric: true, disablePadding: false, label: 'Claims' },
-  { id: 'remaining', numeric: true, disablePadding: false, label: 'Remaining' },
-];
-
 let counter = 0;
 function createData(index) {
-  counter += 1;
-  return {
+  const data = {
     id: counter,
     desc: "Promotion " + index,
     views: 50 + index,
     claims: 25 + index,
     remaining: 10 + index,
   };
+  counter += 1;
+  return data;
 }
 
 class PromotionsPage extends React.Component {
@@ -85,12 +79,12 @@ class PromotionsPage extends React.Component {
     this.setState({ selectedIndex: index });
   }
 
-  handleTableClick = (event) => {
-    console.log(event);
-    this.setState({ usesleft: this.state.usesleft + 1 });
-    this.setState({ views: this.state.views + 1 });
-    this.setState({ claims: this.state.claims + 1 });
-    this.setState({ description: this.state.claims + 1 });
+  handleTableClick = (event, index) => {
+    const data = this.state.data[index];
+    this.setState({ usesleft: data.remaining + 1 });
+    this.setState({ views: data.views + 1 });
+    this.setState({ claims: data.claims + 1 });
+    this.setState({ description: data.description + 1 });
   };
 
   addTag = (event) => {
@@ -144,7 +138,7 @@ class PromotionsPage extends React.Component {
         />
         <br/><br/><br/><br/><br/>
         <GridContainer justify="center">
-          <GridItem xs={8} sm={8} md={8}>
+          <GridItem xs={11} sm={10} md={8}>
             <GridContainer>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
@@ -283,11 +277,9 @@ class PromotionsPage extends React.Component {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {
-                        }
                         {this.state.data.map((row) => {
                           return (
-                          <TableRow key={row.id} onClick={this.handleTableClick}>
+                          <TableRow key={row.id} onClick={e => this.handleTableClick(e, row.id)}>
                             <TableCell component="th" scope="row" align="left">{row.desc}</TableCell>
                             <TableCell component="th" scope="row" align="right">{row.claims}</TableCell>
                             <TableCell component="th" scope="row" align="right">{row.views}</TableCell>
