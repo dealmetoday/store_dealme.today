@@ -54,11 +54,15 @@ class PromotionsPage extends React.Component {
     super(props);
 
     this.state = {
-      usesleft: 50,
-      views: 25,
-      claims: 10,
-      description: "Default promotion description",
-      selectedIndex: -1,
+      tableIndex: -1,
+      tagIndex: -1,
+
+      dealClaims: "10",
+      dealCreated: "--",
+      dealDesc: "Default promotions description",
+      dealExpires: "[ No Expiry Date ]",
+      dealRemaining: "50",
+      dealViews: "25",
 
       tag0: "Womens Apparel",
       tag1: "Mens Apparel",
@@ -66,25 +70,30 @@ class PromotionsPage extends React.Component {
       tag3: "Clothing",
       tag4: "",
 
-      data: []
+      dealData: [],
+      dealTags: [],
     };
 
     for (var i = 0; i < 100; ++i) {
-      this.state.data.push(createData(i));
+      this.state.dealData.push(createData(i));
     }
-    console.log(this.state.data);
+    for (var i = 0; i < 5; ++i) {
+      this.state.dealTags.push("Tag " + i.toString());
+    }
   }
 
-  handleListItemClick = (event, index) => {
-    this.setState({ selectedIndex: index });
+  handleTagClick = (event, index) => {
+    this.setState({ tagIndex: index });
   }
 
   handleTableClick = (event, index) => {
-    const data = this.state.data[index];
-    this.setState({ usesleft: data.remaining + 1 });
-    this.setState({ views: data.views + 1 });
-    this.setState({ claims: data.claims + 1 });
-    this.setState({ description: data.description + 1 });
+    const deal = this.state.dealData[index];
+    this.setState({ dealClaims: deal.claims });
+    // this.setState({ dealCreated: deal.created })
+    this.setState({ dealDesc: deal.description });
+    // this.setState({ dealExpires: deal.expires });
+    this.setState({ dealRemaining: deal.remaining });
+    this.setState({ dealViews: deal.views });
   };
 
   addTag = (event) => {
@@ -99,15 +108,15 @@ class PromotionsPage extends React.Component {
     } else {
       this.setState({ tag4: "New Tag 4" });
     }
-    this.setState({ selectedIndex: -1 })
+    this.setState({ tagIndex: -1 })
   }
 
   removeTag = (event) => {
-    if (this.state.selectedIndex < 0 || this.state.selectedIndex > 4) {
+    if (this.state.tagIndex < 0 || this.state.tagIndex > 4) {
       return;
     }
 
-    switch (this.state.selectedIndex) {
+    switch (this.state.tagIndex) {
       case 0:
         this.setState({ tag0: this.state.tag1 });
       case 1:
@@ -121,7 +130,7 @@ class PromotionsPage extends React.Component {
       default:
         break;
     }
-    this.setState({ selectedIndex: -1 });
+    this.setState({ tagIndex: -1 });
   }
 
   render() {
@@ -138,120 +147,103 @@ class PromotionsPage extends React.Component {
         />
         <br/><br/><br/><br/><br/>
         <GridContainer justify="center">
-          <GridItem xs={11} sm={10} md={8}>
+          <GridItem xs={11} sm={10} md={10}>
             <GridContainer>
-              <GridItem xs={12} sm={12} md={12}>
+              <GridItem xs={12} sm={12} md={5}>
                 <Card>
                   <CardHeader color="warning" stats icon>
                     <CardIcon color="warning">
                       <Icon>content_copy</Icon>
                     </CardIcon>
-                    <h3 className={classes.cardTitleWhite}>Current Promotion</h3>
+                    <h3 className={classes.cardTitleWhite}>Detailed View</h3>
                   </CardHeader>
                   <CardBody>
                     <GridContainer>
-                      <GridItem xs={12} sm={6} md={8}>
-                        <GridContainer>
-                          <GridItem xs={2} sm={2} md={2}>
-                            <h4 className={classes.caseTitle}>
-                              Date Created:
-                            </h4>
-                            <h4 className={classes.caseTitle}>
-                              Expiry Date:
-                            </h4>
-                          </GridItem>
-                          <GridItem xs={4} sm={4} md={4}>
-                            <h4 className={classes.caseTitle}>
-                              Jan 01 2019
-                            </h4>
-                            <h4 className={classes.caseTitle}>
-                              May 01 2019
-                            </h4>
-                          </GridItem>
-                          <GridItem xs={2} sm={2} md={2}>
-                            <h4 className={classes.caseTitle}>
-                              Uses Left:
-                            </h4>
-                            <h4 className={classes.caseTitle}>
-                              Views:
-                            </h4>
-                            <h4 className={classes.caseTitle}>
-                              Claims:
-                            </h4>
-                          </GridItem>
-                          <GridItem xs={4} sm={4} md={4}>
-                            <h4 className={classes.caseTitle}>
-                              {this.state.usesleft}
-                            </h4>
-                            <h4 className={classes.caseTitle}>
-                              {this.state.views}
-                            </h4>
-                            <h4 className={classes.caseTitle}>
-                              {this.state.claims}
-                            </h4>
-                          </GridItem>
-                        </GridContainer>
-                        <GridContainer>
-                          <GridItem xs={12} sm={12} md={12}>
-                            <TextField
-                              id="description"
-                              label="Description"
-                              multiline
-                              fullWidth
-                              rows="4"
-                              defaultValue={this.state.description}
-                              className={classes.textField}
-                              margin="normal"
-                            />
-                          </GridItem>
-                        </GridContainer>
+                      <GridItem xs={4} sm={4} md={4}>
+                        <h4 className={classes.cardTitle}>
+                          Date Created:
+                        </h4>
+                        <h4 className={classes.cardTitle}>
+                          Expiry Date:
+                        </h4>
                       </GridItem>
-                      <GridItem xs={12} sm={6} md={4}>
-                        <List component="nav">
-                          <ListItem
-                            button
-                            selected={this.state.selectedIndex === 0}
-                            onClick={event => this.handleListItemClick(event, 0)}
-                          >
-                            <ListItemText primary={this.state.tag0} />
-                          </ListItem>
-                          <ListItem
-                            button
-                            selected={this.state.selectedIndex === 1}
-                            onClick={event => this.handleListItemClick(event, 1)}
-                          >
-                            <ListItemText primary={this.state.tag1} />
-                          </ListItem>
-                          <ListItem
-                            button
-                            selected={this.state.selectedIndex === 2}
-                            onClick={event => this.handleListItemClick(event, 2)}
-                          >
-                            <ListItemText primary={this.state.tag2} />
-                          </ListItem>
-                          <ListItem
-                            button
-                            selected={this.state.selectedIndex === 3}
-                            onClick={event => this.handleListItemClick(event, 3)}
-                          >
-                            <ListItemText primary={this.state.tag3} />
-                          </ListItem>
-                          <ListItem
-                            button
-                            selected={this.state.selectedIndex === 4}
-                            onClick={event => this.handleListItemClick(event, 4)}
-                          >
-                            <ListItemText primary={this.state.tag4} />
-                          </ListItem>
-                        </List>
-                        <Button simple size="md" color="warning" onClick={this.addTag}>
-                          Add New Tag
-                        </Button>
-                        <Button round size="md" color="warning" onClick={this.removeTag}>
-                          Remove Selected Tag
-                        </Button>
+                      <GridItem xs={8} sm={8} md={8}>
+                        <h4 className={classes.cardTitle} align="right">
+                          {this.state.dealCreated}
+                        </h4>
+                        <h4 className={classes.cardTitle} align="right">
+                          {this.state.dealExpires}
+                        </h4>
                       </GridItem>
                     </GridContainer>
+                    <br/>
+                    <GridContainer>
+                      <GridItem xs={4} sm={4} md={4}>
+                        <h4 className={classes.cardTitle}>
+                          Total Claims:
+                        </h4>
+                        <h4 className={classes.cardTitle}>
+                          Total Views:
+                        </h4>
+                        <h4 className={classes.cardTitle}>
+                          Remaining Uses:
+                        </h4>
+                      </GridItem>
+                      <GridItem xs={8} sm={8} md={8}>
+                        <h4 className={classes.cardTitle} align="right">
+                          {this.state.dealClaims}
+                        </h4>
+                        <h4 className={classes.cardTitle} align="right">
+                          {this.state.dealViews}
+                        </h4>
+                        <h4 className={classes.cardTitle} align="right">
+                          {this.state.dealRemaining}
+                        </h4>
+                      </GridItem>
+                    </GridContainer>
+                    <br/>
+                    <GridContainer>
+                      <GridItem xs={12} sm={6} md={6}>
+                        <TextField
+                          id="description"
+                          label="Description"
+                          multiline
+                          fullWidth
+                          rows="10"
+                          defaultValue={this.state.dealDesc}
+                          className={classes.textField}
+                          margin="normal"
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={6} md={6}>
+                        <List component="nav">
+                          {this.state.dealTags.map((tag, index) => {
+                            return (
+                              <ListItem
+                                button
+                                selected={this.state.tagIndex === index}
+                                onClick={event => this.handleTagClick(event, index)}
+                              >
+                                <ListItemText primary={tag} />
+                              </ListItem>
+                            )
+                          })}
+                        </List>
+                      </GridItem>
+                    </GridContainer>
+                  </CardBody>
+                </Card>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={7}>
+                <Card>
+                  <CardHeader color="warning" stats icon>
+                    <CardIcon color="warning">
+                      <Icon>content_copy</Icon>
+                    </CardIcon>
+                    <h3 className={classes.cardTitleWhite}>All Promotions</h3>
+                  </CardHeader>
+                  <CardBody>
+                    <p>Something</p>
                   </CardBody>
                 </Card>
               </GridItem>
@@ -277,7 +269,7 @@ class PromotionsPage extends React.Component {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {this.state.data.map((row) => {
+                        {this.state.dealData.map((row) => {
                           return (
                           <TableRow key={row.id} onClick={e => this.handleTableClick(e, row.id)}>
                             <TableCell component="th" scope="row" align="left">{row.desc}</TableCell>
