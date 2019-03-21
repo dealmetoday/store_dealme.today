@@ -77,13 +77,14 @@ class DetailedView extends React.Component {
           <DetailValue label="Date Created" value={rest.dealCreated} />
           <DetailValue label="Expiry Date" value={rest.dealExpires} />
           <br/>
-          <DetailValue label="Total Claims" value={rest.dealClaims} />
-          <DetailValue label="Total Views" value={rest.dealViews} />
-          <DetailValue label="Deals Remaining" value={rest.dealRemaining} />
+          <DetailValue label="Total Claims" value={rest.dealClaims.toString()} />
+          <DetailValue label="Total Views" value={rest.dealViews.toString()} />
+          <DetailValue label="Deals Remaining" value={rest.dealRemaining.toString()} />
           <br/>
           <GridContainer>
             <GridItem xs={12} sm={6} md={6}>
               <TextField
+                disabled
                 id="description"
                 label="Description"
                 multiline
