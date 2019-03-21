@@ -56,25 +56,27 @@ class DetailedView extends React.Component {
     }
   }
 
-  handleDealAdd = (event) => {
+  handleDealAdd = (event, handler) => {
     this.setState({ dealState: "" });
+    return handler(event);
   }
 
-  handleDealDelete = (event) => {
+  handleDealDelete = (event, handler) => {
     this.setState({ dealState: "" });
+    return handler(event);
   }
 
   handleDealDiscard = (event) => {
     this.setState({ dealState: "" });
   }
 
-  handleDealEdit = (event) => {
+  handleDealEdit = (event, handler) => {
     this.setState({ dealState: "" });
+    return handler(event);
   }
 
   handleDealState = (event, state) => {
     this.setState({ dealState: state });
-    console.log(this.state.dealState);
   }
 
   handleTagClick = (event, index, handler) => {
@@ -163,7 +165,7 @@ class DetailedView extends React.Component {
           <GridContainer>
             <GridItem xs={12} sm={6} md={6}>
               <TextField
-                disabled
+                disabled={!(this.state.dealState === "add" || this.state.dealState === "edit")}
                 id="description"
                 label="Description"
                 multiline
@@ -214,15 +216,15 @@ class DetailedView extends React.Component {
               <Button
                 simple
                 color="warning"
-                size="md"
+                size="lg"
                 onClick={this.handleDealDiscard}
               >
                 Discard Changes
               </Button>
               <Button
                 color="warning"
-                size="md"
-                onClick={this.handleDealAdd}
+                size="lg"
+                onClick={event=> this.handleDealAdd(event, rest.onDealAdd)}
               >
                 Create New Deal
               </Button>
@@ -233,15 +235,15 @@ class DetailedView extends React.Component {
               <Button
                 simple
                 color="danger"
-                size="md"
+                size="lg"
                 onClick={this.handleDealDiscard}
               >
                 I've changed my mind
               </Button>
               <Button
                 color="danger"
-                size="md"
-                onClick={this.handleDealDelete}
+                size="lg"
+                onClick={event=> this.handleDealDelete(event, rest.onDealDelete)}
               >
                 Confirm Deletion
               </Button>
@@ -252,15 +254,15 @@ class DetailedView extends React.Component {
             <Button
               simple
               color="warning"
-              size="md"
+              size="lg"
               onClick={this.handleDealDiscard}
             >
               Discard Changes
             </Button>
             <Button
               color="warning"
-              size="md"
-              onClick={this.handleDealEdit}
+              size="lg"
+              onClick={event=> this.handleDealEdit(event, rest.onDealEdit)}
             >
               Save Changes
             </Button>

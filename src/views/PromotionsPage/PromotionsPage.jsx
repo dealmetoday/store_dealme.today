@@ -42,6 +42,7 @@ class PromotionsPage extends React.Component {
     super(props);
 
     this.state = {
+      dataIndex: -1,
       tagIndex: 0,
 
       dealTitle: "Some Title",
@@ -64,11 +65,24 @@ class PromotionsPage extends React.Component {
     }
   }
 
+  handleDealAdd = (event) => {
+    console.log("ADD " + this.state.dataIndex);
+  }
+
+  handleDealDelete = (event) => {
+    console.log("DELETE " + this.state.dataIndex);
+  }
+
+  handleDealEdit = (event) => {
+    console.log("EDIT " + this.state.dataIndex);
+  }
+
   handleTagClick = (event, index) => {
     this.setState({ tagIndex: index });
   }
 
   handleTableClick = (event, data) => {
+    this.setState({ dataIndex: data.id })
     this.setState({ dealClaims: data.claims });
     this.setState({ dealCreated: data.created })
     this.setState({ dealDesc: data.title });
@@ -136,6 +150,9 @@ class PromotionsPage extends React.Component {
                   dealTags={this.state.dealTags}
                   dealTitle={this.state.dealTitle}
                   dealViews={this.state.dealViews}
+                  onDealAdd={this.handleDealAdd}
+                  onDealDelete={this.handleDealDelete}
+                  onDealEdit={this.handleDealEdit}
                   onTagClick={this.handleTagClick}
                   onTagAdd={this.handleTagAdd}
                   onTagRemove={this.handleTagRemove}
