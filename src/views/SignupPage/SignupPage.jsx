@@ -230,7 +230,7 @@ class SignupPage extends React.Component {
         >
           <div className={classes.container}>
             <GridContainer justify="center">
-              <GridItem xs={12} sm={12} md={4}>
+              <GridItem xs={12} sm={12} md={8}>
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form ref="form" onSubmit={this.handleSubmit} className={classes.form}>
                     <CardHeader color="danger" className={classes.cardHeader}>

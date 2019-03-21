@@ -1,10 +1,8 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
@@ -17,6 +15,15 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+
+import Email from "@material-ui/icons/Email";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
@@ -35,7 +42,8 @@ class LoginPage extends React.Component {
       cardAnimaton: "cardHidden",
 
       email: "",
-      password: ""
+      password: "",
+      visible: false
     };
   }
 
@@ -53,16 +61,12 @@ class LoginPage extends React.Component {
     this.props.history.push("/signup");
   }
 
-  handleBlur = (event) => {
-    const id = event.target.id;
-    const value = event.target.value;
-    let new_error = this.state.error;
+  handleChange = (event) => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
 
-    if (id === "email") {
-      this.setState({ email: value });
-    } else if (id === "password") {
-      this.setState({ password: value });
-    }
+  handleShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
   }
 
   handleSignin = async () => {
@@ -97,46 +101,60 @@ class LoginPage extends React.Component {
         >
           <div className={classes.container}>
             <GridContainer justify="center">
-              <GridItem xs={12} sm={12} md={4}>
+              <GridItem xs={12} sm={12} md={8}>
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form className={classes.form}>
                     <CardHeader color="danger" className={classes.cardHeader}>
                       <h4>Login</h4>
                     </CardHeader>
                     <CardBody>
-                      <CustomInput
-                        labelText="Email"
-                        id="email"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "email",
-                          endAdornment: (
+                      <FormControl fullWidth className={classes.FormControl}>
+                        <InputLabel
+                          id="label_name"
+                          htmlFor="component-simple"
+                        >
+                          Email
+                        </InputLabel>
+                        <Input
+                          id="email"
+                          value={this.state.email}
+                          onChange={this.handleChange}
+                          endAdornment={
                             <InputAdornment position="end">
-                              <Email className={classes.inputIconsColor} />
+                              <IconButton>
+                                <Email />
+                              </IconButton>
                             </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Password"
-                        id="password"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "password",
-                          endAdornment: (
+                          }
+                        />
+                      </FormControl>
+                      <br/><br/>
+                      <FormControl fullWidth className={classes.FormControl}>
+                        <InputLabel
+                          id="label_password"
+                          htmlFor="component-simple"
+                        >
+                          Password
+                        </InputLabel>
+                        <Input
+                          id="password"
+                          type={this.state.showPassword ? "text" : "password"}
+                          value={this.state.password}
+                          onChange={this.handleChange}
+                          endAdornment={
                             <InputAdornment position="end">
-                              <Icon className={classes.inputIconsColor}>
-                                lock_outline
-                              </Icon>
+                              <IconButton
+                                aria-label="Toggle password visibility"
+                                onClick={this.handleShowPassword}
+                              >
+                                {this.state.visible ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
                             </InputAdornment>
-                          )
-                        }}
-                      />
+                          }
+                        />
+                      </FormControl>
                     </CardBody>
+                    <br/><br/>
                     <div className={classes.login}>
                       <Button simple color="primary"
                               size="lg"
