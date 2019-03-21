@@ -48,17 +48,16 @@ class ProfilePage extends React.Component {
     this.state = {
       name: "",
       parent: "",
-      description: "",
+      desc: "",
       address: "",
       city: "",
       postalcode: "",
 
-      disp_name: "Your Store",
-      disp_parent: "Your Parent Store",
-      disp_description: "Describe your store here!",
-      disp_address: "123 Fake Street",
-      disp_city: "Vancouver",
-      disp_postalcode: "A1B 2C3",
+      // This is what is seen by and send to the server
+      disp_name: "",
+      disp_parent: "",
+      disp_desc: "",
+      disp_location: "",
     }
   }
 
@@ -67,25 +66,18 @@ class ProfilePage extends React.Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
-
     if (this.state.name) {
       this.setState({ disp_name: this.state.name });
     }
     if (this.state.parent) {
       this.setState({ disp_parent: this.state.parent });
     }
-    if (this.state.description) {
-      this.setState({ disp_description: this.state.description });
+    if (this.state.desc) {
+      this.setState({ disp_desc: this.state.description });
     }
-    if (this.state.address) {
-      this.setState({ disp_address: this.state.address });
-    }
-    if (this.state.city) {
-      this.setState({ disp_city: this.state.city });
-    }
-    if (this.state.postalcode) {
-      this.setState({ disp_postalcode: this.state.postalcode });
+    if (this.state.address && this.state.city && this.state.postalcode) {
+      let location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
+      this.setState({ disp_location: location });
     }
   }
 
@@ -111,13 +103,19 @@ class ProfilePage extends React.Component {
                 </a>
               </CardAvatar>
               <CardBody profile>
-                <h6 className={classes.cardCategory}>{this.state.disp_parent}</h6>
-                <h4 className={classes.cardTitle}>{this.state.disp_name}</h4>
-                <p className={classes.description}>{this.state.disp_description}</p>
+                <h6 className={classes.cardCategory}>
+                  {this.state.disp_parent}
+                </h6>
+                <h4 className={classes.cardTitle}>
+                  {this.state.disp_name ? this.state.disp_name : "[Store Name]"}
+                </h4>
+                <p className={classes.desc}>
+                  {this.state.disp_desc ? this.state.disp_desc : "[Store Description]"}
+                </p>
                 <br/><br/>
                 <h6 className={classes.cardCategory}>Location</h6>
                 <p className={classes.description}>
-                  {this.state.disp_address}, {this.state.disp_city}, {this.state.disp_postalcode}
+                  {this.state.disp_location ? this.state.disp_location : "[Store Location]"}
                 </p>
               </CardBody>
             </Card>
@@ -162,8 +160,8 @@ class ProfilePage extends React.Component {
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText="Describe your store here"
-                      id="description"
-                      value={this.state.description}
+                      id="desc"
+                      value={this.state.desc}
                       formControlProps={{
                         fullWidth: true
                       }}
