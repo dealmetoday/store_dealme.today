@@ -156,7 +156,7 @@ class LoginPage extends React.Component {
                     </CardBody>
                     <br/><br/>
                     <div className={classes.login}>
-                      <Button simple color="primary"
+                      <Button round color="danger"
                               size="lg"
                               onClick={this.handleSignin}
                       >
