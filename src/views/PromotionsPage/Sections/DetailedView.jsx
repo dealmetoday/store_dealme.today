@@ -52,29 +52,29 @@ class DetailedView extends React.Component {
     super(props)
     this.state = {
       index: 0,
-      promoState: "",
+      dealState: "",
     }
   }
 
-  handlePromotionAdd = (event) => {
-    this.setState({ promoState: "" });
+  handleDealAdd = (event) => {
+    this.setState({ dealState: "" });
   }
 
-  handlePromotionDelete = (event) => {
-    this.setState({ promoState: "" });
+  handleDealDelete = (event) => {
+    this.setState({ dealState: "" });
   }
 
-  handlePromotionDiscard = (event) => {
-    this.setState({ promoState: "" });
+  handleDealDiscard = (event) => {
+    this.setState({ dealState: "" });
   }
 
-  handlePromotionEdit = (event) => {
-    this.setState({ promoState: "" });
+  handleDealEdit = (event) => {
+    this.setState({ dealState: "" });
   }
 
-  handlePromotionState = (event, state) => {
-    this.setState({ promoState: state });
-    console.log(this.state.promoState);
+  handleDealState = (event, state) => {
+    this.setState({ dealState: state });
+    console.log(this.state.dealState);
   }
 
   handleTagClick = (event, index, handler) => {
@@ -103,19 +103,19 @@ class DetailedView extends React.Component {
             <GridItem xs={5} sm={5} md={5} align="right">
               <IconButton
                 color="inherit"
-                onClick={event => this.handlePromotionState(event, "add")}
+                onClick={event => this.handleDealState(event, "add")}
               >
                 <Add />
               </IconButton>
               <IconButton
                 color="inherit"
-                onClick={event => this.handlePromotionState(event, "edit")}
+                onClick={event => this.handleDealState(event, "edit")}
               >
                 <Edit />
               </IconButton>
               <IconButton
                 color="inherit"
-                onClick={event => this.handlePromotionState(event, "delete")}
+                onClick={event => this.handleDealState(event, "delete")}
               >
                 <Delete />
               </IconButton>
@@ -129,22 +129,22 @@ class DetailedView extends React.Component {
             </GridItem>
             <GridItem xs={4} sm={4} md={4}>
               <div align="right">
-                {this.state.promoState === "add" ? (
+                {this.state.dealState === "add" ? (
                   <Button disabled color="success" size="sm">
-                    New Promotion
+                    New Deal
                   </Button>
                 ) : (null)}
-                {this.state.promoState === "delete" ? (
+                {this.state.dealState === "delete" ? (
                   <Button disabled color="danger" size="sm">
-                    Deleting Promotion
+                    Deleting Deal
                   </Button>
                 ) : (null)}
-                {this.state.promoState === "edit" ? (
+                {this.state.dealState === "edit" ? (
                   <Button disabled color="info" size="sm">
-                    Editing Promotion
+                    Editing Deal
                   </Button>
                 ) : (null)}
-                {this.state.promoState === "" ? (
+                {this.state.dealState === "" ? (
                   <Button disabled color="dark" size="sm">
                     Read Only
                   </Button>
@@ -209,50 +209,58 @@ class DetailedView extends React.Component {
             </GridItem>
           </GridContainer>
           <br/>
-          {this.state.promoState === "add" ? (
+          {this.state.dealState === "add" ? (
             <div align="right">
               <Button
                 simple
                 color="warning"
                 size="md"
-                onClick={this.handlePromotionDiscard}
+                onClick={this.handleDealDiscard}
               >
                 Discard Changes
               </Button>
               <Button
                 color="warning"
                 size="md"
-                onClick={this.handlePromotionAdd}
+                onClick={this.handleDealAdd}
               >
-                Create New Promotion
+                Create New Deal
               </Button>
             </div>
           ) : (null)}
-          {this.state.promoState === "delete" ? (
+          {this.state.dealState === "delete" ? (
             <div align="right">
+              <Button
+                simple
+                color="danger"
+                size="md"
+                onClick={this.handleDealDiscard}
+              >
+                I've changed my mind
+              </Button>
               <Button
                 color="danger"
                 size="md"
-                onClick={this.handlePromotionDelete}
+                onClick={this.handleDealDelete}
               >
                 Confirm Deletion
               </Button>
             </div>
           ) : (null)}
-          {this.state.promoState === "edit" ? (
+          {this.state.dealState === "edit" ? (
             <div align="right">
             <Button
               simple
               color="warning"
               size="md"
-              onClick={this.handlePromotionDiscard}
+              onClick={this.handleDealDiscard}
             >
               Discard Changes
             </Button>
             <Button
               color="warning"
               size="md"
-              onClick={this.handlePromotionEdit}
+              onClick={this.handleDealEdit}
             >
               Save Changes
             </Button>
