@@ -77,6 +77,18 @@ class PromotionsPage extends React.Component {
     console.log("EDIT " + this.state.dataIndex);
   }
 
+  handleStateChange = (event, state) => {
+    if (state === "add") {
+      this.setState({ dealClaims: 0 });
+      this.setState({ dealCreated: "" });
+      this.setState({ dealDesc: "" });
+      this.setState({ dealExpires: "" });
+      this.setState({ dealRemaining: "" });
+      this.setState({ dealTitle: "" });
+      this.setState({ dealViews: 0 });
+    }
+  }
+
   handleTagClick = (event, index) => {
     this.setState({ tagIndex: index });
   }
@@ -153,6 +165,7 @@ class PromotionsPage extends React.Component {
                   onDealAdd={this.handleDealAdd}
                   onDealDelete={this.handleDealDelete}
                   onDealEdit={this.handleDealEdit}
+                  onStateChange={this.handleStateChange}
                   onTagClick={this.handleTagClick}
                   onTagAdd={this.handleTagAdd}
                   onTagRemove={this.handleTagRemove}

@@ -114,8 +114,9 @@ class DetailedView extends React.Component {
     return handler(event);
   }
 
-  handleDealState = (event, state) => {
+  handleDealState = (event, state, handler) => {
     this.setState({ dealState: state });
+    return handler(event, state);
   }
 
   handleTagClick = (event, index, handler) => {
@@ -144,27 +145,19 @@ class DetailedView extends React.Component {
             <GridItem xs={5} sm={5} md={5} align="right">
               <IconButton
                 color="inherit"
-                onClick={event => {
-                  rest.dealClaims = 0;
-                  rest.dealCreated = "";
-                  rest.dealExpires = "";
-                  rest.dealRemaining = 0;
-                  rest.dealViews = 0;
-                  rest.dealTags = [];
-                  this.handleDealState(event, "add");
-                }}
+                onClick={event => this.handleDealState(event, "add", rest.onStateChange)}
               >
                 <Add />
               </IconButton>
               <IconButton
                 color="inherit"
-                onClick={event => this.handleDealState(event, "edit")}
+                onClick={event => this.handleDealState(event, "edit", rest.onStateChange)}
               >
                 <Edit />
               </IconButton>
               <IconButton
                 color="inherit"
-                onClick={event => this.handleDealState(event, "delete")}
+                onClick={event => this.handleDealState(event, "delete", rest.onStateChange)}
               >
                 <Delete />
               </IconButton>
