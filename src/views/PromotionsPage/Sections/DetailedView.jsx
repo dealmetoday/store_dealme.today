@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 // Material-UI Components
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -14,7 +15,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -24,7 +24,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import { Add, Delete, Edit } from "@material-ui/icons";
 
-class Detail extends React.Component {
+class DetailComponent extends React.Component {
   render() {
     const { classes, label, value } = this.props;
     return (
@@ -39,13 +39,51 @@ class Detail extends React.Component {
     )
   }
 }
-
-Detail.propTypes = {
+DetailComponent.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
 }
+const Detail = withStyles(dashboardStyle)(DetailComponent);
 
-const DetailValue = withStyles(dashboardStyle)(Detail);
+class DetailEditComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: props.value,
+    }
+  }
+
+  handleChange = (event, handler) => {
+    this.setState({ input: event.target.value });
+    return handler(event);
+  };
+
+  render() {
+    const { classes, label, value, id, onChange } = this.props;
+    return (
+      <GridContainer>
+        <GridItem xs={4} sm={4} md={4}>
+          <h4 className={classes.cardTitle}>{label}:</h4>
+        </GridItem>
+        <GridItem xs={8} sm={8} md={8}>
+          <Input
+            fullWidth
+            id={id}
+            value={this.state.input}
+            onChange={event => {this.handleChange(event, onChange)}}
+          />
+        </GridItem>
+      </GridContainer>
+    )
+  }
+}
+DetailEditComponent.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+}
+const DetailEdit = withStyles(dashboardStyle)(DetailEditComponent);
 
 class DetailedView extends React.Component {
   constructor(props) {
@@ -56,9 +94,10 @@ class DetailedView extends React.Component {
     }
   }
 
-  handleDealAdd = (event, handler) => {
+  handleDealAdd = (event, rest) => {
     this.setState({ dealState: "" });
-    return handler(event);
+    console.log(rest);
+    return rest.onDealAdd(event);
   }
 
   handleDealDelete = (event, handler) => {
@@ -105,7 +144,15 @@ class DetailedView extends React.Component {
             <GridItem xs={5} sm={5} md={5} align="right">
               <IconButton
                 color="inherit"
-                onClick={event => this.handleDealState(event, "add")}
+                onClick={event => {
+                  rest.dealClaims = 0;
+                  rest.dealCreated = "";
+                  rest.dealExpires = "";
+                  rest.dealRemaining = 0;
+                  rest.dealViews = 0;
+                  rest.dealTags = [];
+                  this.handleDealState(event, "add");
+                }}
               >
                 <Add />
               </IconButton>
@@ -155,12 +202,21 @@ class DetailedView extends React.Component {
             </GridItem>
           </GridContainer>
           <br/>
-          <DetailValue label="Date Created" value={rest.dealCreated} />
-          <DetailValue label="Expiry Date" value={rest.dealExpires} />
+          <Detail label="Date Created" value={rest.dealCreated} />
+          {(this.state.dealState === "add" || this.state.dealState === "edit") ? (
+            <DetailEdit
+              id="dealExpires"
+              value={rest.dealExpires}
+              label="Expiry Date"
+              onChange={(event) => {rest[event.target.id] = event.target.value}}
+            />
+          ) : (
+            <Detail label="Expirty Date" value={rest.dealExpires} />
+          )}
           <br/>
-          <DetailValue label="Total Claims" value={rest.dealClaims.toString()} />
-          <DetailValue label="Total Views" value={rest.dealViews.toString()} />
-          <DetailValue label="Deals Remaining" value={rest.dealRemaining.toString()} />
+          <Detail label="Total Claims" value={rest.dealClaims.toString()} />
+          <Detail label="Total Views" value={rest.dealViews.toString()} />
+          <Detail label="Deals Remaining" value={rest.dealRemaining.toString()} />
           <br/>
           <GridContainer>
             <GridItem xs={12} sm={6} md={6}>
@@ -224,7 +280,7 @@ class DetailedView extends React.Component {
               <Button
                 color="warning"
                 size="lg"
-                onClick={event=> this.handleDealAdd(event, rest.onDealAdd)}
+                onClick={event=> this.handleDealAdd(event, rest)}
               >
                 Create New Deal
               </Button>
