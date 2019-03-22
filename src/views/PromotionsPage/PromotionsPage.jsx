@@ -42,16 +42,16 @@ class PromotionsPage extends React.Component {
     super(props);
 
     this.state = {
-      dataIndex: -1,
+      dataIndex: 0,
       tagIndex: 0,
 
-      dealTitle: "Some Title",
-      dealClaims: "10",
-      dealCreated: "--",
-      dealDesc: "Default promotions description",
-      dealExpires: "[ No Expiry Date ]",
-      dealRemaining: "50",
-      dealViews: "25",
+      dealTitle: "[ No Promotion Selected ]",
+      dealClaims: "",
+      dealCreated: "",
+      dealDesc: "",
+      dealExpires: "",
+      dealRemaining: "",
+      dealViews: "",
 
       dealData: [],
       dealTags: [],

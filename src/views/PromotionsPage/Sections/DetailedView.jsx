@@ -71,6 +71,9 @@ class DetailEditComponent extends React.Component {
             id={id}
             value={this.state.input}
             onChange={event => {this.handleChange(event, onChange)}}
+            inputProps={{
+              style: { textAlign: "right" }
+            }}
           />
         </GridItem>
       </GridContainer>
@@ -209,7 +212,16 @@ class DetailedView extends React.Component {
           <br/>
           <Detail label="Total Claims" value={rest.dealClaims.toString()} />
           <Detail label="Total Views" value={rest.dealViews.toString()} />
-          <Detail label="Deals Remaining" value={rest.dealRemaining.toString()} />
+          {(this.state.dealState === "add" || this.state.dealState === "edit") ? (
+            <DetailEdit
+              id="dealRemaining"
+              value={rest.dealRemaining}
+              label="Deals Remaining"
+              onChange={(event) => {rest[event.target.id] = event.target.value}}
+            />
+          ) : (
+            <Detail label="Deals Remaining" value={rest.dealRemaining} />
+          )}
           <br/>
           <GridContainer>
             <GridItem xs={12} sm={6} md={6}>
@@ -219,7 +231,7 @@ class DetailedView extends React.Component {
                 label="Description"
                 multiline
                 fullWidth
-                rows="10"
+                rows="11"
                 defaultValue={rest.dealDesc}
                 className={classes.textField}
                 margin="normal"

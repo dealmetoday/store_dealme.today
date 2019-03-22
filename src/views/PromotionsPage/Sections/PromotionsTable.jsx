@@ -118,7 +118,7 @@ class PromotionsTable extends React.Component {
       orderBy: "title",
       page: 0,
       rowsPerPage: 10,
-      selected: -1,
+      selected: 0,
       data: []
     };
 
