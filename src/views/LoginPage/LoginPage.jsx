@@ -4,6 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 // core components
+import classNames from 'classnames';
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -20,8 +21,11 @@ import FormControl from "@material-ui/core/FormControl";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 import Email from "@material-ui/icons/Email";
+import ErrorIcon from '@material-ui/icons/Error';
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
@@ -40,6 +44,7 @@ class LoginPage extends React.Component {
     // we use this to make the card to appear after the page has been rendered
     this.state = {
       cardAnimaton: "cardHidden",
+      open: false,
 
       email: "",
       password: "",
@@ -69,6 +74,10 @@ class LoginPage extends React.Component {
     this.setState({ showPassword: !this.state.showPassword });
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleSignin = async () => {
     const params = {
       email: this.state.email,
@@ -80,7 +89,7 @@ class LoginPage extends React.Component {
     console.log(data);
 
     if (data.status !== "Success") {
-      console.log("Ya gooned it");
+      this.setState({ open: true });
     } else {
       this.props.history.push("/admin/dashboard");
     }
@@ -88,6 +97,8 @@ class LoginPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
+    const Icon = ErrorIcon;
+
     return (
       <div>
         <Header
@@ -97,6 +108,22 @@ class LoginPage extends React.Component {
           rightLinks={<HeaderLinks history={this.props.history}/>}
           {...rest}
         />
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <SnackbarContent
+            className={classNames(classes.error)}
+            aria-describedby="client-snackbar"
+            message={
+             <span id="message-id" className={classes.message}>
+               <Icon className={classNames(classes.icon, classes.iconVariant)} />
+               Username and Password are incorrect. Please try again.
+             </span>
+            }
+          />
+        </Snackbar>
         <div
           className={classes.pageHeader}
           style={{

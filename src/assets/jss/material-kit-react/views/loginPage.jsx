@@ -1,6 +1,6 @@
 import { container } from "assets/jss/material-kit-react.jsx";
 
-const loginPageStyle = {
+const loginPageStyle = theme => ({
   container: {
     ...container,
     zIndex: "2",
@@ -67,7 +67,21 @@ const loginPageStyle = {
   login: {
     display: "flex",
     justifyContent: "center"
-  }
-};
+  },
+  icon: {
+    fontSize: 20,
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing.unit,
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
 
 export default loginPageStyle;
