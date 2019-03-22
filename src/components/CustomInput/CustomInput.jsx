@@ -53,7 +53,6 @@ function CustomInput({ ...props }) {
   } else {
     formControlClasses = classes.formControl;
   }
-  console.log(props.error);
   return (
     <FormControl {...formControlProps} className={formControlClasses}>
       {labelText !== undefined ? (

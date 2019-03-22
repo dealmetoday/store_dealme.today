@@ -33,13 +33,14 @@ import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import image from "assets/img/banner_busymall.jpeg";
 
-// Testing Utils
-import Utils from "components/Utils/Utils.jsx";
-
-let utils = new Utils();
+// // Testing Utils
+// import Utils from "components/Utils/Utils.jsx";
+//
+// let utils = new Utils();
 
 class LoginPage extends React.Component {
   constructor(props) {
+    console.log(props);
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
@@ -50,6 +51,7 @@ class LoginPage extends React.Component {
       password: "",
       visible: false
     };
+    // this.utils = this.s
   }
 
   componentDidMount() {
@@ -82,10 +84,10 @@ class LoginPage extends React.Component {
     const params = {
       email: this.state.email,
       role: "store",
-      password: await utils.encrypt(this.state.password)
+      password: await this.props.utils.encrypt(this.state.password)
     }
 
-    let data = await utils.put('/auth/login/email', params);
+    let data = await this.props.utils.put('/auth/login/email', params);
     console.log(data);
 
     if (data.status !== "Success") {

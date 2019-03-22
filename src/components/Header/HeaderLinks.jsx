@@ -23,7 +23,10 @@ class HeaderLinks extends React.Component {
   }
 
   redirectSignin = () => {
-    this.props.history.push("/login");
+    this.props.history.push({
+      pathname: '/login',
+      utils: this.props.utils,
+    });
   }
 
   redirectSignup = () => {

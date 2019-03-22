@@ -17,7 +17,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 
-import avatar from "assets/img/reactlogo.png";
+import avatar from "assets/img/default_avatar.png";
 import { Input } from "@material-ui/core";
 
 const dashboardRoutes = [];

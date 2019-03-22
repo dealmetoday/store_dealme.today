@@ -6,6 +6,9 @@ import { Router, Route, Switch } from "react-router-dom";
 import "assets/scss/material-kit-react.scss?v=1.4.0";
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 
+// Utils
+import Utils from "components/Utils/Utils.jsx";
+
 // pages for this product
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
@@ -17,6 +20,8 @@ import LoginPage from "views/LoginPage/LoginPage.jsx";
 import SignupPage from "views/SignupPage/SignupPage.jsx";
 
 var hist = createBrowserHistory();
+
+let utils = new Utils();
 
 const Page404 = ({ location }) => (
   <div>
@@ -34,9 +39,10 @@ ReactDOM.render(
       <Route exact={true} path="/admin/promotions" component={PromotionsPage} />
       <Route exact={true} path="/admin/traffic" component={TrafficPage} />
 
-      <Route exact={true} path="/login" component={LoginPage} />
+      // <Route exact={true} path="/login" component={LoginPage} />
+      // <Route exact={true} path="/login" render={(props) => <LoginPage {...props} utils={utils} />} />
       <Route exact={true} path="/signup" component={SignupPage} />
-      <Route exact={true} path="/" component={LandingPage} />
+      <Route exact={true} path="/" render={(props) => <LandingPage {...props} utils={utils} />} />
       <Route component={Page404} />
     </Switch>
   </Router>,
