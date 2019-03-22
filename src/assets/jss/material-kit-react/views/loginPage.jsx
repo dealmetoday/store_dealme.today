@@ -77,6 +77,7 @@ const loginPageStyle = theme => ({
   },
   error: {
     backgroundColor: theme.palette.error.dark,
+    margin: theme.spacing.unit,
   },
   message: {
     display: 'flex',
