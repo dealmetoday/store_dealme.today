@@ -134,15 +134,6 @@ class SignupPage extends React.Component {
 
     let data = await utils.post('/stores', params);
     console.log(data);
-
-    params = {
-      email: this.state.email,
-      role: "store",
-      password: await utils.encrypt(this.state.password)
-    }
-
-    data = await utils.put('/auth/login/email', params);
-    console.log(data);
   }
 
   validConfirm(password, confirm) {
