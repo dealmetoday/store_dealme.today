@@ -22,6 +22,11 @@ class DateUtils {
     datestr += " " + date.getFullYear();
     return datestr;
   }
+
+  getOffsetYear = (offset) => {
+    var date = new Date();
+    return date.getFullYear() - offset;
+  }
 }
 
 export default DateUtils;

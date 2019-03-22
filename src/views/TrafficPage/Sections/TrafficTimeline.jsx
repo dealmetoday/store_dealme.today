@@ -24,8 +24,8 @@ const generateFakeAllStats = function(years) {
       var statMonth = []
       for (var day = 0; day < dateutils.numberToDaysInMonth[month]; ++day) {
         var data = { traffic: 0, claims: 0 };
-        data.traffic = 2 * (year + month + day + 1);
-        data.claims = year + month + day;
+        data.traffic = 2 * ((years - year) + month + day + 1);
+        data.claims = (years - year) + month + day;
         statMonth.push(data);
       }
       statYear.push(statMonth);
@@ -44,10 +44,10 @@ class TrafficTimeline extends React.Component {
     }
 
     var pseudoAllStats = generateFakeAllStats(2);
-    this.state.allStats = pseudoAllStats;
-    this.state.weekStats = pseudoAllStats[0][0].slice(0, 7);
+    var date = new Date();
 
-    console.log(this.state);
+    this.state.allStats = pseudoAllStats;
+    this.state.weekStats = pseudoAllStats[0][date.getMonth()].slice(date.getDate(), date.getDate()+7);
   }
 
   render() {
@@ -55,7 +55,7 @@ class TrafficTimeline extends React.Component {
     return (
       <div>
         <WeeklyView week={this.state.weekStats} />
-        <br/><br/>
+        <br/><br/><br/>
         <MonthlyView data={this.state.allStats} />
       </div>
     )
