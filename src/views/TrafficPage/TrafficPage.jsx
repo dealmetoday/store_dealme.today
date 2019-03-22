@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-// react plugin for creating charts
-// @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
-// @material-ui/icons
+
+// Material React Kit Components
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
@@ -13,8 +12,13 @@ import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 
+// Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import Accessibility from "@material-ui/icons/Accessibility";
+
+// Custom Page Sections
+import TrafficBreakdown from "./Sections/TrafficBreakdown.jsx";
+import TrafficTimeline from "./Sections/TrafficTimeline.jsx";
 
 const dashboardRoutes = [];
 
@@ -51,7 +55,7 @@ class TrafficPage extends React.Component {
                     <h3 className={classes.cardTitleWhite}>Traffic Breakdown</h3>
                   </CardHeader>
                   <CardBody>
-                    <p>LEFT</p>
+                    <TrafficBreakdown />
                   </CardBody>
                 </Card>
               </GridItem>
@@ -64,7 +68,7 @@ class TrafficPage extends React.Component {
                     <h3 className={classes.cardTitleWhite}>Traffic Timeline</h3>
                   </CardHeader>
                   <CardBody>
-                    <p>RIGHT</p>
+                    <TrafficTimeline />
                   </CardBody>
                 </Card>
               </GridItem>
