@@ -12,38 +12,12 @@ import TableRow from '@material-ui/core/TableRow';
 // Material React Kit Components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import DateUtils from "components/Utils/DateUtils.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-const numberToMonth = function(number) {
-  switch(number) {
-    case 1: return "February";
-    case 2: return "March";
-    case 3: return "April";
-    case 4: return "May";
-    case 5: return "June";
-    case 6: return "July";
-    case 7: return "August";
-    case 8: return "September";
-    case 9: return "October";
-    case 10: return "Novermber";
-    case 11: return "December";
-    default: return "January";
-  }
-}
-
-const numberToWeekday = function(number) {
-  switch(number) {
-    case 0: return "Monday";
-    case 1: return "Tuesday";
-    case 2: return "Wednesday";
-    case 3: return "Thursday";
-    case 4: return "Friday";
-    case 5: return "Saturday";
-    default: return "Sunday";
-  }
-}
+let dateutils = new DateUtils();
 
 class WeeklyView extends React.Component {
   constructor(props) {
@@ -54,17 +28,6 @@ class WeeklyView extends React.Component {
   getConversionRate = (traffic, claims) => {
     const conversion = Math.round((claims / traffic) * 100);
     return conversion.toString() + "%";
-  }
-
-  getOffsetDate = (offset) => {
-    var date = new Date();
-    date.setDate(date.getDate() - offset);
-
-    var datestr = numberToWeekday(date.getDay());
-    datestr += " " + date.getDate();
-    datestr += " " + numberToMonth(date.getMonth());
-    datestr += " " + date.getFullYear();
-    return datestr;
   }
 
   render() {
@@ -89,7 +52,7 @@ class WeeklyView extends React.Component {
                 {week.map((row, index) => (
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row" align="left">
-                      {this.getOffsetDate(6 - index)}
+                      {dateutils.getOffsetDate(6 - index)}
                     </TableCell>
                     <TableCell component="th" scope="row" align="right">
                       {row.traffic}

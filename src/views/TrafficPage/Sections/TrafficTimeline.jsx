@@ -3,34 +3,51 @@ import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/core/styles';
 
 // Material-UI Components
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 
 // Material React Kit Components
+import DateUtils from "components/Utils/DateUtils.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 // Custom Page Parts
-import WeeklyView from "./WeeklyView";
+import MonthlyView from "./MonthlyView.jsx";
+import WeeklyView from "./WeeklyView.jsx";
+
+let dateutils = new DateUtils();
+
+const generateFakeAllStats = function(years) {
+  var stats = [];
+  for (var year = 0; year < years; ++year) {
+    var statYear = []
+    for (var month = 0; month < 12; ++month) {
+      var statMonth = []
+      for (var day = 0; day < dateutils.numberToDaysInMonth[month]; ++day) {
+        var data = { traffic: 0, claims: 0 };
+        data.traffic = 2 * (year + month + day + 1);
+        data.claims = year + month + day;
+        statMonth.push(data);
+      }
+      statYear.push(statMonth);
+    }
+    stats.push(statYear);
+  }
+  return stats;
+}
 
 class TrafficTimeline extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      allStats: [],
       weekStats: [],
     }
 
-    this.state.weekStats.push({traffic: 10, claims: 5});
-    this.state.weekStats.push({traffic: 20, claims: 10});
-    this.state.weekStats.push({traffic: 30, claims: 15});
-    this.state.weekStats.push({traffic: 40, claims: 20});
-    this.state.weekStats.push({traffic: 50, claims: 25});
-    this.state.weekStats.push({traffic: 60, claims: 30});
-    this.state.weekStats.push({traffic: 70, claims: 35});
+    var pseudoAllStats = generateFakeAllStats(2);
+    this.state.allStats = pseudoAllStats;
+    this.state.weekStats = pseudoAllStats[0][0].slice(0, 7);
+
+    console.log(this.state);
   }
 
   render() {
@@ -38,6 +55,8 @@ class TrafficTimeline extends React.Component {
     return (
       <div>
         <WeeklyView week={this.state.weekStats} />
+        <br/><br/>
+        <MonthlyView data={this.state.allStats} />
       </div>
     )
   }
