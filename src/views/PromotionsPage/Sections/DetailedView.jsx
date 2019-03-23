@@ -59,7 +59,7 @@ class DetailEditComponent extends React.Component {
   };
 
   render() {
-    const { classes, label, value, id, onChange } = this.props;
+    const { classes, label, id, onChange } = this.props;
     return (
       <GridContainer>
         <GridItem xs={4} sm={4} md={4}>
@@ -131,7 +131,7 @@ class DetailedView extends React.Component {
     const { classes, ...rest } = this.props
     return (
       <Card>
-        <CardHeader color="warning" stats icon>
+        <CardHeader color="warning" stats="true" icon="true">
           <CardIcon color="warning">
             <Icon>content_copy</Icon>
           </CardIcon>
@@ -190,7 +190,7 @@ class DetailedView extends React.Component {
                   </Button>
                 ) : (null)}
                 {this.state.dealState === "" ? (
-                  <Button disabled color="dark" size="sm">
+                  <Button disabled color="github" size="sm">
                     Read Only
                   </Button>
                 ) : (null)}
@@ -242,6 +242,7 @@ class DetailedView extends React.Component {
                 {rest.dealTags.map((tag, index) => {
                   return (
                     <ListItem
+                      key={index}
                       button
                       selected={this.state.index === index}
                       onClick={event => this.handleTagClick(event, index, rest.onTagClick)}

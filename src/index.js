@@ -16,7 +16,7 @@ import PromotionsPage from "views/PromotionsPage/PromotionsPage.jsx";
 import TrafficPage from "views/TrafficPage/TrafficPage.jsx";
 
 import LandingPage from "views/LandingPage/LandingPage.jsx";
-import LoginPage from "views/LoginPage/LoginPage.jsx";
+// import LoginPage from "views/LoginPage/LoginPage.jsx";
 import SignupPage from "views/SignupPage/SignupPage.jsx";
 
 var hist = createBrowserHistory();
@@ -39,8 +39,8 @@ ReactDOM.render(
       <Route exact={true} path="/admin/promotions" component={PromotionsPage} />
       <Route exact={true} path="/admin/traffic" component={TrafficPage} />
 
-      // <Route exact={true} path="/login" component={LoginPage} />
-      // <Route exact={true} path="/login" render={(props) => <LoginPage {...props} utils={utils} />} />
+      {/* <Route exact={true} path="/login" component={LoginPage} /> */}
+      {/* <Route exact={true} path="/login" render={(props) => <LoginPage {...props} utils={utils} />} /> */}
       <Route exact={true} path="/signup" component={SignupPage} />
       <Route exact={true} path="/" render={(props) => <LandingPage {...props} utils={utils} />} />
       <Route component={Page404} />

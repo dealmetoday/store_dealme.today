@@ -48,7 +48,7 @@ class TrafficPage extends React.Component {
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <Card>
-                  <CardHeader color="success" stats icon>
+                  <CardHeader color="success" stats="true" icon="true">
                     <CardIcon color="success">
                       <Accessibility />
                     </CardIcon>
@@ -61,7 +61,7 @@ class TrafficPage extends React.Component {
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
               <Card>
-                  <CardHeader color="success" stats icon>
+                  <CardHeader color="success" stats="true" icon="true">
                     <CardIcon color="success">
                       <Accessibility />
                     </CardIcon>

@@ -78,7 +78,7 @@ class DashboardPage extends React.Component {
             <GridContainer>
               <GridItem xs={12} sm={6} md={3}>
                 <Card>
-                  <CardHeader color="warning" stats icon>
+                  <CardHeader color="warning" stats="true" icon="true">
                     <CardIcon color="warning">
                       <Icon>content_copy</Icon>
                     </CardIcon>
@@ -105,7 +105,7 @@ class DashboardPage extends React.Component {
               </GridItem>
               <GridItem xs={12} sm={6} md={3}>
                 <Card>
-                  <CardHeader color="success" stats icon>
+                  <CardHeader color="success" stats="true" icon="true">
                     <CardIcon color="success">
                       <Accessibility />
                     </CardIcon>
@@ -132,7 +132,7 @@ class DashboardPage extends React.Component {
               </GridItem>
               <GridItem xs={12} sm={6} md={3}>
                 <Card>
-                  <CardHeader color="danger" stats icon>
+                  <CardHeader color="danger" stats="true" icon="true">
                     <CardIcon color="danger">
                       <Visibility />
                     </CardIcon>
@@ -159,7 +159,7 @@ class DashboardPage extends React.Component {
               </GridItem>
               <GridItem xs={12} sm={6} md={3}>
                 <Card>
-                  <CardHeader color="info" stats icon>
+                  <CardHeader color="info" stats="true" icon="true">
                     <CardIcon color="info">
                       <Icon>info_outline</Icon>
                     </CardIcon>
@@ -223,7 +223,7 @@ class DashboardPage extends React.Component {
               </GridItem>
 
               <GridItem xs={12} sm={12} md={6}>
-                <Card chart>
+                <Card >
                   <CardHeader color="success">
                     <ChartistGraph
                       className="ct-chart"
@@ -242,7 +242,7 @@ class DashboardPage extends React.Component {
                       increase in traffic this week.
                     </p>
                   </CardBody>
-                  <CardFooter chart>
+                  <CardFooter>
                     <div className={classes.stats}>
                       <AccessTime /> updated 30 minutes ago
                     </div>
@@ -252,7 +252,7 @@ class DashboardPage extends React.Component {
             </GridContainer>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
-                <Card chart>
+                <Card>
                   <CardHeader color="danger">
                     <ChartistGraph
                       className="ct-chart"
@@ -271,7 +271,7 @@ class DashboardPage extends React.Component {
                       increase in promotion views this week.
                     </p>
                   </CardBody>
-                  <CardFooter chart>
+                  <CardFooter>
                     <div className={classes.stats}>
                       <AccessTime /> updated 30 minutes ago
                     </div>
@@ -279,7 +279,7 @@ class DashboardPage extends React.Component {
                 </Card>
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
-                <Card chart>
+                <Card>
                   <CardHeader color="info">
                     <ChartistGraph
                       className="ct-chart"
@@ -298,7 +298,7 @@ class DashboardPage extends React.Component {
                       increase in promotion claims this week.
                     </p>
                   </CardBody>
-                  <CardFooter chart>
+                  <CardFooter>
                     <div className={classes.stats}>
                       <AccessTime /> updated 30 minutes ago
                     </div>

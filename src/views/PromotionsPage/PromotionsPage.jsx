@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 // react plugin for creating charts
-import ChartistGraph from "react-chartist";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -173,7 +172,7 @@ class PromotionsPage extends React.Component {
               </GridItem>
               <GridItem xs={12} sm={12} md={7}>
                 <Card>
-                  <CardHeader color="warning" stats icon>
+                  <CardHeader color="warning" stats="true" icon="true">
                     <CardIcon color="warning">
                       <Icon>content_copy</Icon>
                     </CardIcon>

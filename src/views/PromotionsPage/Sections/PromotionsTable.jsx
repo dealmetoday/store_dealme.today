@@ -118,7 +118,6 @@ class PromotionsTable extends React.Component {
       orderBy: "title",
       page: 0,
       rowsPerPage: 10,
-      selected: 0,
       data: []
     };
 
@@ -147,14 +146,13 @@ class PromotionsTable extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <div>
         <div>
-          <Table aria-lebelledby="tableTitle">
+          <Table aria-labelledby="tableTitle">
             <PromotionsTableHeader
               order={order}
               orderBy={orderBy}
@@ -164,7 +162,6 @@ class PromotionsTable extends React.Component {
               {stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((promotion, index) => {
-                  const selected = (this.state.selected === index);
                   return (
                     <TableRow
                       hover

@@ -50,7 +50,7 @@ class WeeklyView extends React.Component {
               </TableHead>
               <TableBody>
                 {week.map((row, index) => (
-                  <TableRow key={row.id}>
+                  <TableRow key={index}>
                     <TableCell component="th" scope="row" align="left">
                       {dateutils.getOffsetDate(6 - index)}
                     </TableCell>

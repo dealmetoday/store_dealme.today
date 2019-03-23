@@ -18,7 +18,6 @@ class TrafficBreakdown extends React.Component {
   }
 
   render() {
-    const { classes, ...rest } = this.props
     return (
       <div>
         <p>RIGHT</p>

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputLabel from "@material-ui/core/InputLabel";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -18,7 +17,6 @@ import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 
 import avatar from "assets/img/default_avatar.png";
-import { Input } from "@material-ui/core";
 
 const dashboardRoutes = [];
 
@@ -96,13 +94,13 @@ class ProfilePage extends React.Component {
         <br/><br/><br/><br/><br/>
         <GridContainer justify="center">
           <GridItem xs={10} sm={10} md={5}>
-            <Card profile>
+            <Card>
               <CardAvatar>
                 <a href="#pablo" onClick={e => e.preventDefault()}>
                   <img src={avatar} alt="..." />
                 </a>
               </CardAvatar>
-              <CardBody profile>
+              <CardBody>
                 <h6 className={classes.cardCategory}>
                   {this.state.disp_parent}
                 </h6>

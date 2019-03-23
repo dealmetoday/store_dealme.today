@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/core/styles';
 
 // Material-UI Components
@@ -51,7 +50,6 @@ class TrafficTimeline extends React.Component {
   }
 
   render() {
-    const { classes, ...rest } = this.props
     return (
       <div>
         <WeeklyView week={this.state.weekStats} />
