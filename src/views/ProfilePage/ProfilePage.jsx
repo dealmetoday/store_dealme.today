@@ -42,6 +42,7 @@ const styles = {
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
+    this.utils = global.utils;
 
     this.state = {
       name: "",
@@ -52,31 +53,33 @@ class ProfilePage extends React.Component {
       postalcode: "",
 
       // This is what is seen by and send to the server
-      disp_name: "",
-      disp_parent: "",
-      disp_desc: "",
+      disp_name: this.utils.profile.name,
+      disp_parent: this.utils.profile.parentCompany,
+      disp_desc: this.utils.profile.description,
       disp_location: "",
-    }
+    };
   }
 
   handleChange = (event) => {
     this.setState({ [event.target.id]: event.target.value });
   };
 
-  handleSubmit = (e) => {
-    if (this.state.name) {
-      this.setState({ disp_name: this.state.name });
+  handleSubmit = async (e) => {
+    let updateObj =
+    {
+      id: this.utils.profile._id,
+    	name: this.state.name,
+    	description: this.state.desc,
+    	parentCompany: this.state.parent,
     }
-    if (this.state.parent) {
-      this.setState({ disp_parent: this.state.parent });
-    }
-    if (this.state.desc) {
-      this.setState({ disp_desc: this.state.description });
-    }
-    if (this.state.address && this.state.city && this.state.postalcode) {
-      let location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
-      this.setState({ disp_location: location });
-    }
+
+    console.log(updateObj);
+    let result = await this.utils.put('/stores', updateObj);
+    console.log(result);
+    // if (this.state.address && this.state.city && this.state.postalcode) {
+    //   let location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
+    //   this.setState({ disp_location: location });
+    // }
   }
 
   render() {

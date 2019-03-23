@@ -1,6 +1,6 @@
 import { container } from "assets/jss/material-kit-react.jsx";
 
-const signupPageStyle = {
+const signupPageStyle = theme => ({
   container: {
     ...container,
     zIndex: "2",
@@ -88,7 +88,21 @@ const signupPageStyle = {
   signup: {
     display: "flex",
     justifyContent: "center"
-  }
-};
+  },
+  info: {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  icon: {
+    fontSize: 20,
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing.unit,
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
 
 export default signupPageStyle;

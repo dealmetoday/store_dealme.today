@@ -1,10 +1,17 @@
 import React from "react";
+import classNames from 'classnames';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+
 // core components
-import classNames from 'classnames';
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -16,14 +23,9 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControl from "@material-ui/core/FormControl";
-import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
 
+// @material-ui/icons
+import Icon from "@material-ui/core/Icon";
 import Email from "@material-ui/icons/Email";
 import ErrorIcon from '@material-ui/icons/Error';
 import Visibility from "@material-ui/icons/Visibility";
@@ -33,14 +35,8 @@ import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import image from "assets/img/banner_busymall.jpeg";
 
-// // Testing Utils
-// import Utils from "components/Utils/Utils.jsx";
-//
-// let utils = new Utils();
-
 class LoginPage extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
@@ -51,7 +47,8 @@ class LoginPage extends React.Component {
       password: "",
       visible: false
     };
-    // this.utils = this.s
+
+    this.utils = global.utils;
   }
 
   componentDidMount() {
@@ -81,19 +78,21 @@ class LoginPage extends React.Component {
   };
 
   handleSignin = async () => {
+    // await this.utils.test();
     const params = {
       email: this.state.email,
       role: "store",
-      password: await this.props.utils.encrypt(this.state.password)
+      password: await this.utils.encrypt(this.state.password)
     }
 
-    let data = await this.props.utils.put('/auth/login/email', params);
+    let data = await this.utils.put('/auth/login/email', params);
     console.log(data);
 
     if (data.status !== "Success") {
       this.setState({ open: true });
     } else {
-      this.props.history.push("/admin/dashboard");
+      await this.utils.getData(data);
+      this.props.history.push("/admin/profile");
     }
   }
 
@@ -119,7 +118,7 @@ class LoginPage extends React.Component {
             className={classNames(classes.error)}
             aria-describedby="client-snackbar"
             message={
-             <span id="message-id" className={classes.message}>
+             <span className={classes.message}>
                <Icon className={classNames(classes.icon, classes.iconVariant)} />
                Username and Password are incorrect. Please try again.
              </span>

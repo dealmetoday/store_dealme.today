@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from 'classnames';
 
 // Material-UI Components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -8,6 +9,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 // Material Kit Components
 import Button from "components/CustomButtons/Button.jsx";
@@ -22,18 +25,15 @@ import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 
 // Material-UI Icons
+import Icon from "@material-ui/core/Icon";
 import Email from "@material-ui/icons/Email";
+import InfoIcon from '@material-ui/icons/Info';
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 // Styles and Images
 import signupPageStyle from "assets/jss/material-kit-react/views/signupPage.jsx";
 import image from "assets/img/banner_busymall.jpeg";
-
-// Utilities
-import Utils from "components/Utils/Utils.jsx";
-
-let utils = new Utils();
 
 class SignupPage extends React.Component {
   constructor(props) {
@@ -42,6 +42,8 @@ class SignupPage extends React.Component {
     this.state = {
       cardAnimaton: "cardHidden",
       showPassword: false,
+      open: false,
+      message: "",
 
       name: "",
       parent: "",
@@ -61,6 +63,8 @@ class SignupPage extends React.Component {
         confirm: false,
       },
     };
+
+    this.utils = global.utils;
   }
 
   componentDidMount() {
@@ -129,12 +133,25 @@ class SignupPage extends React.Component {
       name: this.state.name,
       email: this.state.email,
       parentCompany: parentVal,
-      password: await utils.encrypt(this.state.password)
+      password: await this.utils.encrypt(this.state.password)
     }
 
-    let data = await utils.post('/stores', params);
+    let data = await this.utils.post('/stores', params);
     console.log(data);
+    if (data.status !== "Success") {
+      this.setState({ message: "Something went wrong - please try again later."});
+      this.setState({ open: true });
+    } else {
+      // TODO: include minor delay
+      this.setState({ message: "Redirecting to login."});
+      this.setState({ open: true });
+      this.props.history.push('/login');
+    }
   }
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   validConfirm(password, confirm) {
     let errstring = "";
@@ -202,6 +219,8 @@ class SignupPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
+    const Icon = InfoIcon;
+
     return (
       <div>
         <Header
@@ -211,6 +230,22 @@ class SignupPage extends React.Component {
           rightLinks={<HeaderLinks history={this.props.history}/>}
           {...rest}
         />
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <SnackbarContent
+            className={classNames(classes.info)}
+            aria-describedby="client-snackbar"
+            message={
+             <span className={classes.message}>
+               <Icon className={classNames(classes.icon, classes.iconVariant)} />
+               {this.state.message}
+             </span>
+            }
+          />
+        </Snackbar>
         <div
           className={classes.pageHeader}
           style={{

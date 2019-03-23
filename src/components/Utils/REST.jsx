@@ -4,43 +4,46 @@ const SERVER = 'https://api.dealme.today';
 
 class REST {
   constructor() {
-    axios.defaults.baseURL = SERVER;
-    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    this.api = axios.create({
+      baseURL: SERVER,
+    });
+
+    this.api.defaults.headers.common['Content-Type'] = 'application/json';
     this.response = null;
   }
 
-  setHeaders(bearer) {
-    axios.defaults.headers.common['Bearer'] = bearer;
+  async setHeaders(bearer) {
+    this.api.defaults.headers.common['Bearer'] = bearer;
   }
 
-  deleteHeaders() {
-    delete axios.defaults.headers.common['Bearer'];
+  async deleteHeaders() {
+    delete this.api.defaults.headers.common['Bearer'];
   }
 
   async get(endpoint, params) {
     if (params === null) {
-      this.response = await axios.get(endpoint);
+      this.response = await this.api.get(endpoint);
     } else {
       let data = { params: params };
-      this.response = await axios.get(endpoint, data);
+      this.response = await this.api.get(endpoint, data);
     }
     return this.response.data;
   }
 
   async post(endpoint, body) {
-    this.response = await axios.post(endpoint, body);
+    this.response = await this.api.post(endpoint, body);
 
     return this.response.data;
   }
 
   async put(endpoint, body) {
-    this.response = await axios.put(endpoint, body);
+    this.response = await this.api.put(endpoint, body);
 
     return this.response.data;
   }
 
   async delete(endpoint, body) {
-    this.response = await axios.delete(endpoint, body);
+    this.response = await this.api.delete(endpoint, body);
 
     return this.response.data;
   }
