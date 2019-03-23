@@ -16,7 +16,7 @@ import PromotionsPage from "views/PromotionsPage/PromotionsPage.jsx";
 import TrafficPage from "views/TrafficPage/TrafficPage.jsx";
 
 import LandingPage from "views/LandingPage/LandingPage.jsx";
-// import LoginPage from "views/LoginPage/LoginPage.jsx";
+import LoginPage from "views/LoginPage/LoginPage.jsx";
 import SignupPage from "views/SignupPage/SignupPage.jsx";
 
 var hist = createBrowserHistory();
