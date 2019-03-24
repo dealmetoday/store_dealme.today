@@ -25,7 +25,6 @@ import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 
 // Material-UI Icons
-import Icon from "@material-ui/core/Icon";
 import Email from "@material-ui/icons/Email";
 import InfoIcon from '@material-ui/icons/Info';
 import Visibility from "@material-ui/icons/Visibility";
@@ -34,6 +33,9 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 // Styles and Images
 import signupPageStyle from "assets/jss/material-kit-react/views/signupPage.jsx";
 import image from "assets/img/banner_busymall.jpeg";
+
+// Utils
+import Utils from "components/Utils/Utils.jsx";
 
 class SignupPage extends React.Component {
   constructor(props) {
@@ -64,7 +66,7 @@ class SignupPage extends React.Component {
       },
     };
 
-    this.utils = global.utils;
+    this.utils = new Utils();
   }
 
   componentDidMount() {

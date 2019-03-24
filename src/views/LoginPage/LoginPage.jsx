@@ -22,10 +22,8 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 // @material-ui/icons
-import Icon from "@material-ui/core/Icon";
 import Email from "@material-ui/icons/Email";
 import ErrorIcon from '@material-ui/icons/Error';
 import Visibility from "@material-ui/icons/Visibility";
@@ -34,6 +32,9 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import image from "assets/img/banner_busymall.jpeg";
+
+// Utils
+import Utils from "components/Utils/Utils.jsx";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class LoginPage extends React.Component {
       visible: false
     };
 
-    this.utils = global.utils;
+    this.utils = new Utils();
   }
 
   componentDidMount() {
@@ -59,6 +60,36 @@ class LoginPage extends React.Component {
       }.bind(this),
       700
     );
+  }
+
+  test = async () => {
+    let params =
+    {
+      access: 'store',
+      email: 'store@store.com',
+      id: 'asdfasd89fuq0we'
+    }
+
+    let result = await this.utils.get('/bearer', params);
+    console.log(result);
+
+    let data =
+    {
+      id: "5c9682de8b4831dba037c876",
+      Bearer: result.Bearer,
+    }
+
+    await this.utils.getData(data.id, data.Bearer);
+
+    let updateObj = {
+      id: "5c9682de8b4831dba037c876",
+    	name: "What",
+    	description: "THE",
+    	parentCompany: "aHHHHH",
+    }
+
+    result = await this.utils.put('/stores', updateObj);
+    console.log(result);
   }
 
   redirectSignup = () => {
@@ -78,7 +109,7 @@ class LoginPage extends React.Component {
   };
 
   handleSignin = async () => {
-    // await this.utils.test();
+    // await this.test();
     const params = {
       email: this.state.email,
       role: "store",
@@ -91,7 +122,12 @@ class LoginPage extends React.Component {
     if (data.status !== "Success") {
       this.setState({ open: true });
     } else {
-      await this.utils.getData(data);
+      global.bearer = data.Bearer;
+      global.id = data.id;
+
+      await this.utils.getData(global.id, global.bearer);
+      global.profile = this.utils.profile;
+
       this.props.history.push("/admin/profile");
     }
   }

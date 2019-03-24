@@ -18,6 +18,9 @@ import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 
 import avatar from "assets/img/default_avatar.png";
 
+// Utils
+import Utils from "components/Utils/Utils.jsx";
+
 const dashboardRoutes = [];
 
 const styles = {
@@ -42,7 +45,6 @@ const styles = {
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
-    this.utils = global.utils;
 
     this.state = {
       name: "",
@@ -53,11 +55,13 @@ class ProfilePage extends React.Component {
       postalcode: "",
 
       // This is what is seen by and send to the server
-      disp_name: this.utils.profile.name,
-      disp_parent: this.utils.profile.parentCompany,
-      disp_desc: this.utils.profile.description,
+      disp_name: global.profile.name,
+      disp_parent: global.profile.parentCompany,
+      disp_desc: global.profile.description,
       disp_location: "",
     };
+
+    this.utils = new Utils();
   }
 
   handleChange = (event) => {
@@ -65,21 +69,41 @@ class ProfilePage extends React.Component {
   };
 
   handleSubmit = async (e) => {
-    let updateObj =
-    {
-      id: this.utils.profile._id,
-    	name: this.state.name,
-    	description: this.state.desc,
-    	parentCompany: this.state.parent,
+    // let location = "";
+    // if (this.state.address && this.state.city && this.state.postalcode) {
+    //   location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
+    // }
+
+    let updateObj = { id: global.id }
+
+    if (this.state.name !== "") {
+      updateObj.name = this.state.name;
+    }
+
+    if (this.state.desc !== "") {
+      updateObj.description = this.state.desc;
+    }
+
+    if (this.state.parent !== "") {
+    	updateObj.parentCompany = this.state.parent;
     }
 
     console.log(updateObj);
+
     let result = await this.utils.put('/stores', updateObj);
-    console.log(result);
-    // if (this.state.address && this.state.city && this.state.postalcode) {
-    //   let location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
-    //   this.setState({ disp_location: location });
-    // }
+    if (result !== null) {
+      let newName = updateObj.name ? this.state.name : this.state.disp_name;
+      let newParent = updateObj.parentCompany ? this.state.parent : this.state.disp_parent;
+      let newDesc = updateObj.description ? this.state.desc : this.state.disp_desc;
+
+      this.setState({
+        disp_name: newName,
+        disp_parent: newParent,
+        disp_desc: newDesc,
+      })
+    };
+
+    console.log(this.state);
   }
 
   render() {

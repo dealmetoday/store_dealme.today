@@ -6,9 +6,6 @@ import { Router, Route, Switch } from "react-router-dom";
 import "assets/scss/material-kit-react.scss?v=1.4.0";
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 
-// Utils
-import Utils from "components/Utils/Utils.jsx";
-
 // pages for this product
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
@@ -28,8 +25,6 @@ const Page404 = ({ location }) => (
 );
 
 //<Route exact={true} path="/admin/dashboard" component={DashboardPage} />
-
-global.utils = new Utils();
 
 ReactDOM.render(
   <Router history={hist}>
