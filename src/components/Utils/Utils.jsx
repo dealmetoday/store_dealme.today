@@ -7,6 +7,7 @@ class Utils {
     this.rest = new REST();
     this.pubKey = null;
     this.profile = null;
+    this.promotions = null;
 
     this.getPubKey();
   }
@@ -61,7 +62,15 @@ class Utils {
     let params = { _id: id };
     let result = await this.get('/stores', params);
     this.profile = result[0];
-    console.log(this.profile);
+    global.profile = this.profile;
+
+    // 2. Promotions
+    delete params._id;
+    params.id = id;
+    result = await this.get('/deals/store', params);
+    this.promotions = result;
+    global.promotions = this.promotions;
+    console.log(result);
   }
 
   async clearData() {
