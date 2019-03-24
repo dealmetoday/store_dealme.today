@@ -33,43 +33,41 @@ class WeeklyTraffic extends React.Component {
   render() {
     const { classes, week } = this.props
     return (
-      <div>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            <h3 className={classes.cardTitle}>Weekly Traffic</h3>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">Date</TableCell>
-                  <TableCell align="right">Traffic</TableCell>
-                  <TableCell align="right">Claims</TableCell>
-                  <TableCell align="right">Conversion</TableCell>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <h3 className={classes.cardTitle}>Weekly Traffic</h3>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">Date</TableCell>
+                <TableCell align="right">Traffic</TableCell>
+                <TableCell align="right">Claims</TableCell>
+                <TableCell align="right">Conversion</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {week.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row" align="left">
+                    {dateutils.getOffsetDate(6 - index)}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    {row.traffic}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    {row.claims}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    {this.getConversionRate(row.traffic, row.claims)}
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {week.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell component="th" scope="row" align="left">
-                      {dateutils.getOffsetDate(6 - index)}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="right">
-                      {row.traffic}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="right">
-                      {row.claims}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="right">
-                      {this.getConversionRate(row.traffic, row.claims)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </GridItem>
-        </GridContainer>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </GridItem>
+      </GridContainer>
     )
   }
 }

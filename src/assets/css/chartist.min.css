@@ -226,39 +226,39 @@
 .ct-series-c .ct-line,
 .ct-series-c .ct-point,
 .ct-series-c .ct-slice-donut {
-    stroke: #f4c63d;
+    stroke: #7fbfff;
 }
 
 .ct-series-c .ct-area,
 .ct-series-c .ct-slice-donut-solid,
 .ct-series-c .ct-slice-pie {
-    fill: #f4c63d;
+    fill: #7fbfff;
 }
 
 .ct-series-d .ct-bar,
 .ct-series-d .ct-line,
 .ct-series-d .ct-point,
 .ct-series-d .ct-slice-donut {
-    stroke: #d17905;
+    stroke: #ffbfff;
 }
 
 .ct-series-d .ct-area,
 .ct-series-d .ct-slice-donut-solid,
 .ct-series-d .ct-slice-pie {
-    fill: #d17905;
+    fill: #ffbfff;
 }
 
 .ct-series-e .ct-bar,
 .ct-series-e .ct-line,
 .ct-series-e .ct-point,
 .ct-series-e .ct-slice-donut {
-    stroke: #453d3f;
+    stroke: #bfbfbf;
 }
 
 .ct-series-e .ct-area,
 .ct-series-e .ct-slice-donut-solid,
 .ct-series-e .ct-slice-pie {
-    fill: #453d3f;
+    fill: #bfbfbf;
 }
 
 .ct-series-f .ct-bar,
