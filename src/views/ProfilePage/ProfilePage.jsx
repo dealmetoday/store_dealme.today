@@ -58,7 +58,7 @@ class ProfilePage extends React.Component {
       disp_name: global.profile.name,
       disp_parent: global.profile.parentCompany,
       disp_desc: global.profile.description,
-      disp_location: "",
+      disp_location: global.storeLoc,
     };
 
     this.utils = new Utils();
@@ -69,11 +69,7 @@ class ProfilePage extends React.Component {
   };
 
   handleSubmit = async (e) => {
-    // let location = "";
-    // if (this.state.address && this.state.city && this.state.postalcode) {
-    //   location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
-    // }
-
+    let location = "";
     let updateObj = { id: global.id }
 
     if (this.state.name !== "") {
@@ -88,22 +84,33 @@ class ProfilePage extends React.Component {
     	updateObj.parentCompany = this.state.parent;
     }
 
+    if (this.state.address && this.state.city && this.state.postalcode) {
+      location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
+      let latlng = await this.utils.getLatLng(location);
+      updateObj.location = [latlng.lat, latlng.lng];
+    }
+
     console.log(updateObj);
 
     let result = await this.utils.put('/stores', updateObj);
     if (result !== null) {
+      let address = "";
+      if (updateObj.location) {
+        address = await this.utils.getAddress({ lat: updateObj.location[0], lng: updateObj.location[1] });
+      }
+
       let newName = updateObj.name ? this.state.name : this.state.disp_name;
       let newParent = updateObj.parentCompany ? this.state.parent : this.state.disp_parent;
       let newDesc = updateObj.description ? this.state.desc : this.state.disp_desc;
+      let newLoc = updateObj.location ? address : this.state.disp_location;
 
       this.setState({
         disp_name: newName,
         disp_parent: newParent,
         disp_desc: newDesc,
+        disp_location: newLoc,
       })
     };
-
-    console.log(this.state);
   }
 
   render() {

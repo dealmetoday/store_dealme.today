@@ -63,33 +63,40 @@ class LoginPage extends React.Component {
   }
 
   test = async () => {
-    let params =
-    {
-      access: 'store',
-      email: 'store@store.com',
-      id: 'asdfasd89fuq0we'
-    }
+    // let params =
+    // {
+    //   access: 'store',
+    //   email: 'store@store.com',
+    //   id: 'asdfasd89fuq0we'
+    // }
+    //
+    // let result = await this.utils.get('/bearer', params);
+    // console.log(result);
+    //
+    // let data =
+    // {
+    //   id: "5c9682de8b4831dba037c876",
+    //   Bearer: result.Bearer,
+    // }
+    //
+    // await this.utils.getData(data.id, data.Bearer);
+    //
+    // let updateObj = {
+    //   id: "5c9682de8b4831dba037c876",
+    // 	name: "What",
+    // 	description: "THE",
+    // 	parentCompany: "aHHHHH",
+    // }
+    //
+    // result = await this.utils.put('/stores', updateObj);
+    // console.log(result);
 
-    let result = await this.utils.get('/bearer', params);
-    console.log(result);
-
-    let data =
-    {
-      id: "5c9682de8b4831dba037c876",
-      Bearer: result.Bearer,
-    }
-
-    await this.utils.getData(data.id, data.Bearer);
-
-    let updateObj = {
-      id: "5c9682de8b4831dba037c876",
-    	name: "What",
-    	description: "THE",
-    	parentCompany: "aHHHHH",
-    }
-
-    result = await this.utils.put('/stores', updateObj);
-    console.log(result);
+    // let latlng = { lat: 49.2834041, lng: -123.1172924 };
+    // let address = "UBC";
+    // let result = await this.utils.getAddress(latlng);
+    // console.log(result);
+    // result = await this.utils.getLatLng(address);
+    // console.log(result);
   }
 
   redirectSignup = () => {
