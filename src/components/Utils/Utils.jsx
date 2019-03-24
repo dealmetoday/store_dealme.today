@@ -43,6 +43,8 @@ class Utils {
         if (status === 'OK') {
           console.log(results);
           resolve(results[0].formatted_address);
+        } else if (status === "ZERO_RESULTS") {
+          resolve("Invalid Address");
         } else {
           reject(status);
         }
