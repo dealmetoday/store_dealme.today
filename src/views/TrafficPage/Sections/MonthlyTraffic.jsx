@@ -71,7 +71,7 @@ const chartOptions = function(maxval){
   }
 };
 
-class MonthlyView extends React.Component {
+class MonthlyTraffic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -193,9 +193,9 @@ class MonthlyView extends React.Component {
   }
 }
 
-MonthlyView.propTypes = {
+MonthlyTraffic.propTypes = {
   classes: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
 };
 
-export default withStyles(dashboardStyle)(MonthlyView);
+export default withStyles(dashboardStyle)(MonthlyTraffic);

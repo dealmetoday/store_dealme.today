@@ -10,8 +10,8 @@ import DateUtils from "components/Utils/DateUtils.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 // Custom Page Parts
-import MonthlyView from "./MonthlyView.jsx";
-import WeeklyView from "./WeeklyView.jsx";
+import MonthlyTraffic from "./MonthlyTraffic.jsx";
+import WeeklyTraffic from "./WeeklyTraffic.jsx";
 
 let dateutils = new DateUtils();
 
@@ -52,9 +52,9 @@ class TrafficTimeline extends React.Component {
   render() {
     return (
       <div>
-        <WeeklyView week={this.state.weekStats} />
+        <WeeklyTraffic week={this.state.weekStats} />
         <br/><br/><br/>
-        <MonthlyView data={this.state.allStats} />
+        <MonthlyTraffic data={this.state.allStats} />
       </div>
     )
   }

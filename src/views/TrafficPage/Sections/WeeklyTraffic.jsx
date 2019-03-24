@@ -19,7 +19,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 let dateutils = new DateUtils();
 
-class WeeklyView extends React.Component {
+class WeeklyTraffic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -74,9 +74,9 @@ class WeeklyView extends React.Component {
   }
 }
 
-WeeklyView.propTypes = {
+WeeklyTraffic.propTypes = {
   classes: PropTypes.object.isRequired,
   week: PropTypes.array.isRequired,
 };
 
-export default withStyles(dashboardStyle)(WeeklyView);
+export default withStyles(dashboardStyle)(WeeklyTraffic);
