@@ -12,6 +12,15 @@ class DateUtils {
     ]
   }
 
+  formatISODate = (isodate) => {
+    const date = new Date(Date.parse(isodate));
+
+    var formatted = date.getDate().toString();
+    formatted += " " + this.numberToMonth[date.getMonth()];
+    formatted += " " + date.getFullYear();
+    return formatted.includes("NaN") ? "" : formatted;
+  }
+
   getOffsetDate = (offset) => {
     var date = new Date();
     date.setDate(date.getDate() - offset);

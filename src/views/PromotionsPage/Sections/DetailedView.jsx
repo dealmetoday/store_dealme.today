@@ -17,12 +17,15 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import DateUtils from "components/Utils/DateUtils.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import { Add, Delete, Edit } from "@material-ui/icons";
+
+var dateutils = new DateUtils();
 
 class DetailComponent extends React.Component {
   render() {
@@ -197,12 +200,15 @@ class DetailedView extends React.Component {
             </GridItem>
           </GridContainer>
           <br/>
-          <Detail label="Date Created" value={rest.dealCreated} />
+          <Detail
+            label="Date Created"
+            value={dateutils.formatISODate(rest.dealCreated)}
+          />
           {(this.state.dealState === "add" || this.state.dealState === "edit") ? (
             <DetailEdit
               id="dealExpires"
               value={rest.dealExpires}
-              label="Expiry Date"
+              label={this.state.dealState === "add" ? "Deal Duration (days)" : "Expiry Date"}
               onChange={(event) => {rest[event.target.id] = event.target.value}}
             />
           ) : (
@@ -216,7 +222,7 @@ class DetailedView extends React.Component {
               id="dealRemaining"
               value={rest.dealRemaining >= 0 ? rest.dealRemaining.toString() : "Unlimited"}
               label="Deals Remaining"
-              onChange={(event) => {rest[event.target.id] = event.target.value}}
+              onChange={(event) => {rest[event.target.id] = event.target.value; console.log(event.target.id, event.target.value)}}
             />
           ) : (
             <Detail
