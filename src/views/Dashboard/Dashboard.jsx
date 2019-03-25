@@ -34,7 +34,11 @@ import {
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
+// Utils
+import Utils from "components/Utils/Utils.jsx";
+
 const dashboardRoutes = [];
+const minute = 60 * 1000;
 
 function createData(id, name, views, claims, active) {
   return { id, name, views, claims, active };
@@ -49,10 +53,33 @@ const tablerows = [
 ];
 
 class DashboardPage extends React.Component {
-  state = {
-    value: 0,
-    mobileOpen: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+      mobileOpen: false,
+      lastUpdated: 0,
+    };
+
+    this.utils = new Utils();
+  }
+
+  componentDidMount() {
+    this.timeInterval = setInterval(() => {
+      this.setState({ lastUpdated: this.state.lastUpdated + 1 });
+    }, minute);
+
+    this.updateInterval = setInterval(() => {
+      this.setState({ lastUpdated: 0 });
+      this.utils.getData(global.id, global.bearer);
+    }, 30*minute);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeInterval);
+    clearInterval(this.updateInterval);
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -60,6 +87,7 @@ class DashboardPage extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -244,7 +272,7 @@ class DashboardPage extends React.Component {
                   </CardBody>
                   <CardFooter>
                     <div className={classes.stats}>
-                      <AccessTime /> updated 30 minutes ago
+                      <AccessTime /> updated {this.state.lastUpdated} minutes ago
                     </div>
                   </CardFooter>
                 </Card>
@@ -273,7 +301,7 @@ class DashboardPage extends React.Component {
                   </CardBody>
                   <CardFooter>
                     <div className={classes.stats}>
-                      <AccessTime /> updated 30 minutes ago
+                      <AccessTime /> updated {this.state.lastUpdated} minutes ago
                     </div>
                   </CardFooter>
                 </Card>
@@ -300,7 +328,7 @@ class DashboardPage extends React.Component {
                   </CardBody>
                   <CardFooter>
                     <div className={classes.stats}>
-                      <AccessTime /> updated 30 minutes ago
+                      <AccessTime /> updated {this.state.lastUpdated} minutes ago
                     </div>
                   </CardFooter>
                 </Card>
