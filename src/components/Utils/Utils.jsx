@@ -8,6 +8,7 @@ class Utils {
     this.pubKey = null;
     this.profile = null;
     this.promotions = null;
+    this.stats = null;
     this.mapsClient = new window.google.maps.Geocoder();
 
     this.getPubKey();
@@ -109,6 +110,12 @@ class Utils {
     result = await this.get('/deals/store', params);
     this.promotions = result;
     global.promotions = this.promotions;
+    console.log(result);
+
+    // 3. Analytics
+    result = await this.get('/stats', params);
+    this.stats = result;
+    global.stats = this.stats;
     console.log(result);
   }
 
