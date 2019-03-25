@@ -99,7 +99,6 @@ class DetailedView extends React.Component {
 
   handleDealAdd = (event, rest) => {
     this.setState({ dealState: "" });
-    console.log(rest);
     return rest.onDealAdd(event);
   }
 
@@ -128,7 +127,7 @@ class DetailedView extends React.Component {
   }
 
   render() {
-    const { classes, ...rest } = this.props
+    const { classes, ...rest } = this.props;
     return (
       <Card>
         <CardHeader color="warning" stats="true" icon="true">
@@ -215,12 +214,15 @@ class DetailedView extends React.Component {
           {(this.state.dealState === "add" || this.state.dealState === "edit") ? (
             <DetailEdit
               id="dealRemaining"
-              value={rest.dealRemaining}
+              value={rest.dealRemaining >= 0 ? rest.dealRemaining.toString() : "Unlimited"}
               label="Deals Remaining"
               onChange={(event) => {rest[event.target.id] = event.target.value}}
             />
           ) : (
-            <Detail label="Deals Remaining" value={rest.dealRemaining} />
+            <Detail
+              label="Deals Remaining"
+              value={rest.dealRemaining >= 0 ? rest.dealRemaining.toString() : "Unlimited"}
+            />
           )}
           <br/>
           <GridContainer>

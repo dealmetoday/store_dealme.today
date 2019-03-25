@@ -16,23 +16,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 // Helper functions
-let index = 0;
-function createData(title, claims, views, remaining) {
-  const data = {
-    id: index,
-    title: title,
-    desc: "Description for promotion " + index,
-    created: "--",
-    expires: "--",
-    claims: claims,
-    views: views,
-    remaining: remaining
-  }
-
-  index += 1;
-  return data;
-}
-
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -118,13 +101,8 @@ class PromotionsTable extends React.Component {
       orderBy: "title",
       page: 0,
       rowsPerPage: 10,
-      data: []
+      data: global.promotions,
     };
-
-    // Replace this with actual data!!!
-    for (var i = 0; i < 100; ++i) {
-      this.state.data.push(createData("Promotion " + i, 10 + i, 25 + i, 50 + i));
-    }
   };
 
   handleChangePage = (event, page) => {
@@ -168,13 +146,15 @@ class PromotionsTable extends React.Component {
                       onClick={event => this.props.onClick(event, promotion)}
                       aria-checked={selected}
                       tabIndex={-1}
-                      key={promotion.id}
+                      key={promotion._id}
                       selected={selected}
                     >
-                      <TableCell componend="th" scope="row">{promotion.title}</TableCell>
+                      <TableCell componend="th" scope="row">{promotion.description}</TableCell>
                       <TableCell align="right">{promotion.claims}</TableCell>
                       <TableCell align="right">{promotion.views}</TableCell>
-                      <TableCell align="right">{promotion.remaining}</TableCell>
+                      <TableCell align="right">
+                        {promotion.usesLeft >= 0 ? promotion.usesLeft : "Unlimited"}
+                      </TableCell>
                     </TableRow>
                   )
               })}

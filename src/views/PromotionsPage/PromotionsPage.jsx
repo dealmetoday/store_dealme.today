@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 // react plugin for creating charts
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -8,6 +9,7 @@ import Icon from "@material-ui/core/Icon";
 import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 // core components
+import DateUtils from "components/Utils/DateUtils.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
@@ -22,26 +24,16 @@ import DetailedView from "./Sections/DetailedView.jsx";
 import PromotionsTable from "./Sections/PromotionsTable.jsx";
 
 const dashboardRoutes = [];
-
-let counter = 0;
-function createData(index) {
-  const data = {
-    id: counter,
-    desc: "Promotion " + index,
-    views: 50 + index,
-    claims: 25 + index,
-    remaining: 10 + index,
-  };
-  counter += 1;
-  return data;
-}
+var dateutils = new DateUtils();
 
 class PromotionsPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      dataIndex: 0,
+      renderError: false,
+
+      selectedDeal: 0,
       tagIndex: 0,
 
       dealTitle: "[ No Promotion Selected ]",
@@ -52,28 +44,58 @@ class PromotionsPage extends React.Component {
       dealRemaining: "",
       dealViews: "",
 
-      dealData: [],
+      // dealData: global.promotions,
       dealTags: [],
     };
 
-    for (var i = 0; i < 100; ++i) {
-      this.state.dealData.push(createData(i));
-    }
-    for (i = 0; i < 5; ++i) {
+    for (var i = 0; i < 5; ++i) {
       this.state.dealTags.push("Tag " + i.toString());
     }
   }
 
+  componentDidCatch(error, info) {
+    console.log("PromotionsPage caught error");
+    console.log(error);
+    console.log(info);
+    this.setState({ renderError: true });
+  }
+
+  getIndexOfSelectedDeal = () => {
+    for (var i = 0; i < global.promotions.length; ++i) {
+      if (global.promotions[i]["_id"] === this.state.selectedDeal) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  formatDate = (isodate) => {
+    const date = new Date(Date.parse(isodate));
+
+    var formatted = date.getDate().toString();
+    formatted += " " + dateutils.numberToMonth[date.getMonth()];
+    formatted += " " + date.getFullYear();
+    return formatted;
+  }
+
   handleDealAdd = (event) => {
-    console.log("ADD " + this.state.dataIndex);
+    const index = this.getIndexOfSelectedDeal();
+    console.log("ADD ", index);
   }
 
   handleDealDelete = (event) => {
-    console.log("DELETE " + this.state.dataIndex);
+    const index = this.getIndexOfSelectedDeal();
+    if (index > -1) {
+      global.promomtions = global.promotions.splice(index, 1);
+
+      this.handleStateChange("");
+      this.handleTableClick();
+    }
   }
 
   handleDealEdit = (event) => {
-    console.log("EDIT " + this.state.dataIndex);
+    const index = this.getIndexOfSelectedDeal();
+    console.log("EDIT ", index);
   }
 
   handleStateChange = (event, state) => {
@@ -93,14 +115,25 @@ class PromotionsPage extends React.Component {
   }
 
   handleTableClick = (event, data) => {
-    this.setState({ dataIndex: data.id })
-    this.setState({ dealClaims: data.claims });
-    this.setState({ dealCreated: data.created })
-    this.setState({ dealDesc: data.title });
-    this.setState({ dealExpires: data.expires });
-    this.setState({ dealRemaining: data.remaining });
-    this.setState({ dealTitle: data.title });
-    this.setState({ dealViews: data.views });
+    if (data) {
+      this.setState({ selectedDeal: data._id });
+      this.setState({ dealClaims: data.claims });
+      this.setState({ dealCreated: this.formatDate(data.creationDate) });
+      this.setState({ dealDesc: data.description });
+      this.setState({ dealExpires: this.formatDate(data.expiryDate) });
+      this.setState({ dealRemaining: data.usesLeft });
+      this.setState({ dealTitle: data.description });
+      this.setState({ dealViews: data.views });
+    } else {
+      this.setState({ selectedDeal: 0 });
+      this.setState({ dealClaims: "" });
+      this.setState({ dealCreated: "" });
+      this.setState({ dealDesc: "" });
+      this.setState({ dealExpires: "" });
+      this.setState({ dealRemaining: "" });
+      this.setState({ dealTitle: "[ No Promotion Selected ]" });
+      this.setState({ dealViews: "" });
+    }
   };
 
   handleTagAdd = (event) => {
@@ -137,6 +170,9 @@ class PromotionsPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
+    if (this.state.renderError) {
+      return <Redirect to="/login" />
+    }
     return (
       <div>
         <DashboardHeader
