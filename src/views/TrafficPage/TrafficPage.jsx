@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
+import { Redirect } from "react-router-dom";
 
 // Material React Kit Components
 import Card from "components/Card/Card.jsx";
@@ -17,7 +18,8 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 import Accessibility from "@material-ui/icons/Accessibility";
 
 // Custom Page Sections
-import TrafficBreakdown from "./Sections/TrafficBreakdown.jsx";
+import Demographics from "./Sections/Demographics.jsx";
+import MainStats from "./Sections/MainStats.jsx";
 import TrafficTimeline from "./Sections/TrafficTimeline.jsx";
 
 const dashboardRoutes = [];
@@ -27,11 +29,22 @@ class TrafficPage extends React.Component {
     super(props);
 
     this.state = {
+      renderError: false,
     };
+  }
+
+  componentDidCatch(error, info) {
+    console.log("PromotionsPage caught error");
+    console.log(error);
+    console.log(info);
+    this.setState({ renderError: true });
   }
 
   render() {
     const { classes, ...rest } = this.props;
+    if (this.state.renderError) {
+      return <Redirect to="/login" />
+    }
     return (
       <div>
         <DashboardHeader
@@ -55,7 +68,8 @@ class TrafficPage extends React.Component {
                     <h3 className={classes.cardTitleWhite}>Traffic Breakdown</h3>
                   </CardHeader>
                   <CardBody>
-                    <TrafficBreakdown />
+                    <MainStats />
+                    <Demographics />
                   </CardBody>
                 </Card>
               </GridItem>

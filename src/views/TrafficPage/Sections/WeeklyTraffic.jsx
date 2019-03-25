@@ -25,7 +25,9 @@ class WeeklyTraffic extends React.Component {
     this.state = {};
   }
 
-  getConversionRate = (traffic, claims) => {
+  getConversionRate = (index) => {
+    const claims = global.stats.claimsWeek[index];
+    const traffic = global.stats.customersWeek[index];
     const conversion = Math.round((claims / traffic) * 100);
     return conversion.toString() + "%";
   }
@@ -48,19 +50,19 @@ class WeeklyTraffic extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {week.map((row, index) => (
+              {[6, 5, 4, 3, 2, 1, 0].map((index) => (
                 <TableRow key={index}>
                   <TableCell component="th" scope="row" align="left">
-                    {dateutils.getOffsetDate(6 - index)}
+                    {dateutils.getOffsetDate(index)}
                   </TableCell>
                   <TableCell component="th" scope="row" align="right">
-                    {row.traffic}
+                    {global.stats.customersWeek[index]}
                   </TableCell>
                   <TableCell component="th" scope="row" align="right">
-                    {row.claims}
+                    {global.stats.claimsWeek[index]}
                   </TableCell>
                   <TableCell component="th" scope="row" align="right">
-                    {this.getConversionRate(row.traffic, row.claims)}
+                    {this.getConversionRate(index)}
                   </TableCell>
                 </TableRow>
               ))}
