@@ -10,6 +10,8 @@ import Input from '@material-ui/core/Input';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
 // Material React Kit Components
@@ -105,6 +107,7 @@ class PromotionsPage extends React.Component {
 
     this.state = {
       renderError: false,
+      anchorMenu: null,
       dealState: "",
 
       selectedDeal: 0,
@@ -117,14 +120,15 @@ class PromotionsPage extends React.Component {
       dealExpires: "",
       dealRemaining: "",
       dealViews: "",
-
-      // dealData: global.promotions,
       dealTags: [],
     };
+    this.tagIdToString = {};
+    this.tagStringToId = {};
 
-    for (var i = 0; i < 5; ++i) {
-      this.state.dealTags.push("Tag " + i.toString());
-    }
+    global.tags.forEach((tag) => {
+      this.tagIdToString[tag._id] = tag.key;
+      this.tagStringToId[tag.key] = tag._id;
+    });
   }
 
   componentDidCatch(error, info) {
@@ -153,10 +157,15 @@ class PromotionsPage extends React.Component {
   }
 
   handleDealAdd = (event) => {
-    this.handleDealState("");
+    this.setState({ dealState: "" });
 
     var expires = new Date();
     expires.setDate(expires.getDate() + parseInt(this.state.dealExpires, 10));
+
+    let tags = [];
+    this.state.dealTags.forEach(tag => {
+      tags.push(this.tagStringToId[tag]);
+    })
 
     var promotion = {
       _id: "",
@@ -168,36 +177,35 @@ class PromotionsPage extends React.Component {
       isActive: true,
       mall: "",
       store: "",
-      tags: ["", ""],
+      tags: tags,
       usesLeft: parseInt(this.state.dealRemaining, 10),
       views: 0,
     }
     global.promotions.push(promotion);
+    this.setDefaultDetails();
   }
 
   handleDealDiscard = (event) => {
-    this.handleDealState("");
+    if (this.state.dealState === "add") {
+      this.setDefaultDetails();
+    }
+    this.setState({ dealState: "" });
   }
 
   handleDealDelete = (event) => {
-    this.handleDealState("");
+    this.setState({ dealState: "" });
 
     const index = this.getIndexOfSelectedDeal();
     if (index > -1) {
       global.promomtions = global.promotions.splice(index, 1);
-
-      this.handleStateChange("");
-      this.handleTableClick();
     }
+    this.setDefaultDetails();
   }
 
   handleDealEdit = (event) => {
-    this.handleDealState("");
+    this.setState({ dealState: "" });
 
-    const index = this.getIndexOfSelectedDeal();
-    console.log(this.state);
-
-    let promotion = global.promotions[index];
+    let promotion = global.promotions[this.getIndexOfSelectedDeal()];
     if (this.state.dealDesc) {
       promotion.description = this.state.dealDesc;
     }
@@ -211,21 +219,34 @@ class PromotionsPage extends React.Component {
     if (this.state.dealRemaining) {
       promotion.usesLeft = parseInt(this.state.dealRemaining, 10);
     }
+
+    let tags = [];
+    this.state.dealTags.forEach(tag => {
+      tags.push(this.tagStringToId[tag]);
+    })
+    promotion.tags = tags;
+    this.setDefaultDetails();
   }
 
   handleDealState = (event, state) => {
     this.setState({ dealState: state });
 
     if (state === "add") {
+      this.setDefaultDetails();
+
       const date = new Date();
       this.setState({ dealClaims: 0 });
       this.setState({ dealCreated: date.toISOString() });
-      this.setState({ dealDesc: "" });
-      this.setState({ dealExpires: "" });
-      this.setState({ dealRemaining: "" });
-      this.setState({ dealTitle: "" });
       this.setState({ dealViews: 0 });
     }
+  }
+
+  handleMenuClose = (event) => {
+    this.setState({ anchorMenu: null });
+  }
+
+  handleMenuOpen = (event) => {
+    this.setState({ [event.target.id]: event.currentTarget })
   }
 
   handleTagClick = (event, index) => {
@@ -234,45 +255,32 @@ class PromotionsPage extends React.Component {
 
   handleTableClick = (event, data) => {
     if (data) {
+      var tags = [];
+      data.tags.forEach((tag) => {
+        tags.push(this.tagIdToString[tag]);
+      })
+
       this.setState({ selectedDeal: data._id });
       this.setState({ dealClaims: data.claims });
       this.setState({ dealCreated: dateutils.formatISODate(data.creationDate) });
       this.setState({ dealDesc: data.description });
       this.setState({ dealExpires: dateutils.formatISODate(data.expiryDate) });
       this.setState({ dealRemaining: data.usesLeft });
+      this.setState({ dealTags: tags });
       this.setState({ dealTitle: data.description });
       this.setState({ dealViews: data.views });
     } else {
-      this.setState({ selectedDeal: 0 });
-      this.setState({ dealClaims: "" });
-      this.setState({ dealCreated: "" });
-      this.setState({ dealDesc: "" });
-      this.setState({ dealExpires: "" });
-      this.setState({ dealRemaining: "" });
-      this.setState({ dealTitle: "[ No Promotion Selected ]" });
-      this.setState({ dealViews: "" });
+      this.setDefaultDetails();
     }
   };
 
-  handleTagAdd = (event) => {
-    if (this.state.dealTags.length >= 5) {
-      return; // Maximum 5 tags per promotion
+  handleTagAdd = (event, tag) => {
+    if (this.state.dealTags.length <= 5 && !this.state.dealTags.includes(tag)) {
+      let newtags = this.state.dealTags;
+      newtags.push(tag);
+      this.setState({ dealTags: newtags.sort() });
     }
-
-    let newtags = this.state.dealTags;
-    if (!newtags.includes("Tag 0")) {
-      newtags.push("Tag 0");
-    } else if (!newtags.includes("Tag 1")) {
-      newtags.push("Tag 1");
-    } else if (!newtags.includes("Tag 2")) {
-      newtags.push("Tag 2");
-    } else if (!newtags.includes("Tag 3")) {
-      newtags.push("Tag 3");
-    } else if (!newtags.includes("Tag 4")) {
-      newtags.push("Tag 4");
-    }
-
-    this.setState({ dealTags: newtags.sort() });
+    this.handleMenuClose();
   }
 
   handleTagRemove = (event) => {
@@ -284,6 +292,18 @@ class PromotionsPage extends React.Component {
 
     newtags.splice(index, 1);
     this.setState({ dealTags: newtags });
+  }
+
+  setDefaultDetails = () => {
+    this.setState({ selectedDeal: 0 });
+    this.setState({ dealClaims: "" });
+    this.setState({ dealCreated: "" });
+    this.setState({ dealDesc: "" });
+    this.setState({ dealExpires: "" });
+    this.setState({ dealRemaining: "" });
+    this.setState({ dealTags: [] });
+    this.setState({ dealTitle: "[ No Promotion Selected ]" });
+    this.setState({ dealViews: "" });
   }
 
   render() {
@@ -457,10 +477,40 @@ class PromotionsPage extends React.Component {
                           })}
                         </List>
                         <div align="right">
-                          <Button round color="warning" size="sm" onClick={this.onTagAdd}>
+                          <Button
+                            id="anchorMenu"
+                            disabled={this.state.dealState === "" || this.state.dealState === "delete"}
+                            round
+                            color="warning"
+                            size="sm"
+                            onClick={this.handleMenuOpen}
+                          >
                             Add Tag
                           </Button>
-                          <Button round color="warning" size="sm" onClick={this.onTagRemove}>
+                          <Menu
+                            id="menu_tags"
+                            anchorEl={this.state.anchorMenu}
+                            open={Boolean(this.state.anchorMenu)}
+                            onClose={this.handleMenuClose}
+                          >
+                            {global.tags.map((tag) => (
+                              <MenuItem
+                                key={tag._id}
+                                id="tag"
+                                value={tag.key}
+                                onClick={event => this.handleTagAdd(event, tag.key)}
+                              >
+                                {tag.key}
+                              </MenuItem>
+                            ))}
+                          </Menu>
+                          <Button
+                            disabled={this.state.dealState === "" || this.state.dealState === "delete"}
+                            round
+                            color="warning"
+                            size="sm"
+                            onClick={this.handleTagRemove}
+                          >
                             Remove Tag
                           </Button>
                         </div>
@@ -509,9 +559,7 @@ class PromotionsPage extends React.Component {
                     <h3 className={classes.cardTitleWhite}>All Promotions</h3>
                   </CardHeader>
                   <CardBody>
-                    <PromotionsTable
-                      onClick={this.handleTableClick}
-                    />
+                    <PromotionsTable onClick={this.handleTableClick} />
                   </CardBody>
                 </Card>
               </GridItem>
