@@ -50,7 +50,7 @@ class LandingPage extends React.Component {
     return (
       <div>
         <Header
-          color="transparent"
+          color="dark"
           routes={dashboardRoutes}
           brand="DealMe"
           rightLinks={<HeaderLinks history={this.props.history} />}
