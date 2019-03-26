@@ -24,11 +24,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
-import {
-  trafficChart,
-  viewChart,
-  claimChart
-} from "variables/charts.jsx";
+import { chartAnimation, chartOptions } from "variables/charts.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
@@ -263,13 +259,8 @@ class DashboardPage extends React.Component {
                         series: [global.stats.customersWeek.reverse()],
                       }}
                       type="Line"
-                      options={{
-                        lineSmooth: Chartist.Interpolation.cardinal({ tension: 0 }),
-                        low: 0,
-                        high: Math.max(global.stats.customersWeek) * 1.1,
-                        chartPadding: { top: 5, right: 5, bottom: 5, left: 5 }
-                      }}
-                      listener={trafficChart.animation}
+                      options={chartOptions(Math.max(global.stats.customersWeek))}
+                      listener={chartAnimation}
                     />
                   </CardHeader>
                   <CardBody>
@@ -289,13 +280,8 @@ class DashboardPage extends React.Component {
                         series: [global.stats.viewsWeek.reverse()]
                       }}
                       type="Line"
-                      options={{
-                        lineSmooth: Chartist.Interpolation.cardinal({ tension: 0 }),
-                        low: 0,
-                        high: Math.max(global.stats.viewsWeek) * 1.1,
-                        chartPadding: { top: 5, right: 5, bottom: 5, left: 5 }
-                      }}
-                      listener={viewChart.animation}
+                      options={chartOptions(Math.max(global.stats.viewsWeek))}
+                      listener={chartAnimation}
                     />
                   </CardHeader>
                   <CardBody>
@@ -313,13 +299,8 @@ class DashboardPage extends React.Component {
                         series: [global.stats.claimsWeek.reverse()],
                       }}
                       type="Line"
-                      options={{
-                        lineSmooth: Chartist.Interpolation.cardinal({ tension: 0 }),
-                        low: 0,
-                        high: Math.max(global.stats.claimsWeek) * 1.1,
-                        chartPadding: { top: 5, right: 5, bottom: 5, left: 5 }
-                      }}
-                      listener={claimChart.animation}
+                      options={chartOptions(Math.max(global.stats.claimsWeek))}
+                      listener={chartAnimation}
                     />
                   </CardHeader>
                   <CardBody>

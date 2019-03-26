@@ -15,61 +15,10 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
 // Styles, Icons, and Images
+import { chartAnimation, chartOptions } from "variables/charts.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-const Chartist = require("chartist");
 var dateutils = new DateUtils();
-
-const chartAnimation = {
-  draw: function(data) {
-    if (data.type === "line" || data.type === "area") {
-      data.element.animate({
-        d: {
-          begin: 600,
-          dur: 700,
-          from: data.path
-            .clone()
-            .scale(1, 0)
-            .translate(0, data.chartRect.height())
-            .stringify(),
-          to: data.path.clone().stringify(),
-          easing: Chartist.Svg.Easing.easeOutQuint
-        }
-      });
-    } else if (data.type === "point") {
-      data.element.animate({
-        opacity: {
-          begin: (data.index + 1) * 80,
-          dur: 500,
-          from: 0,
-          to: 1,
-          easing: "ease"
-        }
-      });
-    }
-  }
-}
-
-const chartOptions = function(maxval){
-  // Round up to nearest ten
-  maxval = (maxval % 10 === 0)
-    ? maxval + 10
-    : Math.ceil(maxval / 10) * 10;
-
-  return {
-    lineSmooth: Chartist.Interpolation.cardinal({
-      tension: 0
-    }),
-    low: 0,
-    high: maxval,
-    chartPadding: {
-      top: 5,
-      right: 5,
-      bottom: 5,
-      left: 5
-    }
-  }
-};
 
 class MonthlyTraffic extends React.Component {
   constructor(props) {
