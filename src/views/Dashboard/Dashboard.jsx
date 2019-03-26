@@ -1,31 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-// react plugin for creating charts
-import ChartistGraph from "react-chartist";
-// @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import DashboardHeader from "components/Header/DashboardHeader.jsx";
-import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
-import Accessibility from "@material-ui/icons/Accessibility";
-import Visibility from "@material-ui/icons/Visibility";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-// core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
+import ChartistGraph from "react-chartist";
+
+// Material-UI Components
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import DashboardHeader from "components/Header/DashboardHeader.jsx";
+import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
 
+// Material React Kit Components
+import Accessibility from "@material-ui/icons/Accessibility";
+import Icon from "@material-ui/core/Icon";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Visibility from "@material-ui/icons/Visibility";
+
+// Styles, Icons, and Images
 import { chartAnimation, chartOptions } from "variables/charts.jsx";
-
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 // Utils
