@@ -134,7 +134,7 @@ class LoginPage extends React.Component {
 
       await this.utils.getData(global.id, global.bearer);
 
-      this.props.history.push("/admin/profile");
+      this.props.history.push("/admin/dashboard");
     }
   }
 

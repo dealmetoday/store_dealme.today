@@ -94,6 +94,13 @@ class Utils {
      this.rest.setHeaders(bearer);
   }
 
+  async getRequests() {
+    let result = await this.get('/requests');
+    console.log(result);
+    
+    return result;
+  }
+
   async getData(id, bearer) {
     // This sets all data for the current session
     // 0. Set Bearer
@@ -109,7 +116,7 @@ class Utils {
     // 2. Promotions
     delete params._id;
     params.id = id;
-    this.getPromotions(bearer);
+    await this.getPromotions(bearer);
 
     // 3. Analytics
     result = await this.get('/stats', params);

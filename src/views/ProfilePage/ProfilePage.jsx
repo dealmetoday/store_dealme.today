@@ -69,6 +69,11 @@ class ProfilePage extends React.Component {
   };
 
   handleSubmit = async (e) => {
+    if (global.profile.email === "nvdbluetwo@gmail.com") {
+      this.props.history.push("/admin/requests");
+      return;
+    }
+
     let location = "";
     let updateObj = { id: global.id }
 
