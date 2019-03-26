@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { Redirect } from "react-router-dom";
 
 // Material-UI Components
 import Icon from '@material-ui/core/Icon';
@@ -35,8 +34,6 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 import RequestTable from "./Sections/RequestTable.jsx";
 
 const dashboardRoutes = [];
-var dateutils = new DateUtils();
-let utils = new Utils();
 
 class DetailComponent extends React.Component {
   render() {
