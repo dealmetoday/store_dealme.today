@@ -132,13 +132,10 @@ class Utils {
     console.log(result);
 
     // 5. Requests
-    try {
+    if (global.profile.email === "nvdbluetwo@gmail.com") {
       result = await this.getRequests();
       this.requests = result;
       global.requests = this.requests;
-    } catch {
-      this.requests = [];
-      global.requests = [];
     }
   }
 
