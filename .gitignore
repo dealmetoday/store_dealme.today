@@ -54,8 +54,8 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
+# Build
+build/
 
-# next.js build output
-.next
+# WebStorm
+.idea
