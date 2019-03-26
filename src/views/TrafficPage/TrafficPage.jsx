@@ -25,14 +25,6 @@ import TrafficTimeline from "./Sections/TrafficTimeline.jsx";
 const dashboardRoutes = [];
 
 class TrafficPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      renderError: false,
-    };
-  }
-
   componentDidCatch(error, info) {
     console.log("PromotionsPage caught error");
     console.log(error);
@@ -42,7 +34,7 @@ class TrafficPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    if (this.state.renderError) {
+    if (typeof global.stats === "undefined") {
       return <Redirect to="/login" />
     }
     return (

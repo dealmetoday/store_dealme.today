@@ -36,8 +36,11 @@ class PromotionsTable extends React.Component {
 
   render() {
     const { rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, global.requests.length - page * rowsPerPage);
+    if (typeof global.requests === "undefined") {
+      return null;
+    }
 
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, global.requests.length - page * rowsPerPage);
     return (
       <div>
         <div>
@@ -75,7 +78,7 @@ class PromotionsTable extends React.Component {
         <TablePagination
           rowsPerPageOptions={[5, 10, 20]}
           component="div"
-          count={global.promotions.length}
+          count={global.requests.length}
           rowsPerPage={this.state.rowsPerPage}
           page={this.state.page}
           backIconButtonProps={{

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import ChartistGraph from "react-chartist";
+import { Redirect } from "react-router-dom";
 
 // Material-UI Components
 import Card from "components/Card/Card.jsx";
@@ -31,7 +32,6 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 // Utils
 import Utils from "components/Utils/Utils.jsx";
 
-const Chartist = require("chartist");
 const dashboardRoutes = [];
 const minute = 60 * 1000;
 
@@ -77,6 +77,14 @@ class DashboardPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
+
+    if (typeof global.id === "undefined"
+      || typeof global.bearer === "undefined"
+      || typeof global.promotions === "undefined"
+      || typeof global.stats === "undefined")
+    {
+      return <Redirect to="/login" />
+    }
     return (
       <div>
         <DashboardHeader

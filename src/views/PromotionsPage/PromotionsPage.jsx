@@ -107,8 +107,13 @@ class PromotionsPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.renderError = (typeof global.promotions === "undefined"
+      || typeof global.tags === "undefined");
+    if (this.renderError) {
+      return;
+    }
+
     this.state = {
-      renderError: false,
       anchorMenu: null,
       dealState: "",
 
@@ -222,8 +227,6 @@ class PromotionsPage extends React.Component {
       promotion.usesLeft = parseInt(this.state.dealRemaining, 10);
     }
     utils.dealUpdate(global.bearer, promotion, index, this.handleTableClick);
-    this.setDefaultDetails();
-    this.handleTableClick(null, null);
   }
 
   handleDealState = (event, state) => {
@@ -306,7 +309,7 @@ class PromotionsPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    if (this.state.renderError) {
+    if (this.renderError) {
       return <Redirect to="/login" />
     }
     return (

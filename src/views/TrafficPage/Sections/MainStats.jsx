@@ -40,6 +40,9 @@ class MainStats extends React.Component {
 
   render() {
     const { classes } = this.props
+    if (typeof global.stats === "undefined") {
+      return null;
+    }
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>

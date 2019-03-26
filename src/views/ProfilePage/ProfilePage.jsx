@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -45,6 +47,13 @@ const styles = {
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.renderError = (typeof global.profile === "undefined"
+      || typeof global.storeLoc === "undefined"
+      || typeof global.id === "undefined");
+    if (this.renderError) {
+      return;
+    }
 
     this.state = {
       name: "",
@@ -120,6 +129,9 @@ class ProfilePage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
+    if (this.renderError) {
+      return <Redirect to="/login" />
+    }
     return (
       <div>
         <DashboardHeader

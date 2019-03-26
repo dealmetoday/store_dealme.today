@@ -5,14 +5,6 @@ import { Redirect } from "react-router-dom";
 
 // Material-UI Components
 import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
 
 // Material React Kit Components
 import Button from "components/CustomButtons/Button.jsx";
@@ -22,10 +14,8 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
-import DateUtils from "components/Utils/DateUtils.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Utils from "components/Utils/Utils.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
@@ -35,8 +25,6 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 import RequestTable from "./Sections/RequestTable.jsx";
 
 const dashboardRoutes = [];
-var dateutils = new DateUtils();
-let utils = new Utils();
 
 class DetailComponent extends React.Component {
   render() {
@@ -72,9 +60,9 @@ class AdminPage extends React.Component {
     };
   }
 
-  getIndexOfSelectedDeal = () => {
-    for (var i = 0; i < global.promotions.length; ++i) {
-      if (global.promotions[i]["_id"] === this.state.selectedDeal) {
+  getIndexOfSelectedRequest = () => {
+    for (var i = 0; i < global.requests.length; ++i) {
+      if (global.requests[i]["_id"] === this.state.selectedRequest) {
         return i;
       }
     }
@@ -109,6 +97,9 @@ class AdminPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
+    if (typeof global.requests === "undefined") {
+      return <Redirect to="/login" />
+    }
     return (
       <div>
         <DashboardHeader

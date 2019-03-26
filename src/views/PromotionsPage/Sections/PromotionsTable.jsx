@@ -56,6 +56,9 @@ class PromotionsTableHeader extends React.Component {
 
   render() {
     const { order, orderBy } = this.props;
+    if (typeof global.promotions === "undefined") {
+      return null;
+    }
     return (
       <TableHead>
         <TableRow>
