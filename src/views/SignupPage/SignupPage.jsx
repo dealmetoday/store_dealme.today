@@ -37,6 +37,12 @@ import image from "assets/img/banner_busymall.jpeg";
 // Utils
 import Utils from "components/Utils/Utils.jsx";
 
+// Redux and cookies ...
+import { withCookies } from 'react-cookie';
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
+import { updateProfile } from 'redux/actions.js';
+
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
@@ -410,4 +416,14 @@ class SignupPage extends React.Component {
   }
 }
 
-export default withStyles(signupPageStyle)(SignupPage);
+let mapStateToProps = (state) => {
+  return {
+    todos: state.todos,
+    userInfo: state.userInfo,
+  };
+}
+
+export default compose(
+  withStyles(signupPageStyle),
+  connect(mapStateToProps, null)
+)(SignupPage);

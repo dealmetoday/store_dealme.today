@@ -26,6 +26,7 @@
     "axios": "^0.18.0",
     "chartist": "^0.11.0",
     "classnames": "^2.2.6",
+    "compose": "^0.1.2",
     "css-loader": "^2.1.1",
     "history": "^4.9.0",
     "node-sass": "^4.11.0",
@@ -34,13 +35,16 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
     "react-chartist": "^0.13.3",
+    "react-cookie": "^3.1.1",
     "react-datetime": "^2.16.3",
     "react-dom": "^16.8.5",
     "react-mobile-store-button": "0.0.4",
+    "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
     "react-slick": "^0.23.2",
-    "react-swipeable-views": "^0.13.1"
+    "react-swipeable-views": "^0.13.1",
+    "redux": "^4.0.1"
   },
   "browserslist": [
     ">0.2%",

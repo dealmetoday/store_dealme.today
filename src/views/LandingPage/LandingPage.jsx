@@ -20,9 +20,31 @@ import AboutSection from "./Sections/AboutSection.jsx";
 import TeamSection from "./Sections/TeamSection.jsx";
 import WorkSection from "./Sections/WorkSection.jsx";
 
+// Redux and cookies ...
+import { withCookies } from 'react-cookie';
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
+import { updateProfile, addTodo } from 'redux/actions.js';
+
 const dashboardRoutes = [];
 
 class LandingPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      profile: this.props.profile
+    }
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    let testProfile = { id: "5c82fd4b481499a8c03bca68" };
+    dispatch(updateProfile(testProfile));
+    console.log("Here");
+    console.log(this.props.profile);
+    console.log("There");
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -85,4 +107,14 @@ class LandingPage extends React.Component {
   }
 }
 
-export default withStyles(landingPageStyle)(LandingPage);
+let mapStateToProps = (state) => {
+  return {
+    todos: state.todos,
+    profile: state.userInfo.profile,
+  };
+}
+
+export default compose(
+  withStyles(landingPageStyle),
+  connect(mapStateToProps, null)
+)(LandingPage);
