@@ -16,6 +16,8 @@ import LandingPage from "views/LandingPage/LandingPage.jsx";
 import LoginPage from "views/LoginPage/LoginPage.jsx";
 import SignupPage from "views/SignupPage/SignupPage.jsx";
 
+import AdminPage from "views/AdminPage/AdminPage.jsx";
+
 var hist = createBrowserHistory();
 
 const Page404 = ({ location }) => (
@@ -33,6 +35,7 @@ ReactDOM.render(
       <Route exact={true} path="/admin/profile" component={ProfilePage} />
       <Route exact={true} path="/admin/promotions" component={PromotionsPage} />
       <Route exact={true} path="/admin/traffic" component={TrafficPage} />
+      <Route exact={true} path="/admin/requests" component={AdminPage} />
 
       <Route exact={true} path="/login" component={LoginPage} />
       <Route exact={true} path="/signup" component={SignupPage} />
