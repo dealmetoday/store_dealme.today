@@ -43,25 +43,25 @@ class WeeklyTraffic extends React.Component {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell align="left">Date</TableCell>
-                <TableCell align="right">Traffic</TableCell>
-                <TableCell align="right">Claims</TableCell>
-                <TableCell align="right">Conversion</TableCell>
+                <TableCell padding="none" align="left">Date</TableCell>
+                <TableCell padding="none" align="right">Traffic</TableCell>
+                <TableCell padding="none" align="right">Claims</TableCell>
+                <TableCell padding="none" align="right">Conversion</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {[6, 5, 4, 3, 2, 1, 0].map((index) => (
                 <TableRow key={index}>
-                  <TableCell component="th" scope="row" align="left">
+                  <TableCell padding="none" component="th" scope="row" align="left">
                     {dateutils.getOffsetDate(index)}
                   </TableCell>
-                  <TableCell component="th" scope="row" align="right">
+                  <TableCell padding="none" component="th" scope="row" align="right">
                     {global.stats.customersWeek[index]}
                   </TableCell>
-                  <TableCell component="th" scope="row" align="right">
+                  <TableCell padding="none" component="th" scope="row" align="right">
                     {global.stats.claimsWeek[index]}
                   </TableCell>
-                  <TableCell component="th" scope="row" align="right">
+                  <TableCell padding="none" component="th" scope="row" align="right">
                     {this.getConversionRate(index)}
                   </TableCell>
                 </TableRow>

@@ -44,9 +44,9 @@ class PromotionsTable extends React.Component {
           <Table aria-labelledby="tableTitle">
             <TableHead>
               <TableRow>
-                <TableCell align="left">Action</TableCell>
-                <TableCell align="left">Model</TableCell>
-                <TableCell align="left">Request Value</TableCell>
+                <TableCell padding="none" align="left">Action</TableCell>
+                <TableCell padding="none" align="left">Model</TableCell>
+                <TableCell padding="none" align="left">Request Value</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -59,14 +59,14 @@ class PromotionsTable extends React.Component {
                     tabIndex={-1}
                     key={request._id}
                   >
-                    <TableCell component="th" scope="row">{request.content.request}</TableCell>
-                    <TableCell align="left">{request.model}</TableCell>
-                    <TableCell align="left">{request.content.key}</TableCell>
+                    <TableCell padding="none" component="th" scope="row">{request.content.request}</TableCell>
+                    <TableCell padding="none" align="left">{request.model}</TableCell>
+                    <TableCell padding="none" align="left">{request.content.key}</TableCell>
                   </TableRow>
                 ))}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 49 * emptyRows }}>
-                    <TableCell colSpan={4} />
+                    <TableCell padding="none" colSpan={4} />
                   </TableRow>
                 )}
             </TableBody>

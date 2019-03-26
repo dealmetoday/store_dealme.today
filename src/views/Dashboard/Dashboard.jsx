@@ -214,11 +214,11 @@ class DashboardPage extends React.Component {
                     <Table className={classes.table}>
                       <TableHead>
                         <TableRow>
-                          <TableCell></TableCell>
+                          <TableCell padding="none"></TableCell>
                           <TableCell align="left">Promotion</TableCell>
-                          <TableCell align="right">Views</TableCell>
-                          <TableCell align="right">Claims</TableCell>
-                          <TableCell align="right">Status</TableCell>
+                          <TableCell padding="none" align="right">Views</TableCell>
+                          <TableCell padding="none" align="right">Claims</TableCell>
+                          <TableCell padding="none" align="right">Status</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -226,19 +226,19 @@ class DashboardPage extends React.Component {
                           .sort((a, b) => (a.claims < b.claims) ? 1 : -1)
                           .map((promotion, index) => (
                             <TableRow key={index}>
-                              <TableCell component="th" scope="row" align="right">
+                              <TableCell padding="none" component="th" scope="row" align="left">
                                 {index + 1}
                               </TableCell>
                               <TableCell component="th" scope="row" align="left">
                                 {promotion.description}
                               </TableCell>
-                              <TableCell component="th" scope="row" align="right">
+                              <TableCell padding="none" component="th" scope="row" align="right">
                                 {promotion.views}
                               </TableCell>
-                              <TableCell component="th" scope="row" align="right">
+                              <TableCell padding="none" component="th" scope="row" align="right">
                                 {promotion.claims}
                               </TableCell>
-                              <TableCell component="th" scope="row" align="right">
+                              <TableCell padding="none" component="th" scope="row" align="right">
                                 {promotion.isActive ? "Active" : "Inactive"}
                               </TableCell>
                             </TableRow>
