@@ -25,6 +25,7 @@ import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 import DateUtils from "components/Utils/DateUtils.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
+import Utils from "components/Utils/Utils.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
@@ -36,6 +37,7 @@ import PromotionsTable from "./Sections/PromotionsTable.jsx";
 
 const dashboardRoutes = [];
 var dateutils = new DateUtils();
+var utils = new Utils();
 
 class DetailComponent extends React.Component {
   render() {
@@ -147,15 +149,6 @@ class PromotionsPage extends React.Component {
     return -1;
   }
 
-  formatDate = (isodate) => {
-    const date = new Date(Date.parse(isodate));
-
-    var formatted = date.getDate().toString();
-    formatted += " " + dateutils.numberToMonth[date.getMonth()];
-    formatted += " " + date.getFullYear();
-    return formatted;
-  }
-
   handleDealAdd = (event) => {
     this.setState({ dealState: "" });
 
@@ -163,25 +156,21 @@ class PromotionsPage extends React.Component {
     expires.setDate(expires.getDate() + parseInt(this.state.dealExpires, 10));
 
     let tags = [];
-    this.state.dealTags.forEach(tag => {
-      tags.push(this.tagStringToId[tag]);
-    })
+    this.state.dealTags.forEach(tag => { tags.push(this.tagStringToId[tag]) });
 
     var promotion = {
-      _id: "",
-      claims: 0,
-      creationDate: this.state.dealCreated,
+      creationDate: dateutils.convertISOToEpoch(this.state.dealCreated),
       description: this.state.dealDesc,
-      expiryDate: expires.toISOString(),
+      expiryDate: dateutils.convertDateToEpoch(expires),
       format: "Percent",
       isActive: true,
-      mall: "",
-      store: "",
+      mall: global.profile.mall,
+      store: global.profile._id,
       tags: tags,
       usesLeft: parseInt(this.state.dealRemaining, 10),
-      views: 0,
     }
-    global.promotions.push(promotion);
+
+    utils.dealAdd(global.bearer, promotion, this.handleTableClick);
     this.setDefaultDetails();
   }
 
@@ -197,7 +186,12 @@ class PromotionsPage extends React.Component {
 
     const index = this.getIndexOfSelectedDeal();
     if (index > -1) {
-      global.promomtions = global.promotions.splice(index, 1);
+      let promotion = {
+        id: global.promotions[index]._id, // Remove this once DB is updated
+        dealID: global.promotions[index]._id,
+        storeID: global.profile._id,
+      };
+      utils.dealDelete(global.bearer, promotion, index, this.handleTableClick);
     }
     this.setDefaultDetails();
   }
@@ -205,7 +199,15 @@ class PromotionsPage extends React.Component {
   handleDealEdit = (event) => {
     this.setState({ dealState: "" });
 
-    let promotion = global.promotions[this.getIndexOfSelectedDeal()];
+    const index = this.getIndexOfSelectedDeal();
+
+    let tags = [];
+    this.state.dealTags.forEach(tag => { tags.push(this.tagStringToId[tag]) });
+
+    let promotion = {
+      id: global.promotions[index]._id,
+      tags: tags,
+    }
     if (this.state.dealDesc) {
       promotion.description = this.state.dealDesc;
     }
@@ -214,18 +216,14 @@ class PromotionsPage extends React.Component {
     {
       var expires = new Date();
       expires.setDate(expires.getDate() + parseInt(this.state.dealExpires, 10));
-      promotion.expiryDate = expires.toISOString();
+      promotion.expiryDate = dateutils.convertDateToEpoch(expires);
     }
     if (this.state.dealRemaining) {
       promotion.usesLeft = parseInt(this.state.dealRemaining, 10);
     }
-
-    let tags = [];
-    this.state.dealTags.forEach(tag => {
-      tags.push(this.tagStringToId[tag]);
-    })
-    promotion.tags = tags;
+    utils.dealUpdate(global.bearer, promotion, index, this.handleTableClick);
     this.setDefaultDetails();
+    this.handleTableClick(null, null);
   }
 
   handleDealState = (event, state) => {
@@ -262,9 +260,9 @@ class PromotionsPage extends React.Component {
 
       this.setState({ selectedDeal: data._id });
       this.setState({ dealClaims: data.claims });
-      this.setState({ dealCreated: dateutils.formatISODate(data.creationDate) });
+      this.setState({ dealCreated: data.creationDate });
       this.setState({ dealDesc: data.description });
-      this.setState({ dealExpires: dateutils.formatISODate(data.expiryDate) });
+      this.setState({ dealExpires: data.expiryDate });
       this.setState({ dealRemaining: data.usesLeft });
       this.setState({ dealTags: tags });
       this.setState({ dealTitle: data.description });
@@ -396,7 +394,7 @@ class PromotionsPage extends React.Component {
                     <br/>
                     <Detail
                       label="Date Created"
-                      value={dateutils.formatISODate(this.state.dealCreated)}
+                      value={dateutils.convertISOToFormatted(this.state.dealCreated)}
                     />
                     {(this.state.dealState === "add" || this.state.dealState === "edit") ? (
                       <DetailEdit
@@ -414,7 +412,7 @@ class PromotionsPage extends React.Component {
                     ) : (
                       <Detail
                         label="ExpiryDate"
-                        value={dateutils.formatISODate(this.state.dealExpires)}
+                        value={dateutils.convertISOToFormatted(this.state.dealExpires)}
                       />
                     )}
                     <br/>
@@ -452,7 +450,7 @@ class PromotionsPage extends React.Component {
                           label="Description"
                           multiline
                           fullWidth
-                          rows="11"
+                          rows="6"
                           defaultValue={this.state.dealDesc}
                           className={classes.textField}
                           margin="normal"

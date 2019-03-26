@@ -28,7 +28,8 @@ class Utils {
   }
 
   async delete(endpoint, body) {
-    return await this.rest.delete(endpoint, body);
+    let data = { data: body }
+    return await this.rest.delete(endpoint, data);
   }
 
   async getPubKey() {
@@ -108,10 +109,7 @@ class Utils {
     // 2. Promotions
     delete params._id;
     params.id = id;
-    result = await this.get('/deals/store', params);
-    this.promotions = result;
-    global.promotions = this.promotions;
-    console.log(result);
+    this.getPromotions(bearer);
 
     // 3. Analytics
     result = await this.get('/stats', params);
@@ -123,6 +121,49 @@ class Utils {
     result = await this.get('/tags', params);
     this.tags = result;
     global.tags = this.tags;
+    console.log(result);
+  }
+
+  async dealAdd(bearer, deal, onComplete) {
+    await this.setHeaders(bearer);
+    let result = await this.post('/deals', deal);
+    console.log("DEAL ADDED", result);
+
+    this.getPromotions(bearer);
+    onComplete();
+  }
+
+  async dealDelete(bearer, deal, index, onComplete) {
+    await this.setHeaders(bearer);
+    let result = await this.delete('/deals', deal);
+    console.log("DEAL DELETED", result);
+
+    if (result.stats !== "Failure.") {
+      global.promotions.splice(index, 1);
+    }
+    onComplete();
+  }
+
+  async dealUpdate(bearer, deal, index, onComplete) {
+    await this.setHeaders(bearer);
+    let result = await this.put('/deals', deal);
+    console.log("DEAL UPDATED", result);
+
+    if (result.stats !== "Failure.") {
+      for (var property in deal) {
+        global.promotions[index][property] = deal[property];
+      }
+    }
+    onComplete();
+  }
+
+  async getPromotions(bearer) {
+    await this.setHeaders(bearer);
+    let params = { id: global.profile._id };
+
+    let result = await this.get('/deals/store', params);
+    this.promotions = result;
+    global.promotions = this.promotions;
     console.log(result);
   }
 

@@ -53,6 +53,11 @@ class DashboardPage extends React.Component {
     value: 0,
     mobileOpen: false
   };
+
+  add = (accumulator, a) => {
+    return accumulator + a;
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -60,6 +65,7 @@ class DashboardPage extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -86,13 +92,13 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     <p className={classes.cardCategory}>
-                      Active Promotions: 15
+                      Active Promotions: {global.stats.activeDeals.length}
                     </p>
                     <p className={classes.cardCategory}>
-                      Inactive Promotions: 10
+                      Inactive Promotions: {global.stats.allDeals.length - global.stats.activeDeals.length}
                     </p>
                     <p className={classes.cardCategory}>
-                      Total Promotions: 25
+                      Total Promotions: {global.stats.allDeals.length}
                     </p>
                   </CardBody>
                   <hr width="80%" size="1" color="#999999" />
@@ -113,13 +119,13 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     <p className={classes.cardCategory}>
-                      Visitors Today: 112
+                      Visitors Today: {global.stats.customersWeek[0]}
                     </p>
                     <p className={classes.cardCategory}>
-                      Vistors This Week: 806
+                      Vistors This Week: {global.stats.customersWeek.reduce(this.add)}
                     </p>
                     <p className={classes.cardCategory}>
-                      Visitors This Month: 3511
+                      Visitors This Month: {global.stats.customersMonth}
                     </p>
                   </CardBody>
                   <hr width="80%" size="1" color="#999999" />
@@ -140,13 +146,13 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     <p className={classes.cardCategory}>
-                      Promotions Viewed Today: 60
+                      Promotions Viewed Today: {global.stats.viewsWeek[0]}
                     </p>
                     <p className={classes.cardCategory}>
-                      Promotions Viewed This Week: 401
+                      Promotions Viewed This Week: {global.stats.viewsWeek.reduce(this.add)}
                     </p>
                     <p className={classes.cardCategory}>
-                      Promotions Viewed This Month: 2255
+                      Promotions Viewed This Month: {global.stats.viewsMonth}
                     </p>
                   </CardBody>
                   <hr width="80%" size="1" color="#999999" />
@@ -167,13 +173,13 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     <p className={classes.cardCategory}>
-                      Promotions Claimed Today: 29
+                      Promotions Claimed Today: {global.stats.claimsWeek[0]}
                     </p>
                     <p className={classes.cardCategory}>
-                      Promotions Claimed This Week: 199
+                      Promotions Claimed This Week: {global.stats.claimsWeek.reduce(this.add)}
                     </p>
                     <p className={classes.cardCategory}>
-                      Promotions Claimed This Month: 1102
+                      Promotions Claimed This Month: {global.stats.claimsMonth}
                     </p>
                   </CardBody>
                   <hr width="80%" size="1" color="#999999" />

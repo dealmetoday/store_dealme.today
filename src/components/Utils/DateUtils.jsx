@@ -12,13 +12,25 @@ class DateUtils {
     ]
   }
 
-  formatISODate = (isodate) => {
-    const date = new Date(Date.parse(isodate));
+  convertDateToEpoch = (date) => {
+    return date.getTime()/1000;
+  }
 
+  convertDateToFormatted = (date) => {
     var formatted = date.getDate().toString();
     formatted += " " + this.numberToMonth[date.getMonth()];
     formatted += " " + date.getFullYear();
     return formatted.includes("NaN") ? "" : formatted;
+  }
+
+  convertISOToEpoch = (isotime) => {
+    const date = new Date(Date.parse(isotime));
+    return this.convertDateToEpoch(date);
+  }
+
+  convertISOToFormatted = (isotime) => {
+    const date = new Date(Date.parse(isotime));
+    return this.convertDateToFormatted(date);
   }
 
   getOffsetDate = (offset) => {

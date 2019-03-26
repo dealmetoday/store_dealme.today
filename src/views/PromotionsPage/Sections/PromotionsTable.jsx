@@ -100,8 +100,7 @@ class PromotionsTable extends React.Component {
       order: "asc",
       orderBy: "title",
       page: 0,
-      rowsPerPage: 10,
-      data: global.promotions,
+      rowsPerPage: 5,
     };
   };
 
@@ -124,8 +123,8 @@ class PromotionsTable extends React.Component {
   }
 
   render() {
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, global.promotions.length - page * rowsPerPage);
 
     return (
       <div>
@@ -137,7 +136,7 @@ class PromotionsTable extends React.Component {
               onRequestSort={this.handleRequestSort}
             />
             <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
+              {stableSort(global.promotions, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((promotion, index) => {
                   return (
@@ -169,7 +168,7 @@ class PromotionsTable extends React.Component {
         <TablePagination
           rowsPerPageOptions={[5, 10, 20]}
           component="div"
-          count={this.state.data.length}
+          count={global.promotions.length}
           rowsPerPage={this.state.rowsPerPage}
           page={this.state.page}
           backIconButtonProps={{
