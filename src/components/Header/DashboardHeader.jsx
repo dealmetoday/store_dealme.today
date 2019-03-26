@@ -15,6 +15,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import dashboardHeaderStyle from "assets/jss/material-kit-react/components/dashboardHeaderStyle.jsx";
+import logo from "assets/img/dealme.png"
 
 class DashboardHeader extends React.Component {
   redirectHome = () => {
@@ -81,7 +82,12 @@ class DashboardHeader extends React.Component {
     return (
       <AppBar className={appBarClasses}>
         <Toolbar className={classes.container}>
-          {leftLinks !== undefined ? brandComponent : null}
+          <img
+            src={logo}
+            style={{height: "5%", width: "10%"}}
+            onClick={() => this.props.history.push("/")}
+          />
+          {/* {leftLinks !== undefined ? brandComponent : null}
           <div className={classes.flex}>
             {leftLinks !== undefined ? (
               <Hidden smDown implementation="css">
@@ -90,7 +96,7 @@ class DashboardHeader extends React.Component {
             ) : (
               brandComponent
             )}
-          </div>
+          </div> */}
           <Hidden smDown implementation="css">
             {rightLinks}
           </Hidden>
