@@ -8,6 +8,7 @@ class Utils {
     this.pubKey = null;
     this.profile = null;
     this.promotions = null;
+    this.requests = null;
     this.stats = null;
     this.tags = null;
     this.mapsClient = new window.google.maps.Geocoder();
@@ -95,9 +96,9 @@ class Utils {
   }
 
   async getRequests() {
-    let result = await this.get('/requests');
+    let result = await this.get('/request');
     console.log(result);
-    
+
     return result;
   }
 
@@ -129,6 +130,16 @@ class Utils {
     this.tags = result;
     global.tags = this.tags;
     console.log(result);
+
+    // 5. Requests
+    try {
+      result = await this.getRequests();
+      this.requests = result;
+      global.requests = this.requests;
+    } catch {
+      this.requests = [];
+      global.requests = [];
+    }
   }
 
   async dealAdd(bearer, deal, onComplete) {
