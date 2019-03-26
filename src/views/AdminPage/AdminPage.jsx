@@ -16,6 +16,7 @@ import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
+import Utils from "components/Utils/Utils.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
@@ -25,6 +26,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 import RequestTable from "./Sections/RequestTable.jsx";
 
 const dashboardRoutes = [];
+var utils = new Utils();
 
 class DetailComponent extends React.Component {
   render() {
@@ -69,12 +71,16 @@ class AdminPage extends React.Component {
     return -1;
   }
 
-  handleAccept = (event) => {
-    return;
+  handleAccept = async (event) => {
+    const index = this.getIndexOfSelectedRequest();
+    await utils.put('/request/accept', { id: global.requests[index]._id });
+    this.handleTableClick();
   }
 
-  handleDecline = (event) => {
-    return;
+  handleDecline = async (event) => {
+    const index = this.getIndexOfSelectedRequest();
+    await utils.put('/request/reject', { id: global.requests[index]._id });
+    this.handleTableClick();
   }
 
   handleTableClick = (event, data) => {
@@ -89,7 +95,7 @@ class AdminPage extends React.Component {
   };
 
   setDefaultDetails = () => {
-    this.setState({ selectedRequest: "" });
+    this.setState({ selectedRequest: "[ No Request Selected ]" });
     this.setState({ requestKey: "" });
     this.setState({ requestModel: "" });
     this.setState({ requestRequest: "" });
