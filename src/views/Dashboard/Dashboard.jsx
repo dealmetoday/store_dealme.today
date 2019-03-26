@@ -34,7 +34,12 @@ import {
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
+// Utils
+import Utils from "components/Utils/Utils.jsx";
+
+const Chartist = require("chartist");
 const dashboardRoutes = [];
+const minute = 60 * 1000;
 
 function createData(id, name, views, claims, active) {
   return { id, name, views, claims, active };
@@ -49,13 +54,35 @@ const tablerows = [
 ];
 
 class DashboardPage extends React.Component {
-  state = {
-    value: 0,
-    mobileOpen: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+      mobileOpen: false,
+      lastUpdated: 0,
+    };
+
+    this.utils = new Utils();
+  }
 
   add = (accumulator, a) => {
     return accumulator + a;
+  }
+
+  componentDidMount() {
+    this.timeInterval = setInterval(() => {
+      this.setState({ lastUpdated: this.state.lastUpdated + 1 });
+    }, minute);
+
+    this.updateInterval = setInterval(() => {
+      this.setState({ lastUpdated: 0 });
+      this.utils.getData(global.id, global.bearer);
+    }, 30*minute);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeInterval);
+    clearInterval(this.updateInterval);
   }
 
   handleChange = (event, value) => {
@@ -68,6 +95,9 @@ class DashboardPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
+    console.log("CUST", global.stats.customersWeek);
+    console.log("VIEW", global.stats.viewsWeek);
+    console.log("CLAIM", global.stats.claimsWeek);
     return (
       <div>
         <DashboardHeader
@@ -213,6 +243,29 @@ class DashboardPage extends React.Component {
                         </TableRow>
                       </TableHead>
                       <TableBody>
+                        {global.promotions
+                          .sort((a, b) => (a.claims < b.claims) ? 1 : -1)
+                          .map((promotion, index) => (
+                            <TableRow key={index}>
+                              <TableCell component="th" scope="row" align="right">
+                                {index + 1}
+                              </TableCell>
+                              <TableCell component="th" scope="row" align="left">
+                                {promotion.description}
+                              </TableCell>
+                              <TableCell component="th" scope="row" align="right">
+                                {promotion.views}
+                              </TableCell>
+                              <TableCell component="th" scope="row" align="right">
+                                {promotion.claims}
+                              </TableCell>
+                              <TableCell component="th" scope="row" align="right">
+                                {promotion.isActive ? "Active" : "Inactive"}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                      </TableBody>
+                      {/* <TableBody>
                         {tablerows.map(row => (
                           <TableRow key={row.id}>
                             <TableCell component="th" scope="row" align="right">{row.id}</TableCell>
@@ -222,7 +275,7 @@ class DashboardPage extends React.Component {
                             <TableCell component="th" scope="row" align="right">{row.active}</TableCell>
                           </TableRow>
                         ))}
-                      </TableBody>
+                      </TableBody> */}
                     </Table>
                   </CardBody>
                 </Card>
@@ -233,26 +286,23 @@ class DashboardPage extends React.Component {
                   <CardHeader color="success">
                     <ChartistGraph
                       className="ct-chart"
-                      data={trafficChart.data}
+                      data={{
+                        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                        series: [global.stats.customersWeek.reverse()],
+                      }}
                       type="Line"
-                      options={trafficChart.options}
+                      options={{
+                        lineSmooth: Chartist.Interpolation.cardinal({ tension: 0 }),
+                        low: 0,
+                        high: Math.max(global.stats.customersWeek) * 1.1,
+                        chartPadding: { top: 5, right: 5, bottom: 5, left: 5 }
+                      }}
                       listener={trafficChart.animation}
                     />
                   </CardHeader>
                   <CardBody>
                     <h4 className={classes.cardTitle}>Weekly Store Traffic</h4>
-                    <p className={classes.cardCategory}>
-                      <span className={classes.successText}>
-                        <ArrowUpward className={classes.upArrowCardCategory} /> 5%
-                      </span>{" "}
-                      increase in traffic this week.
-                    </p>
                   </CardBody>
-                  <CardFooter>
-                    <div className={classes.stats}>
-                      <AccessTime /> updated 30 minutes ago
-                    </div>
-                  </CardFooter>
                 </Card>
               </GridItem>
             </GridContainer>
@@ -262,26 +312,23 @@ class DashboardPage extends React.Component {
                   <CardHeader color="danger">
                     <ChartistGraph
                       className="ct-chart"
-                      data={viewChart.data}
+                      data={{
+                        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                        series: [global.stats.viewsWeek.reverse()]
+                      }}
                       type="Line"
-                      options={viewChart.options}
+                      options={{
+                        lineSmooth: Chartist.Interpolation.cardinal({ tension: 0 }),
+                        low: 0,
+                        high: Math.max(global.stats.viewsWeek) * 1.1,
+                        chartPadding: { top: 5, right: 5, bottom: 5, left: 5 }
+                      }}
                       listener={viewChart.animation}
                     />
                   </CardHeader>
                   <CardBody>
                     <h4 className={classes.cardTitle}>Weekly Promotion Views</h4>
-                    <p className={classes.cardCategory}>
-                      <span className={classes.successText}>
-                        <ArrowUpward className={classes.upArrowCardCategory} /> 10%
-                      </span>{" "}
-                      increase in promotion views this week.
-                    </p>
                   </CardBody>
-                  <CardFooter>
-                    <div className={classes.stats}>
-                      <AccessTime /> updated 30 minutes ago
-                    </div>
-                  </CardFooter>
                 </Card>
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
@@ -289,26 +336,23 @@ class DashboardPage extends React.Component {
                   <CardHeader color="info">
                     <ChartistGraph
                       className="ct-chart"
-                      data={claimChart.data}
+                      data={{
+                        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                        series: [global.stats.claimsWeek.reverse()],
+                      }}
                       type="Line"
-                      options={claimChart.options}
+                      options={{
+                        lineSmooth: Chartist.Interpolation.cardinal({ tension: 0 }),
+                        low: 0,
+                        high: Math.max(global.stats.claimsWeek) * 1.1,
+                        chartPadding: { top: 5, right: 5, bottom: 5, left: 5 }
+                      }}
                       listener={claimChart.animation}
                     />
                   </CardHeader>
                   <CardBody>
                     <h4 className={classes.cardTitle}>Weekly Promotion Claims</h4>
-                    <p className={classes.cardCategory}>
-                      <span className={classes.successText}>
-                        <ArrowUpward className={classes.upArrowCardCategory} /> 5%
-                      </span>{" "}
-                      increase in promotion claims this week.
-                    </p>
                   </CardBody>
-                  <CardFooter>
-                    <div className={classes.stats}>
-                      <AccessTime /> updated 30 minutes ago
-                    </div>
-                  </CardFooter>
                 </Card>
               </GridItem>
             </GridContainer>

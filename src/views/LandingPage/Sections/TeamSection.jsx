@@ -14,7 +14,7 @@ import Card from "components/Card/Card.jsx";
 import teamStyle from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
 
 import team_ahong from "assets/img/team/team_ahong.png"
-import team_chackwell from "assets/img/team/team_chackwell.jpg"
+import team_chackwell from "assets/img/team/team_chackwell.png"
 import team_drulofs from "assets/img/team/team_drulofs.jpg"
 import team_lmarcil from "assets/img/team/team_lmarcil.jpg"
 import team_mstefanovic from "assets/img/team/team_mstefanovic.png"
