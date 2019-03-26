@@ -7,15 +7,13 @@ import { withStyles } from '@material-ui/core/styles';
 
 // Material React Kit Components
 // import CardHeader from "components/Card/CardHeader.jsx";
-import DateUtils from "components/Utils/DateUtils.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-const Chartist = require("chartist");
-var dateutils = new DateUtils();
+// const Chartist = require("chartist");
 
 // const chartAnimation = {
 //   draw: function(data) {

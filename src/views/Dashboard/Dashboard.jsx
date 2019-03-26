@@ -8,8 +8,6 @@ import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
 import Visibility from "@material-ui/icons/Visibility";
 import Table from '@material-ui/core/Table';
@@ -40,18 +38,6 @@ import Utils from "components/Utils/Utils.jsx";
 const Chartist = require("chartist");
 const dashboardRoutes = [];
 const minute = 60 * 1000;
-
-function createData(id, name, views, claims, active) {
-  return { id, name, views, claims, active };
-}
-
-const tablerows = [
-  createData(1, '$10 off Mens Footwear', 159, 100, "Active"),
-  createData(2, '10% off Headwear', 140, 98, "Active"),
-  createData(3, '25% off Womens Shirts', 130, 95, "Inactive"),
-  createData(4, '$20 off Mens Shirts', 127, 80, "Inactive"),
-  createData(5, '$5 off Kids Shirts', 119, 78, "Active"),
-];
 
 class DashboardPage extends React.Component {
   constructor(props) {
@@ -95,9 +81,6 @@ class DashboardPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    console.log("CUST", global.stats.customersWeek);
-    console.log("VIEW", global.stats.viewsWeek);
-    console.log("CLAIM", global.stats.claimsWeek);
     return (
       <div>
         <DashboardHeader
@@ -265,17 +248,6 @@ class DashboardPage extends React.Component {
                             </TableRow>
                           ))}
                       </TableBody>
-                      {/* <TableBody>
-                        {tablerows.map(row => (
-                          <TableRow key={row.id}>
-                            <TableCell component="th" scope="row" align="right">{row.id}</TableCell>
-                            <TableCell component="th" scope="row" align="left">{row.name}</TableCell>
-                            <TableCell component="th" scope="row" align="right">{row.views}</TableCell>
-                            <TableCell component="th" scope="row" align="right">{row.claims}</TableCell>
-                            <TableCell component="th" scope="row" align="right">{row.active}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody> */}
                     </Table>
                   </CardBody>
                 </Card>

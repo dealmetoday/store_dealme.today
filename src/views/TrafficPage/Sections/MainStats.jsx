@@ -5,14 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 // Material-UI Components
 
 // Material React Kit Components
-import DateUtils from "components/Utils/DateUtils.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
 // Styles, Icons, and Images
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
-
-var dateutils = new DateUtils();
 
 class DetailComponent extends React.Component {
   render() {
