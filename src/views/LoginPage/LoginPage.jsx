@@ -42,6 +42,7 @@ class LoginPage extends React.Component {
     // we use this to make the card to appear after the page has been rendered
     this.state = {
       cardAnimaton: "cardHidden",
+      error: "login",
       open: false,
 
       email: "",
@@ -123,10 +124,18 @@ class LoginPage extends React.Component {
       password: await this.utils.encrypt(this.state.password)
     }
 
-    let data = await this.utils.put('/auth/login/email', params);
-    console.log(data);
+    let data = null;
+    try {
+      data = await this.utils.put('/auth/login/email', params);
+      console.log(data);
+    } catch (e) {
+      this.setState({ error: "network" });
+      this.setState({ open: true });
+      return;
+    }
 
     if (data.status !== "Success") {
+      this.error = "login";
       this.setState({ open: true });
     } else {
       global.bearer = data.Bearer;
@@ -135,6 +144,17 @@ class LoginPage extends React.Component {
       await this.utils.getData(global.id, global.bearer);
 
       this.props.history.push("/admin/dashboard");
+    }
+  }
+
+  renderSnackbarMessage = () => {
+    switch (this.state.error) {
+      case "network":
+        return <span>A network error has occurred. Please refresh and try again.</span>;
+      case "load":
+        return <span>Failed to load store data. Please try again.</span>;
+      default:
+        return <span>Username or password is incorrect. Please try again.</span>;
     }
   }
 
@@ -162,7 +182,7 @@ class LoginPage extends React.Component {
             message={
              <span className={classes.message}>
                <Icon className={classNames(classes.icon, classes.iconVariant)} />
-               Username and Password are incorrect. Please try again.
+               {this.renderSnackbarMessage()}
              </span>
             }
           />
