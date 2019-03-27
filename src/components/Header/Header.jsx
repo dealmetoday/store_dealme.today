@@ -15,7 +15,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import headerStyle from "assets/jss/material-kit-react/components/headerStyle.jsx";
-import logo from "assets/img/dealme.png"
+import logo from "assets/img/favicon.png"
 
 class Header extends React.Component {
   redirectHome = () => {
