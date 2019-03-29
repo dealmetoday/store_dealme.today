@@ -64,7 +64,15 @@ class PromotionsTable extends React.Component {
                   >
                     <TableCell padding="none" component="th" scope="row">{request.content.request}</TableCell>
                     <TableCell padding="none" align="left">{request.model}</TableCell>
-                    <TableCell padding="none" align="left">{request.content.key}</TableCell>
+                    {typeof request.content.key === "undefined" ? (
+                      <TableCell padding="none" align="left">
+                        {request.content.id}
+                      </TableCell>
+                    ) : (
+                      <TableCell padding="none" align="left">
+                        {request.content.key}
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
                 {emptyRows > 0 && (

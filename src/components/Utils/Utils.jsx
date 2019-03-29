@@ -126,10 +126,11 @@ class Utils {
     console.log(result);
 
     // 4. Tags
-    result = await this.get('/tags', params);
-    this.tags = result;
-    global.tags = this.tags;
-    console.log(result);
+    await this.getTags(bearer);
+    // result = await this.get('/tags', params);
+    // this.tags = result;
+    // global.tags = this.tags;
+    // console.log(result);
 
     // 5. Requests
     if (global.profile.email === "nvdbluetwo@gmail.com") {
@@ -179,6 +180,16 @@ class Utils {
     let result = await this.get('/deals/store', params);
     this.promotions = result;
     global.promotions = this.promotions;
+    console.log(result);
+  }
+
+  async getTags(bearer) {
+    await this.setHeaders(bearer);
+    let params = { id: global.profile._id };
+
+    let result = await this.get('/tags', params);
+    this.tags = result;
+    global.tags = this.tags;
     console.log(result);
   }
 

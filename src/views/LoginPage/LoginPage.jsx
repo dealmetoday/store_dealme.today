@@ -172,7 +172,7 @@ class LoginPage extends React.Component {
       <div>
         <Header
           absolute
-          color="transparent"
+          color="dark"
           brand="DealMe"
           rightLinks={<HeaderLinks history={this.props.history}/>}
           {...rest}

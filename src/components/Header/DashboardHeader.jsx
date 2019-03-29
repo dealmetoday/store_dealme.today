@@ -15,7 +15,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import dashboardHeaderStyle from "assets/jss/material-kit-react/components/dashboardHeaderStyle.jsx";
-import logo from "assets/img/dealme.png"
+import logo from "assets/img/favicon.png"
 
 class DashboardHeader extends React.Component {
   redirectHome = () => {

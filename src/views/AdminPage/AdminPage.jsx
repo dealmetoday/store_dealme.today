@@ -52,6 +52,10 @@ const Detail = withStyles(dashboardStyle)(DetailComponent);
 class AdminPage extends React.Component {
   constructor(props) {
     super(props);
+    if (typeof global.bearer === "undefined") {
+      return;
+    }
+    utils.getTags(global.bearer);
 
     this.state = {
       selectedRequest: 0,
@@ -73,22 +77,33 @@ class AdminPage extends React.Component {
 
   handleAccept = async (event) => {
     const index = this.getIndexOfSelectedRequest();
-    await utils.put('/request/accept', { id: global.requests[index]._id });
-    this.handleTableClick();
+    if (index > -1) {
+      await utils.put('/request/approve', { id: global.requests[index]._id });
+      await utils.getTags(global.bearer);
+      global.requests.splice(index, 1);
+      this.handleTableClick();
+    }
   }
 
   handleDecline = async (event) => {
     const index = this.getIndexOfSelectedRequest();
-    await utils.put('/request/reject', { id: global.requests[index]._id });
-    this.handleTableClick();
+    if (index > -1) {
+      await utils.put('/request/reject', { id: global.requests[index]._id });
+      global.requests.splice(index, 1);
+      this.handleTableClick();
+    }
   }
 
   handleTableClick = (event, data) => {
     if (data) {
       this.setState({ selectedRequest: data._id });
-      this.setState({ requestKey: data.content.key });
       this.setState({ requestModel: data.model });
       this.setState({ requestRequest: data.content.request });
+      if (typeof data.content.key === "undefined") {
+        this.setState({ requestKey: data.content.id });
+      } else {
+        this.setState({ requestKey: data.content.key });
+      }
     } else {
       this.setDefaultDetails();
     }
@@ -103,7 +118,7 @@ class AdminPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    if (typeof global.requests === "undefined") {
+    if (typeof global.requests === "undefined" || typeof global.bearer === "undefined") {
       return <Redirect to="/login" />
     }
     return (

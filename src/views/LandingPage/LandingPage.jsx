@@ -55,10 +55,6 @@ class LandingPage extends React.Component {
           brand="DealMe"
           rightLinks={<HeaderLinks history={this.props.history} />}
           fixed
-          changeColorOnScroll={{
-            height: 400,
-            color: "danger"
-          }}
           {...rest}
         />
         <Parallax filter image={require("assets/img/banner_busymall.jpeg")} className={classes.banner}>
