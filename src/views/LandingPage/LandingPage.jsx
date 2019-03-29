@@ -40,17 +40,17 @@ class LandingPage extends React.Component {
     const { dispatch } = this.props
     let testProfile = { id: "5c82fd4b481499a8c03bca68" };
     dispatch(updateProfile(testProfile));
-    console.log("Here");
     console.log(this.props.profile);
-    console.log("There");
   }
 
   render() {
+    console.log(this.props.profile);
+
     const { classes, ...rest } = this.props;
     return (
       <div>
         <Header
-          color="dark"
+          color="transparent"
           routes={dashboardRoutes}
           brand="DealMe"
           rightLinks={<HeaderLinks history={this.props.history} />}
@@ -108,11 +108,12 @@ class LandingPage extends React.Component {
 }
 
 let mapStateToProps = (state) => {
+  console.log(state);
   return {
     todos: state.todos,
     profile: state.userInfo.profile,
-  };
-}
+  }
+};
 
 export default compose(
   withStyles(landingPageStyle),

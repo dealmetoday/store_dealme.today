@@ -11,7 +11,7 @@ class Utils {
     this.requests = null;
     this.stats = null;
     this.tags = null;
-    this.mapsClient = new window.google.maps.Geocoder();
+    // this.mapsClient = new window.google.maps.Geocoder();
 
     this.getPubKey();
   }
@@ -38,42 +38,42 @@ class Utils {
     this.pubKey = Buffer.from(pubKey);
   }
 
-  getAddress(input) {
-    let data = { location: input };
-    let mapsClient = this.mapsClient;
+  // getAddress(input) {
+  //   let data = { location: input };
+  //   let mapsClient = this.mapsClient;
+  //
+  //   return new Promise(function(resolve, reject) {
+  //     mapsClient.geocode(data, function(results, status) {
+  //       if (status === 'OK') {
+  //         console.log(results);
+  //         resolve(results[0].formatted_address);
+  //       } else if (status === "ZERO_RESULTS") {
+  //         resolve("Invalid Address");
+  //       } else {
+  //         reject(status);
+  //       }
+  //     });
+  //   });
+  // }
 
-    return new Promise(function(resolve, reject) {
-      mapsClient.geocode(data, function(results, status) {
-        if (status === 'OK') {
-          console.log(results);
-          resolve(results[0].formatted_address);
-        } else if (status === "ZERO_RESULTS") {
-          resolve("Invalid Address");
-        } else {
-          reject(status);
-        }
-      });
-    });
-  }
-
-  getLatLng(input) {
-    let data = { address: input };
-    let mapsClient = this.mapsClient;
-
-    return new Promise(function(resolve, reject) {
-      mapsClient.geocode(data, function(results, status) {
-        if (status === 'OK') {
-          console.log(results);
-          let latlng = {};
-          latlng.lat = results[0].geometry.location.lat();
-          latlng.lng = results[0].geometry.location.lng();
-          resolve(latlng);
-        } else {
-          reject(status);
-        }
-      });
-    });
-  }
+  // getLatLng(input) {
+  //   let data = { address: input };
+  //   let mapsClient = this.mapsClient;
+  //
+  //   return new Promise(function(resolve, reject) {
+  //     mapsClient.geocode(data, function(results, status) {
+  //       if (status === 'OK') {
+  //         console.log(results);
+  //         let latlng = {};
+  //         latlng.lat = results[0].geometry.location.lat();
+  //         latlng.lng = results[0].geometry.location.lng();
+  //         resolve(latlng);
+  //       } else {
+  //         reject(status);
+  //       }
+  //     });
+  //   });
+  // }
 
   async encrypt(item) {
     if (this.pubKey === null) {
@@ -112,7 +112,7 @@ class Utils {
     let result = await this.get('/stores', params);
     this.profile = result[0];
     global.profile = this.profile;
-    global.storeLoc = await this.getAddress({ lat: this.profile.location[0], lng: this.profile.location[1] });
+    // global.storeLoc = await this.getAddress({ lat: this.profile.location[0], lng: this.profile.location[1] });
 
     // 2. Promotions
     delete params._id;

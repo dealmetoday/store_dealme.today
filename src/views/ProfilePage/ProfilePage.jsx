@@ -98,20 +98,20 @@ class ProfilePage extends React.Component {
     	updateObj.parentCompany = this.state.parent;
     }
 
-    if (this.state.address && this.state.city && this.state.postalcode) {
-      location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
-      let latlng = await this.utils.getLatLng(location);
-      updateObj.location = [latlng.lat, latlng.lng];
-    }
+    // if (this.state.address && this.state.city && this.state.postalcode) {
+    //   location = this.state.address + ", " + this.state.city + ", " + this.state.postalcode;
+    //   let latlng = await this.utils.getLatLng(location);
+    //   updateObj.location = [latlng.lat, latlng.lng];
+    // }
 
     console.log(updateObj);
 
     let result = await this.utils.put('/stores', updateObj);
     if (result !== null) {
       let address = "";
-      if (updateObj.location) {
-        address = await this.utils.getAddress({ lat: updateObj.location[0], lng: updateObj.location[1] });
-      }
+      // if (updateObj.location) {
+      //   address = await this.utils.getAddress({ lat: updateObj.location[0], lng: updateObj.location[1] });
+      // }
 
       let newName = updateObj.name ? this.state.name : this.state.disp_name;
       let newParent = updateObj.parentCompany ? this.state.parent : this.state.disp_parent;
