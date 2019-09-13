@@ -18,8 +18,6 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import DashboardHeader from "components/Header/DashboardHeader.jsx";
 import DashboardHeaderLinks from "components/Header/DashboardHeaderLinks.jsx";
 
-import avatar from "assets/img/default_avatar.png";
-
 // Utils
 import Utils from "components/Utils/Utils.jsx";
 
@@ -146,11 +144,6 @@ class ProfilePage extends React.Component {
         <GridContainer justify="center">
           <GridItem xs={10} sm={10} md={5}>
             <Card>
-              <CardAvatar>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  <img src={avatar} alt="..." />
-                </a>
-              </CardAvatar>
               <CardBody>
                 <h6 className={classes.cardCategory}>
                   {this.state.disp_parent}
