@@ -26,7 +26,7 @@ function Footer({ ...props }) {
   };
   const links = [
     { href: "mailto:nvdbluetwo@gmail.com", fa: "fas fa-envelope"},
-    { href: "https://github.com/nvdbluetwo", fa: "fab fa-github"}
+    { href: "https://github.com/dealmetoday", fa: "fab fa-github"}
   ].map(link => {
     link.key = `nav-link-${link.href}-${link.fa}`
     return link
