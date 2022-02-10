@@ -29,7 +29,7 @@
     "compose": "^0.1.2",
     "css-loader": "^2.1.1",
     "history": "^4.9.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "nouislider": "^13.1.4",
     "perfect-scrollbar": "^1.4.0",
     "prop-types": "^15.7.2",
